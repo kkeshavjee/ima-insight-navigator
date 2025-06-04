@@ -103,16 +103,16 @@ const PreventionPredictionPane: React.FC<PreventionPredictionPaneProps> = ({ sel
   };
 
   return (
-    <div className="h-full bg-teal-100 p-3 rounded-lg shadow-md overflow-y-auto">
+    <div className="h-full bg-indigo-100 p-3 shadow-md overflow-y-auto">
       <div className="flex items-center gap-2 mb-3">
-        <Brain className="w-4 h-4 text-teal-600" />
-        <h2 className="text-lg font-semibold text-teal-700">AI Prevention & Prediction</h2>
+        <Brain className="w-4 h-4 text-indigo-600" />
+        <h2 className="text-lg font-semibold text-indigo-700">AI Prevention & Prediction</h2>
       </div>
       {selectedPatientId ? (
         <div>
           <div className="mb-3 p-2 bg-white rounded-lg shadow-sm">
             <p className="text-slate-600 text-sm">
-              AI-powered insights for Patient: <span className="font-medium text-teal-600">{selectedPatientId}</span>
+              AI-powered insights for Patient: <span className="font-medium text-indigo-600">{selectedPatientId}</span>
             </p>
           </div>
           
@@ -123,7 +123,7 @@ const PreventionPredictionPane: React.FC<PreventionPredictionPaneProps> = ({ sel
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex items-center gap-2">
                       {getInsightIcon(insight.type)}
-                      <h4 className="font-medium text-teal-700 text-sm">{insight.title}</h4>
+                      <h4 className="font-medium text-indigo-700 text-sm">{insight.title}</h4>
                     </div>
                     <span className={getPriorityBadge(insight.priority)}>
                       {insight.priority.toUpperCase()}
@@ -140,7 +140,7 @@ const PreventionPredictionPane: React.FC<PreventionPredictionPaneProps> = ({ sel
                   <p className="text-xs text-slate-600 leading-relaxed">{insight.detail}</p>
                   
                   <div className="mt-2 flex gap-2">
-                    <button className="text-xs bg-teal-500 text-white px-2 py-1 rounded hover:bg-teal-600 transition-colors">
+                    <button className="text-xs bg-indigo-500 text-white px-2 py-1 rounded hover:bg-indigo-600 transition-colors">
                       Act on This
                     </button>
                     <button className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded hover:bg-gray-300 transition-colors">

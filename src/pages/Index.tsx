@@ -44,29 +44,32 @@ const Index = () => {
       )}
 
       {/* Main content area with 5 panes */}
-      <main className="flex-grow p-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 overflow-hidden">
+      <main className="flex-grow p-3 flex gap-3 overflow-hidden">
         {/* Pane 1: Day Schedule */}
-        <div className="lg:col-span-1 md:col-span-1 col-span-full h-full min-h-[300px] lg:min-h-0">
+        <div className="w-1/5 h-full min-h-[300px]">
           <DaySchedulePane onSelectPatient={handlePatientSelect} selectedPatientId={selectedPatientId} />
         </div>
 
-        {/* Pane 2: Cumulative Patient Profile */}
-        <div className="lg:col-span-1 md:col-span-1 col-span-full h-full min-h-[300px] lg:min-h-0">
-          <PatientProfilePane selectedPatientId={selectedPatientId} onNodeSelect={handleNodeSelect} />
-        </div>
+        {/* Middle 3 panes - no gaps between them */}
+        <div className="w-3/5 h-full flex">
+          {/* Pane 2: Cumulative Patient Profile */}
+          <div className="w-1/3 h-full">
+            <PatientProfilePane selectedPatientId={selectedPatientId} onNodeSelect={handleNodeSelect} />
+          </div>
 
-        {/* Pane 3: Drill Down Pane */}
-        <div className="lg:col-span-1 md:col-span-2 lg:col-span-1 col-span-full h-full min-h-[300px] lg:min-h-0">
-          <DrillDownPane selectedNodeData={selectedNodeData} />
-        </div>
+          {/* Pane 3: Drill Down Pane */}
+          <div className="w-1/3 h-full">
+            <DrillDownPane selectedNodeData={selectedNodeData} />
+          </div>
 
-        {/* Pane 4: Prevention and Prediction */}
-        <div className="lg:col-span-1 md:col-span-1 col-span-full h-full min-h-[300px] lg:min-h-0">
-          <PreventionPredictionPane selectedPatientId={selectedPatientId} />
+          {/* Pane 4: Prevention and Prediction */}
+          <div className="w-1/3 h-full">
+            <PreventionPredictionPane selectedPatientId={selectedPatientId} />
+          </div>
         </div>
 
         {/* Pane 5: Final Note Display */}
-        <div className="lg:col-span-1 md:col-span-1 col-span-full h-full min-h-[300px] lg:min-h-0">
+        <div className="w-1/5 h-full min-h-[300px]">
           <FinalNotePane selectedEncounterId={selectedEncounterId} selectedPatientId={selectedPatientId} />
         </div>
       </main>

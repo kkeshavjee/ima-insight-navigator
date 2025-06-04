@@ -56,17 +56,17 @@ const PatientProfilePane: React.FC<PatientProfilePaneProps> = ({ selectedPatient
   };
 
   return (
-    <div className="h-full bg-sky-100 p-3 rounded-lg shadow-md overflow-y-auto">
+    <div className="h-full bg-indigo-100 p-3 shadow-md overflow-y-auto">
       <div className="flex items-center gap-2 mb-3">
-        <Activity className="w-4 h-4 text-sky-600" />
-        <h2 className="text-lg font-semibold text-sky-700">Patient Knowledge Graph</h2>
+        <Activity className="w-4 h-4 text-indigo-600" />
+        <h2 className="text-lg font-semibold text-indigo-700">Patient Knowledge Graph</h2>
       </div>
       {selectedPatientId ? (
         <div>
           <p className="text-slate-600 mb-2 text-sm">
-            Interactive graph for Patient: <span className="font-medium text-sky-600">{selectedPatientId}</span>
+            Interactive graph for Patient: <span className="font-medium text-indigo-600">{selectedPatientId}</span>
           </p>
-          <div className="mt-2 border-2 border-dashed border-sky-300 rounded-md min-h-[8rem] p-2">
+          <div className="mt-2 border-2 border-dashed border-indigo-300 rounded-md min-h-[8rem] p-2">
             {nodesToDisplay.length > 0 ? (
               <div className="space-y-2">
                 {nodesToDisplay.map(node => (
@@ -84,9 +84,9 @@ const PatientProfilePane: React.FC<PatientProfilePaneProps> = ({ selectedPatient
                 ))}
               </div>
             ) : (
-              <p className="text-sky-500 text-center py-6 text-sm">No graph nodes available for this patient.</p>
+              <p className="text-indigo-500 text-center py-6 text-sm">No graph nodes available for this patient.</p>
             )}
-            <p className="text-xs text-sky-400 mt-3 text-center italic">
+            <p className="text-xs text-indigo-400 mt-3 text-center italic">
               (Click nodes to view detailed information)
             </p>
           </div>
