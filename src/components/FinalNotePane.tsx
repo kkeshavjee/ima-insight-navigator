@@ -51,16 +51,16 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
   const note = selectedEncounterId ? mockNotes[selectedEncounterId] : null;
 
   return (
-    <div className="h-full bg-rose-100 p-4 rounded-lg shadow-md overflow-y-auto">
-      <div className="flex items-center gap-2 mb-4">
-        <FileText className="w-5 h-5 text-rose-600" />
-        <h2 className="text-xl font-semibold text-rose-700">AI-Generated Clinical Note</h2>
+    <div className="h-full bg-rose-100 p-3 rounded-lg shadow-md overflow-y-auto">
+      <div className="flex items-center gap-2 mb-3">
+        <FileText className="w-4 h-4 text-rose-600" />
+        <h2 className="text-lg font-semibold text-rose-700">AI-Generated Clinical Note</h2>
       </div>
       
       {selectedEncounterId && note ? (
         <div>
-          <div className="mb-4 p-3 bg-white rounded-lg shadow-sm">
-            <p className="text-slate-600">
+          <div className="mb-3 p-2 bg-white rounded-lg shadow-sm">
+            <p className="text-slate-600 text-sm">
               Encounter: <span className="font-medium text-rose-600">{selectedEncounterId}</span> | 
               Patient: <span className="font-medium text-rose-600">{selectedPatientId}</span>
             </p>
@@ -70,47 +70,47 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
+          <div className="bg-white rounded-lg shadow-sm p-3 mb-3">
             {/* Subjective */}
-            <div className="mb-4">
-              <h3 className="text-rose-600 font-semibold mb-2 flex items-center gap-2">
+            <div className="mb-3">
+              <h3 className="text-rose-600 font-semibold mb-2 flex items-center gap-2 text-sm">
                 <div className="w-2 h-2 bg-rose-500 rounded-full"></div>
                 Subjective
               </h3>
-              <p className="text-slate-700 leading-relaxed text-sm bg-gray-50 p-3 rounded">{note.subjective}</p>
+              <p className="text-slate-700 leading-relaxed text-xs bg-gray-50 p-2 rounded">{note.subjective}</p>
             </div>
 
             {/* Objective */}
             {note.objective && (
-              <div className="mb-4">
-                <h3 className="text-rose-600 font-semibold mb-2 flex items-center gap-2">
+              <div className="mb-3">
+                <h3 className="text-rose-600 font-semibold mb-2 flex items-center gap-2 text-sm">
                   <div className="w-2 h-2 bg-rose-500 rounded-full"></div>
                   Objective
                 </h3>
-                <p className="text-slate-700 leading-relaxed text-sm bg-gray-50 p-3 rounded">{note.objective}</p>
+                <p className="text-slate-700 leading-relaxed text-xs bg-gray-50 p-2 rounded">{note.objective}</p>
               </div>
             )}
 
             {/* Assessment */}
-            <div className="mb-4">
-              <h3 className="text-rose-600 font-semibold mb-2 flex items-center gap-2">
+            <div className="mb-3">
+              <h3 className="text-rose-600 font-semibold mb-2 flex items-center gap-2 text-sm">
                 <div className="w-2 h-2 bg-rose-500 rounded-full"></div>
                 Assessment
               </h3>
-              <div className="text-slate-700 leading-relaxed text-sm bg-gray-50 p-3 rounded whitespace-pre-line">
+              <div className="text-slate-700 leading-relaxed text-xs bg-gray-50 p-2 rounded whitespace-pre-line">
                 {note.assessment}
               </div>
             </div>
 
             {/* Plan */}
-            <div className="mb-4">
-              <h3 className="text-rose-600 font-semibold mb-2 flex items-center gap-2">
+            <div className="mb-3">
+              <h3 className="text-rose-600 font-semibold mb-2 flex items-center gap-2 text-sm">
                 <div className="w-2 h-2 bg-rose-500 rounded-full"></div>
                 Plan
               </h3>
-              <ul className="space-y-2">
+              <ul className="space-y-1">
                 {note.plan.map((item: string, index: number) => (
-                  <li key={index} className="text-slate-700 text-sm bg-gray-50 p-2 rounded flex items-start gap-2">
+                  <li key={index} className="text-slate-700 text-xs bg-gray-50 p-2 rounded flex items-start gap-2">
                     <span className="text-rose-500 font-bold">{index + 1}.</span>
                     <span>{item}</span>
                   </li>
@@ -120,25 +120,25 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-3 flex-wrap">
-            <button className="flex items-center gap-2 px-4 py-2 bg-rose-500 text-white rounded-md hover:bg-rose-600 transition-colors shadow-sm">
-              <CheckCircle className="w-4 h-4" />
+          <div className="flex gap-2 flex-wrap">
+            <button className="flex items-center gap-2 px-3 py-2 bg-rose-500 text-white rounded-md hover:bg-rose-600 transition-colors shadow-sm text-xs">
+              <CheckCircle className="w-3 h-3" />
               Sign Note
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors shadow-sm">
-              <Edit className="w-4 h-4" />
+            <button className="flex items-center gap-2 px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors shadow-sm text-xs">
+              <Edit className="w-3 h-3" />
               Edit with AI
             </button>
-            <button className="px-4 py-2 bg-gray-200 text-slate-700 rounded-md hover:bg-gray-300 transition-colors shadow-sm">
+            <button className="px-3 py-2 bg-gray-200 text-slate-700 rounded-md hover:bg-gray-300 transition-colors shadow-sm text-xs">
               Save Draft
             </button>
           </div>
         </div>
       ) : (
-        <div className="flex items-center justify-center h-40">
+        <div className="flex items-center justify-center h-32">
           <div className="text-center">
-            <FileText className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-            <p className="text-slate-500">Select a patient encounter from the schedule to view the AI-generated clinical note.</p>
+            <FileText className="w-10 h-10 text-gray-300 mx-auto mb-2" />
+            <p className="text-slate-500 text-sm">Select a patient encounter from the schedule to view the AI-generated clinical note.</p>
           </div>
         </div>
       )}

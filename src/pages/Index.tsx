@@ -7,6 +7,7 @@ import PatientProfilePane from '../components/PatientProfilePane';
 import DrillDownPane from '../components/DrillDownPane';
 import PreventionPredictionPane from '../components/PreventionPredictionPane';
 import FinalNotePane from '../components/FinalNotePane';
+import PatientBanner from '../components/PatientBanner';
 
 const Index = () => {
   // State to manage selected patient and encounter
@@ -33,12 +34,17 @@ const Index = () => {
   return (
     <div className="flex flex-col h-screen bg-slate-200 font-sans">
       {/* Header */}
-      <header className="bg-slate-800 text-white p-4 shadow-lg">
-        <h1 className="text-2xl font-bold">Next-Generation Intelligent Medical Assistant (IMA)</h1>
+      <header className="bg-slate-800 text-white p-3 shadow-lg">
+        <h1 className="text-lg font-bold">Next-Generation Intelligent Medical Assistant (IMA)</h1>
       </header>
 
+      {/* Patient Banner */}
+      {selectedPatientId && (
+        <PatientBanner selectedPatientId={selectedPatientId} />
+      )}
+
       {/* Main content area with 5 panes */}
-      <main className="flex-grow p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 overflow-hidden">
+      <main className="flex-grow p-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 overflow-hidden">
         {/* Pane 1: Day Schedule */}
         <div className="lg:col-span-1 md:col-span-1 col-span-full h-full min-h-[300px] lg:min-h-0">
           <DaySchedulePane onSelectPatient={handlePatientSelect} selectedPatientId={selectedPatientId} />
@@ -66,7 +72,7 @@ const Index = () => {
       </main>
       
       {/* Footer */}
-      <footer className="bg-slate-700 text-white p-3 text-center text-sm">
+      <footer className="bg-slate-700 text-white p-2 text-center text-xs">
         <p>&copy; {new Date().getFullYear()} IMA Concept. For demonstration purposes only.</p>
       </footer>
     </div>

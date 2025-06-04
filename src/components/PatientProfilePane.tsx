@@ -36,11 +36,11 @@ const PatientProfilePane: React.FC<PatientProfilePaneProps> = ({ selectedPatient
   const getNodeIcon = (type: string) => {
     switch (type) {
       case 'Condition':
-        return <AlertCircle className="w-4 h-4 text-red-500" />;
+        return <AlertCircle className="w-3 h-3 text-red-500" />;
       case 'Medication':
-        return <Pill className="w-4 h-4 text-blue-500" />;
+        return <Pill className="w-3 h-3 text-blue-500" />;
       default:
-        return <Activity className="w-4 h-4 text-gray-500" />;
+        return <Activity className="w-3 h-3 text-gray-500" />;
     }
   };
 
@@ -56,24 +56,24 @@ const PatientProfilePane: React.FC<PatientProfilePaneProps> = ({ selectedPatient
   };
 
   return (
-    <div className="h-full bg-sky-100 p-4 rounded-lg shadow-md overflow-y-auto">
-      <div className="flex items-center gap-2 mb-4">
-        <Activity className="w-5 h-5 text-sky-600" />
-        <h2 className="text-xl font-semibold text-sky-700">Patient Knowledge Graph</h2>
+    <div className="h-full bg-sky-100 p-3 rounded-lg shadow-md overflow-y-auto">
+      <div className="flex items-center gap-2 mb-3">
+        <Activity className="w-4 h-4 text-sky-600" />
+        <h2 className="text-lg font-semibold text-sky-700">Patient Knowledge Graph</h2>
       </div>
       {selectedPatientId ? (
         <div>
-          <p className="text-slate-600 mb-3">
+          <p className="text-slate-600 mb-2 text-sm">
             Interactive graph for Patient: <span className="font-medium text-sky-600">{selectedPatientId}</span>
           </p>
-          <div className="mt-2 border-2 border-dashed border-sky-300 rounded-md min-h-[10rem] p-3">
+          <div className="mt-2 border-2 border-dashed border-sky-300 rounded-md min-h-[8rem] p-2">
             {nodesToDisplay.length > 0 ? (
               <div className="space-y-2">
                 {nodesToDisplay.map(node => (
                   <div
                     key={node.id}
                     onClick={() => onNodeSelect(node)}
-                    className={`p-3 rounded-lg border cursor-pointer text-sm transition-all duration-200 transform hover:scale-[1.02] ${getNodeColor(node.type)}`}
+                    className={`p-2 rounded-lg border cursor-pointer text-xs transition-all duration-200 transform hover:scale-[1.02] ${getNodeColor(node.type)}`}
                   >
                     <div className="flex items-center gap-2">
                       {getNodeIcon(node.type)}
@@ -84,16 +84,16 @@ const PatientProfilePane: React.FC<PatientProfilePaneProps> = ({ selectedPatient
                 ))}
               </div>
             ) : (
-              <p className="text-sky-500 text-center py-8">No graph nodes available for this patient.</p>
+              <p className="text-sky-500 text-center py-6 text-sm">No graph nodes available for this patient.</p>
             )}
-            <p className="text-xs text-sky-400 mt-4 text-center italic">
+            <p className="text-xs text-sky-400 mt-3 text-center italic">
               (Click nodes to view detailed information)
             </p>
           </div>
         </div>
       ) : (
-        <div className="flex items-center justify-center h-40">
-          <p className="text-slate-500 text-center">Select a patient from the schedule to view their knowledge graph.</p>
+        <div className="flex items-center justify-center h-32">
+          <p className="text-slate-500 text-center text-sm">Select a patient from the schedule to view their knowledge graph.</p>
         </div>
       )}
     </div>
