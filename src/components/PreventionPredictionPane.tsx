@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Brain, AlertTriangle, CheckCircle, Clock } from 'lucide-react';
 
@@ -60,7 +59,14 @@ const PreventionPredictionPane: React.FC<PreventionPredictionPaneProps> = ({ sel
     ]
   };
 
-  const insightsToDisplay = selectedPatientId ? (mockInsights[selectedPatientId] || []) : [];
+  // Sort insights by priority level (high, medium, low)
+  const sortByPriority = (insights: any[]) => {
+    const priorityOrder = { 'high': 0, 'medium': 1, 'low': 2 };
+    return insights.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+  };
+
+  const rawInsights = selectedPatientId ? (mockInsights[selectedPatientId] || []) : [];
+  const insightsToDisplay = sortByPriority([...rawInsights]);
 
   const getInsightIcon = (type: string) => {
     switch (type) {
