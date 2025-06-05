@@ -52,18 +52,18 @@ const Index = () => {
 
         {/* Middle 3 panes - adjusted to take more space */}
         <div className="w-2/3 h-full flex">
-          {/* Pane 2: Cumulative Patient Profile */}
-          <div className="w-1/3 h-full">
+          {/* Pane 2: Patient History - made 25% narrower (from 1/3 to 1/4) */}
+          <div className="w-1/4 h-full">
             <PatientProfilePane selectedPatientId={selectedPatientId} onNodeSelect={handleNodeSelect} />
           </div>
 
-          {/* Pane 3: Drill Down Pane */}
-          <div className="w-1/3 h-full">
+          {/* Pane 3: History Details - expanded to take more space */}
+          <div className="w-1/2 h-full">
             <DrillDownPane selectedNodeData={selectedNodeData} />
           </div>
 
-          {/* Pane 4: Prevention and Prediction */}
-          <div className="w-1/3 h-full">
+          {/* Pane 4: AI Recommendations - made 25% narrower (from 1/3 to 1/4) */}
+          <div className="w-1/4 h-full">
             <PreventionPredictionPane selectedPatientId={selectedPatientId} />
           </div>
         </div>
