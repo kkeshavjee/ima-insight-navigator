@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { FileText, Edit, CheckCircle } from 'lucide-react';
 
@@ -60,10 +59,6 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
       {selectedEncounterId && note ? (
         <div>
           <div className="mb-3 p-2 bg-white rounded-lg shadow-sm">
-            <p className="text-slate-600 text-sm">
-              Encounter: <span className="font-medium text-rose-600">{selectedEncounterId}</span> | 
-              Patient: <span className="font-medium text-rose-600">{selectedPatientId}</span>
-            </p>
             <div className="mt-2 flex gap-2">
               <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">AI Generated</span>
               <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Ready for Review</span>

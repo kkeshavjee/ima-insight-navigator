@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Brain, AlertTriangle, CheckCircle, Clock } from 'lucide-react';
 
@@ -110,12 +109,6 @@ const PreventionPredictionPane: React.FC<PreventionPredictionPaneProps> = ({ sel
       </div>
       {selectedPatientId ? (
         <div>
-          <div className="mb-3 p-2 bg-white rounded-lg shadow-sm">
-            <p className="text-slate-600 text-sm">
-              AI-powered insights for Patient: <span className="font-medium text-indigo-600">{selectedPatientId}</span>
-            </p>
-          </div>
-          
           {insightsToDisplay.length > 0 ? (
             <div className="space-y-2">
               {insightsToDisplay.map(insight => (

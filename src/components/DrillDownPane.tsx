@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { FileText, Calendar, FlaskConical, Clock } from 'lucide-react';
 
@@ -7,7 +6,6 @@ interface DrillDownPaneProps {
 }
 
 const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
-  // Mock data based on selectedNodeData
   const getMockDetails = (node: any) => {
     if (!node) return null;
     
