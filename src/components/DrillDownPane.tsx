@@ -101,55 +101,55 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
   };
 
   return (
-    <div className="h-full bg-indigo-100 p-4 rounded-lg shadow-md overflow-y-auto">
-      <div className="flex items-center gap-2 mb-4">
-        <FileText className="w-5 h-5 text-indigo-600" />
-        <h2 className="text-xl font-semibold text-indigo-700">Drill Down Details</h2>
+    <div className="h-full bg-indigo-100 p-3 rounded-lg shadow-md overflow-y-auto">
+      <div className="flex items-center gap-2 mb-3">
+        <FileText className="w-4 h-4 text-indigo-600" />
+        <h2 className="text-sm font-semibold text-indigo-700">History Details</h2>
       </div>
       {selectedNodeData ? (
         <div>
-          <div className="mb-4 p-3 bg-white rounded-lg shadow-sm">
-            <h3 className="text-lg font-medium text-indigo-600 mb-1">{selectedNodeData.label}</h3>
+          <div className="mb-3 p-2 bg-white rounded-lg shadow-sm">
+            <h3 className="text-sm font-medium text-indigo-600 mb-1">{selectedNodeData.label}</h3>
           </div>
           
-          <div className="space-y-4">
+          <div className="space-y-3">
             {/* Recent Visits Section */}
-            <div className="p-4 bg-white rounded-lg shadow-sm">
-              <div className="flex items-center gap-2 mb-3">
-                <Clock className="w-4 h-4 text-indigo-600" />
-                <h3 className="font-medium text-indigo-600">Recent Visits</h3>
+            <div className="p-3 bg-white rounded-lg shadow-sm">
+              <div className="flex items-center gap-2 mb-2">
+                <Clock className="w-3 h-3 text-indigo-600" />
+                <h3 className="text-xs font-medium text-indigo-600">Recent Visits</h3>
               </div>
               {details && details.recentVisits.length > 0 ? (
-                <div className="space-y-2">
+                <div className="space-y-1">
                   {details.recentVisits.map((visit, index) => (
                     <div key={index} className="p-2 bg-indigo-50 rounded border-l-4 border-indigo-400">
                       <div className="flex justify-between items-start mb-1">
-                        <div className="font-medium text-indigo-800">{visit.date}</div>
-                        <span className="text-xs text-indigo-600 bg-indigo-100 px-2 py-1 rounded">{visit.type}</span>
+                        <div className="text-xs font-medium text-indigo-800">{visit.date}</div>
+                        <span className="text-xs text-indigo-600 bg-indigo-100 px-1 py-0.5 rounded">{visit.type}</span>
                       </div>
-                      <div className="text-sm text-indigo-600 mb-1">Provider: {visit.provider}</div>
-                      <div className="text-sm text-indigo-700">{visit.notes}</div>
+                      <div className="text-xs text-indigo-600 mb-1">Provider: {visit.provider}</div>
+                      <div className="text-xs text-indigo-700">{visit.notes}</div>
                     </div>
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-gray-500 italic">No recent visits available for this item.</p>
+                <p className="text-xs text-gray-500 italic">No recent visits available for this item.</p>
               )}
             </div>
 
             {/* Medications Section */}
             {details && details.medications.length > 0 && (
-              <div className="p-4 bg-white rounded-lg shadow-sm">
-                <div className="flex items-center gap-2 mb-3">
+              <div className="p-3 bg-white rounded-lg shadow-sm">
+                <div className="flex items-center gap-2 mb-2">
                   <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  <h3 className="font-medium text-indigo-600">Related Medications</h3>
+                  <h3 className="text-xs font-medium text-indigo-600">Related Medications</h3>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-1">
                   {details.medications.map((med, index) => (
                     <div key={index} className="p-2 bg-blue-50 rounded border-l-4 border-blue-400">
-                      <div className="font-medium text-blue-800">{med.name}</div>
-                      {med.dosage && <div className="text-sm text-blue-600">Dosage: {med.dosage}</div>}
-                      {med.class && <div className="text-sm text-blue-600">Class: {med.class}</div>}
+                      <div className="text-xs font-medium text-blue-800">{med.name}</div>
+                      {med.dosage && <div className="text-xs text-blue-600">Dosage: {med.dosage}</div>}
+                      {med.class && <div className="text-xs text-blue-600">Class: {med.class}</div>}
                     </div>
                   ))}
                 </div>
@@ -158,21 +158,21 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
 
             {/* Labs Section */}
             {details && details.labs.length > 0 && (
-              <div className="p-4 bg-white rounded-lg shadow-sm">
-                <div className="flex items-center gap-2 mb-3">
-                  <FlaskConical className="w-4 h-4 text-green-600" />
-                  <h3 className="font-medium text-indigo-600">Recent Lab Results</h3>
+              <div className="p-3 bg-white rounded-lg shadow-sm">
+                <div className="flex items-center gap-2 mb-2">
+                  <FlaskConical className="w-3 h-3 text-green-600" />
+                  <h3 className="text-xs font-medium text-indigo-600">Recent Lab Results</h3>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-1">
                   {details.labs.map((lab, index) => (
                     <div key={index} className="p-2 bg-green-50 rounded border-l-4 border-green-400">
                       <div className="flex justify-between items-start">
                         <div>
-                          <div className="font-medium text-green-800">{lab.name}: {lab.value}</div>
-                          <div className="text-sm text-green-600">Date: {lab.date}</div>
+                          <div className="text-xs font-medium text-green-800">{lab.name}: {lab.value}</div>
+                          <div className="text-xs text-green-600">Date: {lab.date}</div>
                         </div>
                         {lab.status && (
-                          <span className={`text-xs px-2 py-1 rounded ${getStatusColor(lab.status)}`}>
+                          <span className={`text-xs px-1 py-0.5 rounded ${getStatusColor(lab.status)}`}>
                             {lab.status}
                           </span>
                         )}
@@ -185,16 +185,16 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
 
             {/* Visits Section */}
             {details && details.visits.length > 0 && (
-              <div className="p-4 bg-white rounded-lg shadow-sm">
-                <div className="flex items-center gap-2 mb-3">
-                  <Calendar className="w-4 h-4 text-purple-600" />
-                  <h3 className="font-medium text-indigo-600">Visit Highlights</h3>
+              <div className="p-3 bg-white rounded-lg shadow-sm">
+                <div className="flex items-center gap-2 mb-2">
+                  <Calendar className="w-3 h-3 text-purple-600" />
+                  <h3 className="text-xs font-medium text-indigo-600">Visit Highlights</h3>
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-1">
                   {details.visits.map((visit, index) => (
                     <div key={index} className="p-2 bg-purple-50 rounded border-l-4 border-purple-400">
-                      <div className="font-medium text-purple-800">{visit.date}</div>
-                      <div className="text-sm text-purple-600">{visit.summary}</div>
+                      <div className="text-xs font-medium text-purple-800">{visit.date}</div>
+                      <div className="text-xs text-purple-600">{visit.summary}</div>
                     </div>
                   ))}
                 </div>
@@ -203,8 +203,8 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
           </div>
         </div>
       ) : (
-        <div className="flex items-center justify-center h-40">
-          <p className="text-slate-500 text-center">Select a node from the Patient Profile to view detailed information.</p>
+        <div className="flex items-center justify-center h-32">
+          <p className="text-slate-500 text-center text-xs">Select a node from the Patient History to view detailed information.</p>
         </div>
       )}
     </div>
