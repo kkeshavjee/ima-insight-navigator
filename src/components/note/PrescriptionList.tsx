@@ -19,14 +19,12 @@ const PrescriptionList: React.FC<PrescriptionListProps> = ({
   selectedPrescriptions,
   onPrescriptionChange
 }) => {
-  const isPrescriptionChecked = (prescriptionId: string, isActive: boolean) => {
-    // Active prescriptions are always checked, inactive ones depend on selection
-    return isActive || selectedPrescriptions.includes(prescriptionId);
+  const isPrescriptionChecked = (prescriptionId: string) => {
+    // Only return checked if the prescription is in selectedPrescriptions array
+    return selectedPrescriptions.includes(prescriptionId);
   };
 
   const handlePrescriptionChange = (prescriptionId: string, checked: boolean) => {
-    const prescription = prescriptions.find(p => p.id === prescriptionId);
-    if (prescription?.active) return; // Don't allow changing active prescriptions
     onPrescriptionChange(prescriptionId, checked);
   };
 
@@ -38,9 +36,8 @@ const PrescriptionList: React.FC<PrescriptionListProps> = ({
           <div key={prescription.id} className="flex items-center gap-2 text-xs">
             <Checkbox
               id={prescription.id}
-              checked={isPrescriptionChecked(prescription.id, prescription.active)}
+              checked={isPrescriptionChecked(prescription.id)}
               onCheckedChange={(checked) => handlePrescriptionChange(prescription.id, !!checked)}
-              disabled={prescription.active}
             />
             <label 
               htmlFor={prescription.id} 

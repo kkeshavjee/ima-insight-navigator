@@ -20,14 +20,12 @@ const LabsList: React.FC<LabsListProps> = ({
   selectedLabs,
   onLabChange
 }) => {
-  const isLabChecked = (labId: string, isActive: boolean) => {
-    // Active labs are always checked, inactive labs depend on selection
-    return isActive || selectedLabs.includes(labId);
+  const isLabChecked = (labId: string) => {
+    // Only return checked if the lab is in selectedLabs array
+    return selectedLabs.includes(labId);
   };
 
   const handleLabChange = (labId: string, checked: boolean) => {
-    const lab = labs.find(l => l.id === labId);
-    if (lab?.active) return; // Don't allow changing active labs
     onLabChange(labId, checked);
   };
 
@@ -39,9 +37,8 @@ const LabsList: React.FC<LabsListProps> = ({
           <div key={lab.id} className="flex items-center gap-2 text-xs">
             <Checkbox
               id={lab.id}
-              checked={isLabChecked(lab.id, lab.active)}
+              checked={isLabChecked(lab.id)}
               onCheckedChange={(checked) => handleLabChange(lab.id, !!checked)}
-              disabled={lab.active}
             />
             <label 
               htmlFor={lab.id} 
