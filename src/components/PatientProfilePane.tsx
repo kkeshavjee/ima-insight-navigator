@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Activity, AlertCircle, Users, Scissors, Heart } from 'lucide-react';
+import { Activity, Heart, Users, Scissors, User } from 'lucide-react';
 
 interface Node {
   id: string;
@@ -39,13 +38,13 @@ const PatientProfilePane: React.FC<PatientProfilePaneProps> = ({ selectedPatient
   const getNodeIcon = (type: string) => {
     switch (type) {
       case 'Condition':
-        return <AlertCircle className="w-3 h-3 text-red-500" />;
+        return <Heart className="w-3 h-3 text-red-500" />;
       case 'Social History':
-        return <Users className="w-3 h-3 text-green-500" />;
+        return <User className="w-3 h-3 text-green-500" />;
       case 'Surgical History':
         return <Scissors className="w-3 h-3 text-purple-500" />;
       case 'Family History':
-        return <Heart className="w-3 h-3 text-orange-500" />;
+        return <Users className="w-3 h-3 text-orange-500" />;
       default:
         return <Activity className="w-3 h-3 text-gray-500" />;
     }
@@ -74,9 +73,6 @@ const PatientProfilePane: React.FC<PatientProfilePaneProps> = ({ selectedPatient
       </div>
       {selectedPatientId ? (
         <div>
-          <p className="text-slate-600 mb-2 text-sm">
-            Interactive graph for Patient: <span className="font-medium text-indigo-600">{selectedPatientId}</span>
-          </p>
           <div className="mt-2 border-2 border-dashed border-indigo-300 rounded-md min-h-[8rem] p-2">
             {nodesToDisplay.length > 0 ? (
               <div className="space-y-2">
