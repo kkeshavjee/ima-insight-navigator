@@ -26,8 +26,6 @@ const LabsList: React.FC<LabsListProps> = ({
   };
 
   const handleLabChange = (labId: string, checked: boolean) => {
-    const lab = labs.find(l => l.id === labId);
-    if (lab?.active) return; // Don't allow unchecking active labs
     onLabChange(labId, checked);
   };
 
@@ -41,7 +39,6 @@ const LabsList: React.FC<LabsListProps> = ({
               id={lab.id}
               checked={isLabChecked(lab.id, lab.active)}
               onCheckedChange={(checked) => handleLabChange(lab.id, !!checked)}
-              disabled={lab.active}
             />
             <label 
               htmlFor={lab.id} 
