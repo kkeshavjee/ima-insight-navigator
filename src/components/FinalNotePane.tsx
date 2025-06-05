@@ -1,7 +1,12 @@
-
 import React, { useState } from 'react';
-import { FileText, Edit, CheckCircle, UserPlus, Calendar, FileCheck } from 'lucide-react';
-import { Checkbox } from '@/components/ui/checkbox';
+import NoteHeader from './note/NoteHeader';
+import NoteStatus from './note/NoteStatus';
+import NoteSection from './note/NoteSection';
+import PrescriptionList from './note/PrescriptionList';
+import LabsList from './note/LabsList';
+import OtherPlanItems from './note/OtherPlanItems';
+import NoteActionButtons from './note/NoteActionButtons';
+import EmptyNoteState from './note/EmptyNoteState';
 
 interface FinalNotePaneProps {
   selectedEncounterId: string | null;
@@ -101,61 +106,25 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
     );
   };
 
-  const isPrescriptionChecked = (prescriptionId: string, isActive: boolean) => {
-    return isActive || selectedPrescriptions.includes(prescriptionId);
-  };
-
-  const isLabChecked = (labId: string, isActive: boolean) => {
-    return isActive || selectedLabs.includes(labId);
-  };
-
   return (
     <div className="h-full bg-rose-100 p-3 rounded-lg shadow-md overflow-y-auto">
-      <div className="flex items-center gap-2 mb-3">
-        <FileText className="w-4 h-4 text-rose-600" />
-        <h2 className="text-sm font-semibold text-rose-700">Note Constructor</h2>
-      </div>
+      <NoteHeader />
       
       {selectedEncounterId && note ? (
         <div>
-          <div className="mb-3 p-2 bg-white rounded-lg shadow-sm">
-            <div className="mt-2 flex gap-2">
-              <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">AI Generated</span>
-              <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Ready for Review</span>
-            </div>
-          </div>
+          <NoteStatus />
 
           <div className="bg-white rounded-lg shadow-sm p-3 mb-3">
             {/* Subjective */}
-            <div className="mb-3">
-              <h3 className="text-rose-600 font-semibold mb-2 flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 bg-rose-500 rounded-full"></div>
-                Subjective
-              </h3>
-              <p className="text-slate-700 leading-relaxed text-xs bg-gray-50 p-2 rounded">{note.subjective}</p>
-            </div>
+            <NoteSection title="Subjective" content={note.subjective} />
 
             {/* Objective */}
             {note.objective && (
-              <div className="mb-3">
-                <h3 className="text-rose-600 font-semibold mb-2 flex items-center gap-2 text-sm">
-                  <div className="w-2 h-2 bg-rose-500 rounded-full"></div>
-                  Objective
-                </h3>
-                <p className="text-slate-700 leading-relaxed text-xs bg-gray-50 p-2 rounded">{note.objective}</p>
-              </div>
+              <NoteSection title="Objective" content={note.objective} />
             )}
 
             {/* Assessment */}
-            <div className="mb-3">
-              <h3 className="text-rose-600 font-semibold mb-2 flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 bg-rose-500 rounded-full"></div>
-                Assessment
-              </h3>
-              <div className="text-slate-700 leading-relaxed text-xs bg-gray-50 p-2 rounded whitespace-pre-line">
-                {note.assessment}
-              </div>
-            </div>
+            <NoteSection title="Assessment" content={note.assessment} />
 
             {/* Plan */}
             <div className="mb-3">
@@ -166,103 +135,34 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
               
               {/* Prescriptions */}
               {note.plan.prescriptions && note.plan.prescriptions.length > 0 && (
-                <div className="mb-4">
-                  <h4 className="text-green-600 font-medium mb-2 text-sm">Prescriptions</h4>
-                  <div className="space-y-2">
-                    {note.plan.prescriptions.map((prescription: any) => (
-                      <div key={prescription.id} className="flex items-center gap-2 text-xs">
-                        <Checkbox
-                          id={prescription.id}
-                          checked={isPrescriptionChecked(prescription.id, prescription.active)}
-                          onCheckedChange={(checked) => handlePrescriptionChange(prescription.id, checked as boolean)}
-                        />
-                        <label 
-                          htmlFor={prescription.id} 
-                          className={`cursor-pointer ${prescription.active ? 'text-green-700 font-medium' : 'text-gray-500'}`}
-                        >
-                          {prescription.name}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <PrescriptionList
+                  prescriptions={note.plan.prescriptions}
+                  selectedPrescriptions={selectedPrescriptions}
+                  onPrescriptionChange={handlePrescriptionChange}
+                />
               )}
 
               {/* Labs */}
               {note.plan.labs && note.plan.labs.length > 0 && (
-                <div className="mb-4">
-                  <h4 className="text-green-600 font-medium mb-2 text-sm">Labs</h4>
-                  <div className="space-y-2">
-                    {note.plan.labs.map((lab: any) => (
-                      <div key={lab.id} className="flex items-center gap-2 text-xs">
-                        <Checkbox
-                          id={lab.id}
-                          checked={isLabChecked(lab.id, lab.active)}
-                          onCheckedChange={(checked) => handleLabChange(lab.id, checked as boolean)}
-                        />
-                        <label 
-                          htmlFor={lab.id} 
-                          className={`cursor-pointer ${lab.active ? 'text-green-700 font-medium' : 'text-gray-500'}`}
-                        >
-                          {lab.name} {lab.timing && `(${lab.timing})`}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <LabsList
+                  labs={note.plan.labs}
+                  selectedLabs={selectedLabs}
+                  onLabChange={handleLabChange}
+                />
               )}
 
               {/* Other Plan Items */}
               {note.plan.other && note.plan.other.length > 0 && (
-                <div>
-                  <h4 className="text-green-600 font-medium mb-2 text-sm">Other</h4>
-                  <ul className="space-y-1">
-                    {note.plan.other.map((item: string, index: number) => (
-                      <li key={index} className="text-slate-700 text-xs bg-gray-50 p-2 rounded flex items-start gap-2">
-                        <span className="text-rose-500 font-bold">{index + 1}.</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <OtherPlanItems items={note.plan.other} />
               )}
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-2 flex-wrap">
-            <button className="flex items-center gap-2 px-3 py-2 bg-rose-500 text-white rounded-md hover:bg-rose-600 transition-colors shadow-sm text-xs">
-              <CheckCircle className="w-3 h-3" />
-              Sign Note
-            </button>
-            <button className="flex items-center gap-2 px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors shadow-sm text-xs">
-              <Edit className="w-3 h-3" />
-              Edit with AI
-            </button>
-            <button className="flex items-center gap-2 px-3 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600 transition-colors shadow-sm text-xs">
-              <UserPlus className="w-3 h-3" />
-              Referrals
-            </button>
-            <button className="flex items-center gap-2 px-3 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 transition-colors shadow-sm text-xs">
-              <Calendar className="w-3 h-3" />
-              Follow-up
-            </button>
-            <button className="flex items-center gap-2 px-3 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition-colors shadow-sm text-xs">
-              <FileCheck className="w-3 h-3" />
-              Fill Forms
-            </button>
-            <button className="px-3 py-2 bg-gray-200 text-slate-700 rounded-md hover:bg-gray-300 transition-colors shadow-sm text-xs">
-              Save Draft
-            </button>
-          </div>
+          <NoteActionButtons />
         </div>
       ) : (
-        <div className="flex items-center justify-center h-32">
-          <div className="text-center">
-            <FileText className="w-10 h-10 text-gray-300 mx-auto mb-2" />
-            <p className="text-slate-500 text-sm">Select a patient encounter from the schedule to view the AI-generated clinical note.</p>
-          </div>
-        </div>
+        <EmptyNoteState />
       )}
     </div>
   );
