@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { FileText, Calendar, FlaskConical, Clock } from 'lucide-react';
 
@@ -111,7 +112,6 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
         <div>
           <div className="mb-4 p-3 bg-white rounded-lg shadow-sm">
             <h3 className="text-lg font-medium text-indigo-600 mb-1">{selectedNodeData.label}</h3>
-            <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">{selectedNodeData.type}</span>
           </div>
           
           <div className="space-y-4">
