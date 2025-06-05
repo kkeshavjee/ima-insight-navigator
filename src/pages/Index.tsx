@@ -45,13 +45,13 @@ const Index = () => {
 
       {/* Main content area with 5 panes */}
       <main className="flex-grow p-3 flex gap-3 overflow-hidden">
-        {/* Pane 1: Day Schedule */}
-        <div className="w-1/5 h-full min-h-[300px]">
+        {/* Pane 1: Day Schedule - made narrower */}
+        <div className="w-1/6 h-full min-h-[300px]">
           <DaySchedulePane onSelectPatient={handlePatientSelect} selectedPatientId={selectedPatientId} />
         </div>
 
-        {/* Middle 3 panes - no gaps between them */}
-        <div className="w-3/5 h-full flex">
+        {/* Middle 3 panes - adjusted to take more space */}
+        <div className="w-2/3 h-full flex">
           {/* Pane 2: Cumulative Patient Profile */}
           <div className="w-1/3 h-full">
             <PatientProfilePane selectedPatientId={selectedPatientId} onNodeSelect={handleNodeSelect} />
@@ -69,7 +69,7 @@ const Index = () => {
         </div>
 
         {/* Pane 5: Final Note Display */}
-        <div className="w-1/5 h-full min-h-[300px]">
+        <div className="w-1/6 h-full min-h-[300px]">
           <FinalNotePane selectedEncounterId={selectedEncounterId} selectedPatientId={selectedPatientId} />
         </div>
       </main>
