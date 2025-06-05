@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import { FileText, Edit, CheckCircle } from 'lucide-react';
+import { FileText, Edit, CheckCircle, UserPlus, Calendar, FileCheck } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
 
 interface FinalNotePaneProps {
@@ -100,6 +101,14 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
     );
   };
 
+  const isPrescriptionChecked = (prescriptionId: string, isActive: boolean) => {
+    return isActive || selectedPrescriptions.includes(prescriptionId);
+  };
+
+  const isLabChecked = (labId: string, isActive: boolean) => {
+    return isActive || selectedLabs.includes(labId);
+  };
+
   return (
     <div className="h-full bg-rose-100 p-3 rounded-lg shadow-md overflow-y-auto">
       <div className="flex items-center gap-2 mb-3">
@@ -164,7 +173,7 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
                       <div key={prescription.id} className="flex items-center gap-2 text-xs">
                         <Checkbox
                           id={prescription.id}
-                          checked={prescription.active || selectedPrescriptions.includes(prescription.id)}
+                          checked={isPrescriptionChecked(prescription.id, prescription.active)}
                           onCheckedChange={(checked) => handlePrescriptionChange(prescription.id, checked as boolean)}
                         />
                         <label 
@@ -188,7 +197,7 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
                       <div key={lab.id} className="flex items-center gap-2 text-xs">
                         <Checkbox
                           id={lab.id}
-                          checked={lab.active || selectedLabs.includes(lab.id)}
+                          checked={isLabChecked(lab.id, lab.active)}
                           onCheckedChange={(checked) => handleLabChange(lab.id, checked as boolean)}
                         />
                         <label 
@@ -229,6 +238,18 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
             <button className="flex items-center gap-2 px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors shadow-sm text-xs">
               <Edit className="w-3 h-3" />
               Edit with AI
+            </button>
+            <button className="flex items-center gap-2 px-3 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600 transition-colors shadow-sm text-xs">
+              <UserPlus className="w-3 h-3" />
+              Referrals
+            </button>
+            <button className="flex items-center gap-2 px-3 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 transition-colors shadow-sm text-xs">
+              <Calendar className="w-3 h-3" />
+              Follow-up
+            </button>
+            <button className="flex items-center gap-2 px-3 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition-colors shadow-sm text-xs">
+              <FileCheck className="w-3 h-3" />
+              Fill Forms
             </button>
             <button className="px-3 py-2 bg-gray-200 text-slate-700 rounded-md hover:bg-gray-300 transition-colors shadow-sm text-xs">
               Save Draft
