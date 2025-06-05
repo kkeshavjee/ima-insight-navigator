@@ -7,6 +7,7 @@ import LabsList from './note/LabsList';
 import OtherPlanItems from './note/OtherPlanItems';
 import NoteActionButtons from './note/NoteActionButtons';
 import EmptyNoteState from './note/EmptyNoteState';
+import ExaminationFindings from './note/ExaminationFindings';
 
 interface FinalNotePaneProps {
   selectedEncounterId: string | null;
@@ -122,6 +123,9 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
             {note.objective && (
               <NoteSection title="Objective" content={note.objective} />
             )}
+
+            {/* Physical Examination Findings - New 3-state checkboxes */}
+            <ExaminationFindings />
 
             {/* Assessment */}
             <NoteSection title="Assessment" content={note.assessment} />
