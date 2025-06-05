@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { FileText, Calendar, FlaskConical, Clock } from 'lucide-react';
 
@@ -24,8 +25,8 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
           { date: '2024-03-20', summary: 'Blood pressure trending down. Patient compliant with medications.' }
         ],
         recentVisits: [
-          { date: '2024-05-15', type: 'Follow-up', provider: 'Dr. Smith', notes: 'Blood pressure well controlled. Continue current medications.' },
-          { date: '2024-04-15', type: 'Routine Check', provider: 'Dr. Smith', notes: 'Discussed lifestyle modifications and medication adherence.' }
+          { date: '2024-05-15', reason: 'Follow-up' },
+          { date: '2024-04-15', reason: 'Routine Check' }
         ]
       };
     }
@@ -43,8 +44,8 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
           { date: '2024-03-15', summary: 'Diabetes management discussed. A1C trending down.' }
         ],
         recentVisits: [
-          { date: '2024-04-20', type: 'Diabetes Management', provider: 'Dr. Johnson', notes: 'HbA1c improved from 8.1% to 7.2%. Patient doing well with current regimen.' },
-          { date: '2024-03-15', type: 'Follow-up', provider: 'Dr. Johnson', notes: 'Reviewed diet and exercise plan. Patient reports good adherence.' }
+          { date: '2024-04-20', reason: 'Diabetes Management' },
+          { date: '2024-03-15', reason: 'Follow-up' }
         ]
       };
     }
@@ -55,7 +56,7 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
         labs: [],
         visits: [],
         recentVisits: [
-          { date: '2024-05-10', type: 'Smoking Cessation', provider: 'Dr. Smith', notes: 'Patient quit smoking 5 years ago. Discussed lung cancer screening eligibility.' }
+          { date: '2024-05-10', reason: 'Smoking Cessation' }
         ]
       };
     }
@@ -66,7 +67,7 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
         labs: [],
         visits: [],
         recentVisits: [
-          { date: '2024-02-10', type: 'Annual Physical', provider: 'Dr. Smith', notes: 'Surgical history reviewed. No complications from appendectomy.' }
+          { date: '2024-02-10', reason: 'Annual Physical' }
         ]
       };
     }
@@ -77,7 +78,7 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
         labs: [],
         visits: [],
         recentVisits: [
-          { date: '2024-05-15', type: 'Follow-up', provider: 'Dr. Smith', notes: 'Family history of diabetes discussed. Patient screened regularly.' }
+          { date: '2024-05-15', reason: 'Follow-up' }
         ]
       };
     }
@@ -123,12 +124,9 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
                 <div className="space-y-1">
                   {details.recentVisits.map((visit, index) => (
                     <div key={index} className="p-2 bg-indigo-50 rounded border-l-4 border-indigo-400">
-                      <div className="flex justify-between items-start mb-1">
-                        <div className="text-xs font-medium text-indigo-800">{visit.date}</div>
-                        <span className="text-xs text-indigo-600 bg-indigo-100 px-1 py-0.5 rounded">{visit.type}</span>
+                      <div className="text-xs font-medium text-indigo-800">
+                        {visit.date} - {visit.reason}
                       </div>
-                      <div className="text-xs text-indigo-600 mb-1">Provider: {visit.provider}</div>
-                      <div className="text-xs text-indigo-700">{visit.notes}</div>
                     </div>
                   ))}
                 </div>
