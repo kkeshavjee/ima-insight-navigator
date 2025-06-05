@@ -54,7 +54,7 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
     <div className="h-full bg-rose-100 p-3 rounded-lg shadow-md overflow-y-auto">
       <div className="flex items-center gap-2 mb-3">
         <FileText className="w-4 h-4 text-rose-600" />
-        <h2 className="text-lg font-semibold text-rose-700">Clinical Note</h2>
+        <h2 className="text-sm font-semibold text-rose-700">Clinical Note</h2>
       </div>
       
       {selectedEncounterId && note ? (

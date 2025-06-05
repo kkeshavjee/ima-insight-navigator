@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Activity, Heart, Users, Scissors, User } from 'lucide-react';
 
@@ -69,7 +70,7 @@ const PatientProfilePane: React.FC<PatientProfilePaneProps> = ({ selectedPatient
     <div className="h-full bg-indigo-100 p-3 shadow-md overflow-y-auto">
       <div className="flex items-center gap-2 mb-3">
         <Activity className="w-4 h-4 text-indigo-600" />
-        <h2 className="text-lg font-semibold text-indigo-700">Patient History</h2>
+        <h2 className="text-sm font-semibold text-indigo-700">Patient History</h2>
       </div>
       {selectedPatientId ? (
         <div>

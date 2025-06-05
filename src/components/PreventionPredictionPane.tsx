@@ -106,7 +106,7 @@ const PreventionPredictionPane: React.FC<PreventionPredictionPaneProps> = ({ sel
     <div className="h-full bg-indigo-100 p-3 shadow-md overflow-y-auto">
       <div className="flex items-center gap-2 mb-3">
         <Brain className="w-4 h-4 text-indigo-600" />
-        <h2 className="text-lg font-semibold text-indigo-700">AI Recommendations</h2>
+        <h2 className="text-sm font-semibold text-indigo-700">AI Recommendations</h2>
       </div>
       {selectedPatientId ? (
         <div>
