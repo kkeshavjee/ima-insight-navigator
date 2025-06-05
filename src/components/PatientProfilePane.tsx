@@ -90,7 +90,6 @@ const PatientProfilePane: React.FC<PatientProfilePaneProps> = ({ selectedPatient
                       {getNodeIcon(node.type)}
                       <span className="font-medium">{node.label}</span>
                     </div>
-                    <div className="text-xs text-gray-500 mt-1">{node.type}</div>
                   </div>
                 ))}
               </div>
