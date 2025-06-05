@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Activity, AlertCircle, Pill } from 'lucide-react';
+import { Activity, AlertCircle, Users, Scissors, Heart } from 'lucide-react';
 
 interface Node {
   id: string;
@@ -19,15 +19,18 @@ const PatientProfilePane: React.FC<PatientProfilePaneProps> = ({ selectedPatient
     p001: [
       { id: 'node_htn', label: 'Hypertension', type: 'Condition' },
       { id: 'node_dm', label: 'Diabetes Mellitus Type 2', type: 'Condition' },
-      { id: 'node_med_lisinopril', label: 'Lisinopril', type: 'Medication' },
-      { id: 'node_med_metformin', label: 'Metformin', type: 'Medication' },
+      { id: 'node_social_smoking', label: 'Former Smoker (20 pack-years)', type: 'Social History' },
+      { id: 'node_surgery_appendix', label: 'Appendectomy (2015)', type: 'Surgical History' },
+      { id: 'node_family_dm', label: 'Father - Diabetes', type: 'Family History' },
     ],
     p002: [
       { id: 'node_asthma', label: 'Asthma', type: 'Condition' },
-      { id: 'node_med_albuterol', label: 'Albuterol Inhaler', type: 'Medication' },
+      { id: 'node_social_exercise', label: 'Regular Exercise', type: 'Social History' },
+      { id: 'node_family_asthma', label: 'Mother - Asthma', type: 'Family History' },
     ],
     p003: [
       { id: 'node_headache', label: 'Chronic Headaches', type: 'Condition' },
+      { id: 'node_social_alcohol', label: 'Social Drinker', type: 'Social History' },
     ],
   };
 
@@ -37,8 +40,12 @@ const PatientProfilePane: React.FC<PatientProfilePaneProps> = ({ selectedPatient
     switch (type) {
       case 'Condition':
         return <AlertCircle className="w-3 h-3 text-red-500" />;
-      case 'Medication':
-        return <Pill className="w-3 h-3 text-blue-500" />;
+      case 'Social History':
+        return <Users className="w-3 h-3 text-green-500" />;
+      case 'Surgical History':
+        return <Scissors className="w-3 h-3 text-purple-500" />;
+      case 'Family History':
+        return <Heart className="w-3 h-3 text-orange-500" />;
       default:
         return <Activity className="w-3 h-3 text-gray-500" />;
     }
@@ -48,8 +55,12 @@ const PatientProfilePane: React.FC<PatientProfilePaneProps> = ({ selectedPatient
     switch (type) {
       case 'Condition':
         return 'bg-red-50 hover:bg-red-100 border-red-200';
-      case 'Medication':
-        return 'bg-blue-50 hover:bg-blue-100 border-blue-200';
+      case 'Social History':
+        return 'bg-green-50 hover:bg-green-100 border-green-200';
+      case 'Surgical History':
+        return 'bg-purple-50 hover:bg-purple-100 border-purple-200';
+      case 'Family History':
+        return 'bg-orange-50 hover:bg-orange-100 border-orange-200';
       default:
         return 'bg-gray-50 hover:bg-gray-100 border-gray-200';
     }

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { FileText, Calendar, FlaskConical } from 'lucide-react';
+import { FileText, Calendar, FlaskConical, Clock } from 'lucide-react';
 
 interface DrillDownPaneProps {
   selectedNodeData: any;
@@ -22,7 +22,12 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
           { name: 'Creatinine', value: '1.0 mg/dL', date: '2024-05-01', status: 'Normal' }
         ],
         visits: [
-          { date: '2024-04-15', summary: 'BP check, stable at 135/85. Continue current regimen.' }
+          { date: '2024-04-15', summary: 'BP check, stable at 135/85. Continue current regimen.' },
+          { date: '2024-03-20', summary: 'Blood pressure trending down. Patient compliant with medications.' }
+        ],
+        recentVisits: [
+          { date: '2024-05-15', type: 'Follow-up', provider: 'Dr. Smith', notes: 'Blood pressure well controlled. Continue current medications.' },
+          { date: '2024-04-15', type: 'Routine Check', provider: 'Dr. Smith', notes: 'Discussed lifestyle modifications and medication adherence.' }
         ]
       };
     }
@@ -38,21 +43,48 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
         ],
         visits: [
           { date: '2024-03-15', summary: 'Diabetes management discussed. A1C trending down.' }
+        ],
+        recentVisits: [
+          { date: '2024-04-20', type: 'Diabetes Management', provider: 'Dr. Johnson', notes: 'HbA1c improved from 8.1% to 7.2%. Patient doing well with current regimen.' },
+          { date: '2024-03-15', type: 'Follow-up', provider: 'Dr. Johnson', notes: 'Reviewed diet and exercise plan. Patient reports good adherence.' }
         ]
       };
     }
     
-    if (node.id === 'node_med_lisinopril') {
+    if (node.id === 'node_social_smoking') {
       return {
-        medications: [
-          { name: 'Lisinopril', class: 'ACE Inhibitor', indication: 'Hypertension, Heart Failure' }
-        ],
+        medications: [],
         labs: [],
-        visits: []
+        visits: [],
+        recentVisits: [
+          { date: '2024-05-10', type: 'Smoking Cessation', provider: 'Dr. Smith', notes: 'Patient quit smoking 5 years ago. Discussed lung cancer screening eligibility.' }
+        ]
       };
     }
     
-    return { medications: [], labs: [], visits: [] };
+    if (node.id === 'node_surgery_appendix') {
+      return {
+        medications: [],
+        labs: [],
+        visits: [],
+        recentVisits: [
+          { date: '2024-02-10', type: 'Annual Physical', provider: 'Dr. Smith', notes: 'Surgical history reviewed. No complications from appendectomy.' }
+        ]
+      };
+    }
+    
+    if (node.id === 'node_family_dm') {
+      return {
+        medications: [],
+        labs: [],
+        visits: [],
+        recentVisits: [
+          { date: '2024-05-15', type: 'Follow-up', provider: 'Dr. Smith', notes: 'Family history of diabetes discussed. Patient screened regularly.' }
+        ]
+      };
+    }
+    
+    return { medications: [], labs: [], visits: [], recentVisits: [] };
   };
 
   const details = getMockDetails(selectedNodeData);
@@ -84,13 +116,37 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
           </div>
           
           <div className="space-y-4">
-            {/* Medications Section */}
+            {/* Recent Visits Section */}
             <div className="p-4 bg-white rounded-lg shadow-sm">
               <div className="flex items-center gap-2 mb-3">
-                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                <h3 className="font-medium text-indigo-600">Related Medications</h3>
+                <Clock className="w-4 h-4 text-indigo-600" />
+                <h3 className="font-medium text-indigo-600">Recent Visits</h3>
               </div>
-              {details && details.medications.length > 0 ? (
+              {details && details.recentVisits.length > 0 ? (
+                <div className="space-y-2">
+                  {details.recentVisits.map((visit, index) => (
+                    <div key={index} className="p-2 bg-indigo-50 rounded border-l-4 border-indigo-400">
+                      <div className="flex justify-between items-start mb-1">
+                        <div className="font-medium text-indigo-800">{visit.date}</div>
+                        <span className="text-xs text-indigo-600 bg-indigo-100 px-2 py-1 rounded">{visit.type}</span>
+                      </div>
+                      <div className="text-sm text-indigo-600 mb-1">Provider: {visit.provider}</div>
+                      <div className="text-sm text-indigo-700">{visit.notes}</div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-gray-500 italic">No recent visits available for this item.</p>
+              )}
+            </div>
+
+            {/* Medications Section */}
+            {details && details.medications.length > 0 && (
+              <div className="p-4 bg-white rounded-lg shadow-sm">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  <h3 className="font-medium text-indigo-600">Related Medications</h3>
+                </div>
                 <div className="space-y-2">
                   {details.medications.map((med, index) => (
                     <div key={index} className="p-2 bg-blue-50 rounded border-l-4 border-blue-400">
@@ -101,18 +157,16 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
                     </div>
                   ))}
                 </div>
-              ) : (
-                <p className="text-sm text-gray-500 italic">No medication details available for this item.</p>
-              )}
-            </div>
+              </div>
+            )}
 
             {/* Labs Section */}
-            <div className="p-4 bg-white rounded-lg shadow-sm">
-              <div className="flex items-center gap-2 mb-3">
-                <FlaskConical className="w-4 h-4 text-green-600" />
-                <h3 className="font-medium text-indigo-600">Recent Lab Results</h3>
-              </div>
-              {details && details.labs.length > 0 ? (
+            {details && details.labs.length > 0 && (
+              <div className="p-4 bg-white rounded-lg shadow-sm">
+                <div className="flex items-center gap-2 mb-3">
+                  <FlaskConical className="w-4 h-4 text-green-600" />
+                  <h3 className="font-medium text-indigo-600">Recent Lab Results</h3>
+                </div>
                 <div className="space-y-2">
                   {details.labs.map((lab, index) => (
                     <div key={index} className="p-2 bg-green-50 rounded border-l-4 border-green-400">
@@ -130,18 +184,16 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
                     </div>
                   ))}
                 </div>
-              ) : (
-                <p className="text-sm text-gray-500 italic">No lab results available for this item.</p>
-              )}
-            </div>
+              </div>
+            )}
 
             {/* Visits Section */}
-            <div className="p-4 bg-white rounded-lg shadow-sm">
-              <div className="flex items-center gap-2 mb-3">
-                <Calendar className="w-4 h-4 text-purple-600" />
-                <h3 className="font-medium text-indigo-600">Visit Highlights</h3>
-              </div>
-              {details && details.visits.length > 0 ? (
+            {details && details.visits.length > 0 && (
+              <div className="p-4 bg-white rounded-lg shadow-sm">
+                <div className="flex items-center gap-2 mb-3">
+                  <Calendar className="w-4 h-4 text-purple-600" />
+                  <h3 className="font-medium text-indigo-600">Visit Highlights</h3>
+                </div>
                 <div className="space-y-2">
                   {details.visits.map((visit, index) => (
                     <div key={index} className="p-2 bg-purple-50 rounded border-l-4 border-purple-400">
@@ -150,10 +202,8 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
                     </div>
                   ))}
                 </div>
-              ) : (
-                <p className="text-sm text-gray-500 italic">No visit highlights available for this item.</p>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       ) : (
