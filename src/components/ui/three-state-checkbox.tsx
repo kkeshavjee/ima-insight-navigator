@@ -25,15 +25,15 @@ const ThreeStateCheckbox: React.FC<ThreeStateCheckboxProps> = ({
   const handleClick = () => {
     if (disabled) return;
     
-    // Cycle through states: not-examined -> yes -> no -> not-examined
+    // Cycle through states: not-examined -> no -> yes -> not-examined
     switch (value) {
       case 'not-examined':
-        onChange('yes');
-        break;
-      case 'yes':
         onChange('no');
         break;
       case 'no':
+        onChange('yes');
+        break;
+      case 'yes':
         onChange('not-examined');
         break;
     }

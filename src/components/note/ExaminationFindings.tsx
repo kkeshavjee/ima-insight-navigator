@@ -42,7 +42,7 @@ const ExaminationFindings: React.FC = () => {
         ))}
       </div>
       <p className="text-xs text-gray-500 mt-2">
-        Click checkboxes to cycle through: Not Examined → Yes → No → Not Examined
+        Click checkboxes to cycle through: Not Examined → No → Yes → Not Examined
       </p>
     </div>
   );
