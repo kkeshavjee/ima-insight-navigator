@@ -1,13 +1,13 @@
 
 import React from 'react';
-import { TrendingUp, FlaskConical, Calendar, Clock, Pill } from 'lucide-react';
+import { TrendingUp, FlaskConical, FileText, Activity, Stethoscope } from 'lucide-react';
 import DetailCard, { StatusBadge } from './DetailCard';
 
 interface IntervalHistoryData {
-  newMedications: Array<{ name: string; date: string; reason: string }>;
-  newLabs: Array<{ name: string; value: string; date: string; status: string; change: string }>;
-  clinicalChanges: Array<{ date: string; description: string }>;
-  upcomingActions: Array<{ action: string; dueDate: string }>;
+  labTests: Array<{ name: string; value: string; date: string; status: string; change: string }>;
+  specialistNotes: Array<{ specialist: string; date: string; summary: string; type: string }>;
+  erDischargeSummaries: Array<{ date: string; chiefComplaint: string; disposition: string; diagnosis: string }>;
+  radiologyReports: Array<{ study: string; date: string; findings: string; impression: string }>;
 }
 
 interface IntervalHistoryCardProps {
@@ -27,26 +27,12 @@ const IntervalHistoryCard: React.FC<IntervalHistoryCardProps> = ({ intervalHisto
       </div>
       
       <div className="space-y-3">
-        {/* New Medications */}
-        <DetailCard
-          icon={Pill}
-          iconColor="text-blue-600"
-          title="New Medications"
-          items={intervalHistory.newMedications}
-          renderItem={(med, index) => (
-            <div key={index} className="p-2 bg-blue-50 rounded border-l-4 border-blue-400">
-              <div className="text-xs font-medium text-blue-800">{med.name}</div>
-              <div className="text-xs text-blue-600">{med.date} - {med.reason}</div>
-            </div>
-          )}
-        />
-
-        {/* Recent Lab Changes */}
+        {/* Lab Tests */}
         <DetailCard
           icon={FlaskConical}
           iconColor="text-green-600"
-          title="Recent Lab Changes"
-          items={intervalHistory.newLabs}
+          title="Lab Tests"
+          items={intervalHistory.labTests}
           renderItem={(lab, index) => (
             <div key={index} className="p-2 bg-green-50 rounded border-l-4 border-green-400">
               <div className="flex justify-between items-center">
@@ -62,30 +48,47 @@ const IntervalHistoryCard: React.FC<IntervalHistoryCardProps> = ({ intervalHisto
           )}
         />
 
-        {/* Clinical Changes */}
+        {/* Specialist Notes */}
         <DetailCard
-          icon={Calendar}
+          icon={Stethoscope}
           iconColor="text-purple-600"
-          title="Clinical Changes"
-          items={intervalHistory.clinicalChanges}
-          renderItem={(change, index) => (
+          title="Specialist Notes"
+          items={intervalHistory.specialistNotes}
+          renderItem={(note, index) => (
             <div key={index} className="p-2 bg-purple-50 rounded border-l-4 border-purple-400">
-              <div className="text-xs font-medium text-purple-800">{change.date}</div>
-              <div className="text-xs text-purple-600">{change.description}</div>
+              <div className="text-xs font-medium text-purple-800">{note.specialist} - {note.type}</div>
+              <div className="text-xs text-purple-600">{note.date}</div>
+              <div className="text-xs text-purple-700 mt-1">{note.summary}</div>
             </div>
           )}
         />
 
-        {/* Upcoming Actions */}
+        {/* ER Discharge Summaries */}
         <DetailCard
-          icon={Clock}
-          iconColor="text-orange-600"
-          title="Upcoming Actions"
-          items={intervalHistory.upcomingActions}
-          renderItem={(action, index) => (
-            <div key={index} className="p-2 bg-orange-50 rounded border-l-4 border-orange-400">
-              <div className="text-xs font-medium text-orange-800">{action.action}</div>
-              <div className="text-xs text-orange-600">Due: {action.dueDate}</div>
+          icon={Activity}
+          iconColor="text-red-600"
+          title="ER Discharge Summaries"
+          items={intervalHistory.erDischargeSummaries}
+          renderItem={(er, index) => (
+            <div key={index} className="p-2 bg-red-50 rounded border-l-4 border-red-400">
+              <div className="text-xs font-medium text-red-800">{er.date} - {er.chiefComplaint}</div>
+              <div className="text-xs text-red-600">Diagnosis: {er.diagnosis}</div>
+              <div className="text-xs text-red-600">Disposition: {er.disposition}</div>
+            </div>
+          )}
+        />
+
+        {/* Radiology Reports */}
+        <DetailCard
+          icon={FileText}
+          iconColor="text-indigo-600"
+          title="Radiology Reports"
+          items={intervalHistory.radiologyReports}
+          renderItem={(radiology, index) => (
+            <div key={index} className="p-2 bg-indigo-50 rounded border-l-4 border-indigo-400">
+              <div className="text-xs font-medium text-indigo-800">{radiology.study} ({radiology.date})</div>
+              <div className="text-xs text-indigo-600">Findings: {radiology.findings}</div>
+              <div className="text-xs text-indigo-700 font-medium">Impression: {radiology.impression}</div>
             </div>
           )}
         />

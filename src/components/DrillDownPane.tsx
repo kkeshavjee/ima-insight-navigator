@@ -89,20 +89,21 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
 
   const getIntervalHistory = () => {
     return {
-      newMedications: [
-        { name: 'Amlodipine 10mg', date: '2024-05-10', reason: 'Added for better BP control' }
-      ],
-      newLabs: [
+      labTests: [
         { name: 'Potassium', value: '4.1 mEq/L', date: '2024-05-01', status: 'Normal', change: 'New' },
-        { name: 'Creatinine', value: '1.0 mg/dL', date: '2024-05-01', status: 'Normal', change: 'Stable' }
+        { name: 'Creatinine', value: '1.0 mg/dL', date: '2024-05-01', status: 'Normal', change: 'Stable' },
+        { name: 'HbA1c', value: '7.0%', date: '2024-05-10', status: 'Elevated', change: 'Improved' }
       ],
-      clinicalChanges: [
-        { date: '2024-05-10', description: 'Blood pressure improved from 145/95 to 135/85' },
-        { date: '2024-05-08', description: 'Patient reports better medication compliance' }
+      specialistNotes: [
+        { specialist: 'Dr. Smith', date: '2024-05-08', summary: 'Blood pressure well controlled. Continue current medications.', type: 'Cardiology' },
+        { specialist: 'Dr. Johnson', date: '2024-04-28', summary: 'Diabetic retinal screening - no changes from baseline.', type: 'Ophthalmology' }
       ],
-      upcomingActions: [
-        { action: 'Recheck BP in 2 weeks', dueDate: '2024-05-29' },
-        { action: 'Schedule annual eye exam', dueDate: '2024-06-15' }
+      erDischargeSummaries: [
+        { date: '2024-04-25', chiefComplaint: 'Chest pain', disposition: 'Discharged home', diagnosis: 'Atypical chest pain, rule out cardiac' }
+      ],
+      radiologyReports: [
+        { study: 'Chest X-ray', date: '2024-05-05', findings: 'Clear lung fields, normal heart size', impression: 'No acute cardiopulmonary abnormalities' },
+        { study: 'Abdominal US', date: '2024-04-30', findings: 'Normal liver echogenicity, no gallstones', impression: 'Normal abdominal ultrasound' }
       ]
     };
   };
