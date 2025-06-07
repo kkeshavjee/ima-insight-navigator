@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { TrendingUp, FlaskConical, Calendar, Clock } from 'lucide-react';
+import { TrendingUp, FlaskConical, Calendar, Clock, Pill } from 'lucide-react';
 import DetailCard, { StatusBadge } from './DetailCard';
 
 interface IntervalHistoryData {
@@ -29,8 +29,8 @@ const IntervalHistoryCard: React.FC<IntervalHistoryCardProps> = ({ intervalHisto
       <div className="space-y-3">
         {/* New Medications */}
         <DetailCard
-          icon={() => <div className="w-2 h-2 bg-blue-500 rounded-full"></div>}
-          iconColor=""
+          icon={Pill}
+          iconColor="text-blue-600"
           title="New Medications"
           items={intervalHistory.newMedications}
           renderItem={(med, index) => (

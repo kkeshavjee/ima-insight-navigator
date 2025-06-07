@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Calendar, Clock, FlaskConical } from 'lucide-react';
+import { Calendar, Clock, FlaskConical, Pill } from 'lucide-react';
 import DetailCard, { StatusBadge } from './DetailCard';
 
 interface NodeDetailsData {
@@ -62,8 +62,8 @@ const NodeDetailsView: React.FC<NodeDetailsViewProps> = ({ selectedNodeData, det
 
         {/* Medications Section */}
         <DetailCard
-          icon={() => <div className="w-2 h-2 bg-blue-500 rounded-full"></div>}
-          iconColor=""
+          icon={Pill}
+          iconColor="text-blue-600"
           title="Related Medications"
           items={details.medications}
           renderItem={(med, index) => (
