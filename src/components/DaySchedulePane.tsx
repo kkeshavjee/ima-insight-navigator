@@ -1,6 +1,7 @@
 
-import React from 'react';
-import { Clock, User } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { Clock, User, Search } from 'lucide-react';
+import { Input } from './ui/input';
 
 interface Appointment {
   id: string;
@@ -16,6 +17,8 @@ interface DaySchedulePaneProps {
 }
 
 const DaySchedulePane: React.FC<DaySchedulePaneProps> = ({ onSelectPatient, selectedPatientId }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+  
   // Mock data for appointments
   const mockAppointments: Appointment[] = [
     { id: 'p001', encounterId: 'e001', name: 'John Doe', time: '09:00 AM', reason: 'Annual Physical' },
@@ -25,14 +28,37 @@ const DaySchedulePane: React.FC<DaySchedulePaneProps> = ({ onSelectPatient, sele
     { id: 'p005', encounterId: 'e005', name: 'Maria Garcia', time: '11:00 AM', reason: 'Lab Results' },
   ];
 
+  // Filter appointments based on search term
+  const filteredAppointments = useMemo(() => {
+    if (!searchTerm.trim()) {
+      return mockAppointments;
+    }
+    return mockAppointments.filter(appt => 
+      appt.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [searchTerm]);
+
   return (
     <div className="h-full bg-slate-100 p-2 rounded-lg shadow-md overflow-y-auto">
       <div className="flex items-center gap-1 mb-2">
         <Clock className="w-3 h-3 text-slate-600" />
         <h2 className="text-sm font-semibold text-slate-700">Day Schedule</h2>
       </div>
+      
+      {/* Search input */}
+      <div className="relative mb-3">
+        <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 w-3 h-3 text-slate-400" />
+        <Input
+          type="text"
+          placeholder="Search patients..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="pl-7 h-7 text-xs bg-white border-slate-300 focus:border-sky-500 focus:ring-sky-500"
+        />
+      </div>
+
       <ul className="space-y-1">
-        {mockAppointments.map(appt => (
+        {filteredAppointments.map(appt => (
           <li
             key={appt.id}
             onClick={() => onSelectPatient(appt.id, appt.encounterId)}
@@ -50,6 +76,11 @@ const DaySchedulePane: React.FC<DaySchedulePaneProps> = ({ onSelectPatient, sele
             </div>
           </li>
         ))}
+        {filteredAppointments.length === 0 && searchTerm && (
+          <li className="p-3 text-center text-xs text-slate-500">
+            No patients found matching "{searchTerm}"
+          </li>
+        )}
       </ul>
     </div>
   );
