@@ -35,7 +35,7 @@ const Index = () => {
     <div className="flex flex-col h-screen bg-slate-200 font-sans">
       {/* Header */}
       <header className="bg-slate-800 text-white p-3 shadow-lg">
-        <h1 className="text-sm font-bold">Next-Generation Intelligent Medical Assistant (IMA)</h1>
+        <h1 className="text-xs font-bold">Next-Generation Intelligent Medical Assistant (IMA)</h1>
       </header>
 
       {/* Patient Banner */}
@@ -57,13 +57,13 @@ const Index = () => {
             <PatientProfilePane selectedPatientId={selectedPatientId} onNodeSelect={handleNodeSelect} />
           </div>
 
-          {/* Pane 3: History Details - made even narrower */}
-          <div className="w-1/4 h-full">
+          {/* Pane 3: History Details - same size as Patient History */}
+          <div className="w-1/3 h-full">
             <DrillDownPane selectedNodeData={selectedNodeData} />
           </div>
 
           {/* Pane 4: AI Recommendations */}
-          <div className="w-5/12 h-full">
+          <div className="w-1/3 h-full">
             <PreventionPredictionPane selectedPatientId={selectedPatientId} />
           </div>
         </div>
