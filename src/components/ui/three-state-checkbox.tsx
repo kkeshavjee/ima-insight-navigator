@@ -44,15 +44,15 @@ const ThreeStateCheckbox: React.FC<ThreeStateCheckboxProps> = ({
       case 'yes':
         return {
           icon: <Check className="h-3 w-3" />,
-          bgColor: 'bg-green-500',
-          textColor: 'text-green-700',
+          bgColor: 'bg-red-500',
+          textColor: 'text-red-700',
           label: 'Yes'
         };
       case 'no':
         return {
           icon: <X className="h-3 w-3" />,
-          bgColor: 'bg-red-500',
-          textColor: 'text-red-700',
+          bgColor: 'bg-green-500',
+          textColor: 'text-green-700',
           label: 'No'
         };
       case 'not-examined':
