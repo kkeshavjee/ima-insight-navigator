@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { TrendingUp, FlaskConical, FileText, Activity, Stethoscope, Plus, Minus, TrendingDown } from 'lucide-react';
+import { TrendingUp, FlaskConical, FileText, Activity, Stethoscope, Plus, Minus } from 'lucide-react';
 import DetailCard, { StatusBadge } from './DetailCard';
 
 interface IntervalHistoryData {
@@ -22,7 +22,7 @@ const IntervalHistoryCard: React.FC<IntervalHistoryCardProps> = ({ intervalHisto
       case 'stable':
         return <Minus className="w-3 h-3 text-gray-600" />;
       case 'improved':
-        return <TrendingDown className="w-3 h-3 text-green-600" />;
+        return <TrendingUp className="w-3 h-3 text-green-600" />;
       default:
         return <Plus className="w-3 h-3 text-blue-600" />;
     }
@@ -52,12 +52,7 @@ const IntervalHistoryCard: React.FC<IntervalHistoryCardProps> = ({ intervalHisto
                 <div className="text-xs font-medium text-green-800">{lab.name}: {lab.value} ({lab.date})</div>
                 <div className="flex gap-1 items-center">
                   <StatusBadge status={lab.status} />
-                  <div className="flex items-center gap-1">
-                    {getChangeIcon(lab.change)}
-                    <span className="text-xs text-gray-600">
-                      {lab.change}
-                    </span>
-                  </div>
+                  {getChangeIcon(lab.change)}
                 </div>
               </div>
             </div>
