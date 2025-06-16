@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Plus } from 'lucide-react';
 
 interface Lab {
   id: string;
@@ -29,9 +30,22 @@ const LabsList: React.FC<LabsListProps> = ({
     onLabChange(labId, checked);
   };
 
+  const handleOrderClick = () => {
+    console.log('Order button clicked');
+  };
+
   return (
     <div className="mb-4">
-      <h4 className="text-green-600 font-medium mb-2 text-sm">Labs</h4>
+      <div className="flex items-center justify-between mb-2">
+        <h4 className="text-green-600 font-medium text-sm">Labs</h4>
+        <button
+          onClick={handleOrderClick}
+          className="flex items-center gap-1 px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors shadow-sm text-xs"
+        >
+          <Plus className="w-3 h-3" />
+          Order
+        </button>
+      </div>
       <div className="space-y-2">
         {labs.map((lab) => (
           <div key={lab.id} className="flex items-center gap-2 text-xs">

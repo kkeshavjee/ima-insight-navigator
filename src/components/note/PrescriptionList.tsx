@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Plus } from 'lucide-react';
 
 interface Prescription {
   id: string;
@@ -28,9 +29,22 @@ const PrescriptionList: React.FC<PrescriptionListProps> = ({
     onPrescriptionChange(prescriptionId, checked);
   };
 
+  const handlePrescribeClick = () => {
+    console.log('Prescribe button clicked');
+  };
+
   return (
     <div className="mb-4">
-      <h4 className="text-green-600 font-medium mb-2 text-sm">Prescriptions</h4>
+      <div className="flex items-center justify-between mb-2">
+        <h4 className="text-green-600 font-medium text-sm">Prescriptions</h4>
+        <button
+          onClick={handlePrescribeClick}
+          className="flex items-center gap-1 px-2 py-1 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors shadow-sm text-xs"
+        >
+          <Plus className="w-3 h-3" />
+          Prescribe
+        </button>
+      </div>
       <div className="space-y-2">
         {prescriptions.map((prescription) => (
           <div key={prescription.id} className="flex items-center gap-2 text-xs">
