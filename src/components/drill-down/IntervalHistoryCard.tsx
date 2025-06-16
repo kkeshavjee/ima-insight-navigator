@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { TrendingUp, FlaskConical, FileText, Activity, Stethoscope } from 'lucide-react';
+import { TrendingUp, FlaskConical, FileText, Activity, Stethoscope, Plus, Minus, TrendingDown } from 'lucide-react';
 import DetailCard, { StatusBadge } from './DetailCard';
 
 interface IntervalHistoryData {
@@ -15,13 +15,26 @@ interface IntervalHistoryCardProps {
 }
 
 const IntervalHistoryCard: React.FC<IntervalHistoryCardProps> = ({ intervalHistory }) => {
+  const getChangeIcon = (change: string) => {
+    switch (change.toLowerCase()) {
+      case 'new':
+        return <Plus className="w-3 h-3 text-blue-600" />;
+      case 'stable':
+        return <Minus className="w-3 h-3 text-gray-600" />;
+      case 'improved':
+        return <TrendingDown className="w-3 h-3 text-green-600" />;
+      default:
+        return <Plus className="w-3 h-3 text-blue-600" />;
+    }
+  };
+
   return (
     <div>
       {/* Header */}
       <div className="mb-3 p-2 bg-white rounded-lg shadow-sm">
         <div className="flex items-center gap-2 mb-2">
-          <TrendingUp className="w-4 h-4 text-blue-600" />
-          <h3 className="text-sm font-medium text-blue-600">Interval History</h3>
+          <TrendingUp className="w-3 h-3 text-blue-600" />
+          <h3 className="text-xs font-medium text-blue-600">Interval History</h3>
           <span className="text-xs text-gray-500">(Since last visit: 2024-04-15)</span>
         </div>
       </div>
@@ -37,11 +50,14 @@ const IntervalHistoryCard: React.FC<IntervalHistoryCardProps> = ({ intervalHisto
             <div key={index} className="p-2 bg-green-50 rounded border-l-4 border-green-400">
               <div className="flex justify-between items-center">
                 <div className="text-xs font-medium text-green-800">{lab.name}: {lab.value} ({lab.date})</div>
-                <div className="flex gap-1">
+                <div className="flex gap-1 items-center">
                   <StatusBadge status={lab.status} />
-                  <span className="text-xs px-1 py-0.5 rounded bg-blue-50 text-blue-600">
-                    {lab.change}
-                  </span>
+                  <div className="flex items-center gap-1">
+                    {getChangeIcon(lab.change)}
+                    <span className="text-xs text-gray-600">
+                      {lab.change}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
