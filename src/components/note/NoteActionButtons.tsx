@@ -25,7 +25,7 @@ const NoteActionButtons: React.FC = () => {
       </button>
       <button className="flex items-center gap-2 px-3 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600 transition-colors shadow-sm text-xs">
         <UserPlus className="w-3 h-3" />
-        Referrals
+        Refer
       </button>
       
       {/* Follow-up dropdown */}
