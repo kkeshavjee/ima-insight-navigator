@@ -98,19 +98,19 @@ const DaySchedulePane: React.FC<DaySchedulePaneProps> = ({ onSelectPatient, sele
   return (
     <div className="h-full bg-slate-100 p-2 rounded-lg shadow-md overflow-y-auto">
       <div className="flex items-center gap-1 mb-2">
-        <Clock className="w-3 h-3 text-slate-600" />
-        <h2 className="text-sm font-semibold text-slate-700">Day Schedule</h2>
+        <Clock className="w-2.5 h-2.5 text-slate-600" />
+        <h2 className="text-xs font-semibold text-slate-700">Day Schedule</h2>
       </div>
       
       {/* Search input */}
       <div className="relative mb-3">
-        <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 w-3 h-3 text-slate-400" />
+        <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 w-2.5 h-2.5 text-slate-400" />
         <Input
           type="text"
           placeholder="Search all patients..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-7 h-7 text-xs bg-white border-slate-300 focus:border-sky-500 focus:ring-sky-500"
+          className="pl-6 h-6 text-xs bg-white border-slate-300 focus:border-sky-500 focus:ring-sky-500"
         />
       </div>
 
@@ -120,7 +120,7 @@ const DaySchedulePane: React.FC<DaySchedulePaneProps> = ({ onSelectPatient, sele
           <h3 className="text-xs font-medium text-slate-600 mb-1">Add to Schedule:</h3>
           <div className="space-y-1">
             {availablePatients.map(patient => (
-              <div key={patient.id} className="flex items-center justify-between p-1.5 bg-green-50 rounded border border-green-200">
+              <div key={patient.id} className="flex items-center justify-between p-1 bg-green-50 rounded border border-green-200">
                 <div className="flex-1">
                   <div className="text-xs font-medium text-green-800">{patient.name}</div>
                   <div className="text-xs text-green-600">{patient.phone}</div>
@@ -129,9 +129,9 @@ const DaySchedulePane: React.FC<DaySchedulePaneProps> = ({ onSelectPatient, sele
                   size="sm"
                   variant="outline"
                   onClick={() => addPatientToSchedule(patient)}
-                  className="h-6 px-2 text-xs border-green-300 hover:bg-green-100"
+                  className="h-5 px-1.5 text-xs border-green-300 hover:bg-green-100"
                 >
-                  <Plus className="w-3 h-3" />
+                  <Plus className="w-2.5 h-2.5" />
                 </Button>
               </div>
             ))}
@@ -149,11 +149,11 @@ const DaySchedulePane: React.FC<DaySchedulePaneProps> = ({ onSelectPatient, sele
           <li
             key={`${appt.id}-${appt.encounterId}`}
             onClick={() => onSelectPatient(appt.id, appt.encounterId)}
-            className={`p-1.5 rounded-md shadow hover:bg-sky-100 cursor-pointer transition-all duration-200 ease-in-out transform hover:scale-[1.02]
+            className={`p-1 rounded-md shadow hover:bg-sky-100 cursor-pointer transition-all duration-200 ease-in-out transform hover:scale-[1.02]
                         ${selectedPatientId === appt.id ? 'bg-sky-200 ring-1 ring-sky-500 shadow-lg' : 'bg-white hover:shadow-md'}`}
           >
             <div className="flex items-center gap-1 mb-0.5">
-              <User className="w-2.5 h-2.5 text-sky-600" />
+              <User className="w-2 h-2 text-sky-600" />
               <div className={`font-medium text-xs ${selectedPatientId === appt.id ? 'text-sky-800' : 'text-sky-700'}`}>
                 {appt.name}
               </div>
@@ -164,7 +164,7 @@ const DaySchedulePane: React.FC<DaySchedulePaneProps> = ({ onSelectPatient, sele
           </li>
         ))}
         {filteredAppointments.length === 0 && searchTerm && availablePatients.length === 0 && (
-          <li className="p-3 text-center text-xs text-slate-500">
+          <li className="p-2 text-center text-xs text-slate-500">
             No patients found matching "{searchTerm}"
           </li>
         )}

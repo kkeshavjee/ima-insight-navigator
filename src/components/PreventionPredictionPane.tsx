@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Brain, AlertTriangle, CheckCircle, Clock } from 'lucide-react';
 
@@ -109,21 +110,21 @@ const PreventionPredictionPane: React.FC<PreventionPredictionPaneProps> = ({ sel
   };
 
   return (
-    <div className="h-full bg-indigo-100 p-3 shadow-md overflow-y-auto">
-      <div className="flex items-center gap-2 mb-3">
-        <Brain className="w-4 h-4 text-indigo-600" />
-        <h2 className="text-sm font-semibold text-indigo-700">AI Recommendations</h2>
+    <div className="h-full bg-indigo-100 p-2 shadow-md overflow-y-auto">
+      <div className="flex items-center gap-1 mb-2">
+        <Brain className="w-3 h-3 text-indigo-600" />
+        <h2 className="text-xs font-semibold text-indigo-700">AI Recommendations</h2>
       </div>
       {selectedPatientId ? (
         <div>
           {insightsToDisplay.length > 0 ? (
-            <div className="space-y-2">
+            <div className="space-y-1">
               {insightsToDisplay.map(insight => (
                 <div key={insight.id} className={getInsightStyle(insight.type, insight.priority)}>
-                  <div className="flex items-start justify-between mb-2">
-                    <div className="flex items-center gap-2">
+                  <div className="flex items-start justify-between mb-1">
+                    <div className="flex items-center gap-1">
                       {getInsightIcon(insight.type)}
-                      <h4 className="font-medium text-indigo-700 text-sm">{insight.title}</h4>
+                      <h4 className="font-medium text-indigo-700 text-xs">{insight.title}</h4>
                     </div>
                     <span className={getPriorityBadge(insight.priority)}>
                       {insight.priority.toUpperCase()}
@@ -131,19 +132,19 @@ const PreventionPredictionPane: React.FC<PreventionPredictionPaneProps> = ({ sel
                   </div>
                   
                   {insight.score && (
-                    <div className="mb-2">
-                      <span className="text-xl font-bold text-red-600">{insight.score}</span>
+                    <div className="mb-1">
+                      <span className="text-lg font-bold text-red-600">{insight.score}</span>
                       <span className="text-xs text-gray-500 ml-1">risk score</span>
                     </div>
                   )}
                   
                   <p className="text-xs text-slate-600 leading-relaxed">{insight.detail}</p>
                   
-                  <div className="mt-2 flex gap-2">
-                    <button className="text-xs bg-indigo-500 text-white px-2 py-1 rounded hover:bg-indigo-600 transition-colors">
+                  <div className="mt-1 flex gap-1">
+                    <button className="text-xs bg-indigo-500 text-white px-1.5 py-0.5 rounded hover:bg-indigo-600 transition-colors">
                       Act on This
                     </button>
-                    <button className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded hover:bg-gray-300 transition-colors">
+                    <button className="text-xs bg-gray-200 text-gray-700 px-1.5 py-0.5 rounded hover:bg-gray-300 transition-colors">
                       Dismiss
                     </button>
                   </div>
@@ -151,17 +152,17 @@ const PreventionPredictionPane: React.FC<PreventionPredictionPaneProps> = ({ sel
               ))}
             </div>
           ) : (
-            <div className="bg-white rounded-lg shadow-sm p-6 text-center">
-              <Brain className="w-10 h-10 text-gray-300 mx-auto mb-2" />
-              <p className="text-slate-500 text-sm">No AI insights available for this patient in the current dataset.</p>
+            <div className="bg-white rounded-lg shadow-sm p-4 text-center">
+              <Brain className="w-8 h-8 text-gray-300 mx-auto mb-1" />
+              <p className="text-slate-500 text-xs">No AI insights available for this patient in the current dataset.</p>
             </div>
           )}
         </div>
       ) : (
-        <div className="flex items-center justify-center h-32">
+        <div className="flex items-center justify-center h-24">
           <div className="text-center">
-            <Brain className="w-10 h-10 text-gray-300 mx-auto mb-2" />
-            <p className="text-slate-500 text-sm">Select a patient to view AI-powered insights and predictions.</p>
+            <Brain className="w-8 h-8 text-gray-300 mx-auto mb-1" />
+            <p className="text-slate-500 text-xs">Select a patient to view AI-powered insights and predictions.</p>
           </div>
         </div>
       )}

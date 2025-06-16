@@ -67,40 +67,40 @@ const PatientProfilePane: React.FC<PatientProfilePaneProps> = ({ selectedPatient
   };
 
   return (
-    <div className="h-full bg-indigo-100 p-3 shadow-md overflow-y-auto">
-      <div className="flex items-center gap-2 mb-3">
-        <Activity className="w-4 h-4 text-indigo-600" />
-        <h2 className="text-sm font-semibold text-indigo-700">Patient History</h2>
+    <div className="h-full bg-indigo-100 p-2 shadow-md overflow-y-auto">
+      <div className="flex items-center gap-1 mb-2">
+        <Activity className="w-3 h-3 text-indigo-600" />
+        <h2 className="text-xs font-semibold text-indigo-700">Patient History</h2>
       </div>
       {selectedPatientId ? (
         <div>
-          <div className="mt-2 border-2 border-dashed border-indigo-300 rounded-md min-h-[8rem] p-2">
+          <div className="mt-2 border-2 border-dashed border-indigo-300 rounded-md min-h-[6rem] p-2">
             {nodesToDisplay.length > 0 ? (
-              <div className="space-y-2">
+              <div className="space-y-1">
                 {nodesToDisplay.map(node => (
                   <div
                     key={node.id}
                     onClick={() => onNodeSelect(node)}
-                    className={`p-2 rounded-lg border cursor-pointer text-xs transition-all duration-200 transform hover:scale-[1.02] ${getNodeColor(node.type)}`}
+                    className={`p-1.5 rounded-lg border cursor-pointer text-xs transition-all duration-200 transform hover:scale-[1.02] ${getNodeColor(node.type)}`}
                   >
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1">
                       {getNodeIcon(node.type)}
-                      <span className="font-medium">{node.label}</span>
+                      <span className="font-medium text-xs">{node.label}</span>
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-indigo-500 text-center py-6 text-sm">No graph nodes available for this patient.</p>
+              <p className="text-indigo-500 text-center py-4 text-xs">No graph nodes available for this patient.</p>
             )}
-            <p className="text-xs text-indigo-400 mt-3 text-center italic">
+            <p className="text-xs text-indigo-400 mt-2 text-center italic">
               (Click nodes to view detailed information)
             </p>
           </div>
         </div>
       ) : (
-        <div className="flex items-center justify-center h-32">
-          <p className="text-slate-500 text-center text-sm">Select a patient from the schedule to view their knowledge graph.</p>
+        <div className="flex items-center justify-center h-24">
+          <p className="text-slate-500 text-center text-xs">Select a patient from the schedule to view their knowledge graph.</p>
         </div>
       )}
     </div>

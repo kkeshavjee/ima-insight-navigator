@@ -35,7 +35,7 @@ const Index = () => {
     <div className="flex flex-col h-screen bg-slate-200 font-sans">
       {/* Header */}
       <header className="bg-slate-800 text-white p-3 shadow-lg">
-        <h1 className="text-lg font-bold">Next-Generation Intelligent Medical Assistant (IMA)</h1>
+        <h1 className="text-base font-bold">Next-Generation Intelligent Medical Assistant (IMA)</h1>
       </header>
 
       {/* Patient Banner */}
@@ -45,31 +45,31 @@ const Index = () => {
 
       {/* Main content area with 5 panes */}
       <main className="flex-grow p-3 flex gap-3 overflow-hidden">
-        {/* Pane 1: Day Schedule - made narrower */}
-        <div className="w-1/6 h-full min-h-[300px]">
+        {/* Pane 1: Day Schedule - made narrower (1/8) */}
+        <div className="w-1/8 h-full min-h-[300px]">
           <DaySchedulePane onSelectPatient={handlePatientSelect} selectedPatientId={selectedPatientId} />
         </div>
 
-        {/* Middle 3 panes - adjusted to take more space */}
-        <div className="w-2/3 h-full flex">
-          {/* Pane 2: Patient History - made 25% narrower (from 1/3 to 1/4) */}
+        {/* Middle 3 panes - adjusted proportions */}
+        <div className="w-5/8 h-full flex">
+          {/* Pane 2: Patient History - kept same */}
           <div className="w-1/4 h-full">
             <PatientProfilePane selectedPatientId={selectedPatientId} onNodeSelect={handleNodeSelect} />
           </div>
 
-          {/* Pane 3: History Details - expanded to take more space */}
-          <div className="w-1/2 h-full">
+          {/* Pane 3: History Details - made narrower (3/8) */}
+          <div className="w-3/8 h-full">
             <DrillDownPane selectedNodeData={selectedNodeData} />
           </div>
 
-          {/* Pane 4: AI Recommendations - made 25% narrower (from 1/3 to 1/4) */}
+          {/* Pane 4: AI Recommendations - kept same */}
           <div className="w-1/4 h-full">
             <PreventionPredictionPane selectedPatientId={selectedPatientId} />
           </div>
         </div>
 
-        {/* Pane 5: Final Note Display */}
-        <div className="w-1/6 h-full min-h-[300px]">
+        {/* Pane 5: Final Note Display - made wider (1/4) */}
+        <div className="w-1/4 h-full min-h-[300px]">
           <FinalNotePane selectedEncounterId={selectedEncounterId} selectedPatientId={selectedPatientId} />
         </div>
       </main>

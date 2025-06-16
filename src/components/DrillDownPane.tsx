@@ -112,10 +112,10 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
   const intervalHistory = getIntervalHistory();
 
   return (
-    <div className="h-full bg-indigo-100 p-3 rounded-lg shadow-md overflow-y-auto">
-      <div className="flex items-center gap-2 mb-3">
-        <FileText className="w-4 h-4 text-indigo-600" />
-        <h2 className="text-sm font-semibold text-indigo-700">History Details</h2>
+    <div className="h-full bg-indigo-100 p-2 rounded-lg shadow-md overflow-y-auto">
+      <div className="flex items-center gap-1 mb-2">
+        <FileText className="w-3 h-3 text-indigo-600" />
+        <h2 className="text-xs font-semibold text-indigo-700">History Details</h2>
       </div>
       
       {!selectedNodeData ? (

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import NoteHeader from './note/NoteHeader';
 import NoteStatus from './note/NoteStatus';
@@ -108,14 +109,14 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
   };
 
   return (
-    <div className="h-full bg-rose-100 p-3 rounded-lg shadow-md overflow-y-auto">
+    <div className="h-full bg-rose-100 p-2 rounded-lg shadow-md overflow-y-auto">
       <NoteHeader />
       
       {selectedEncounterId && note ? (
         <div>
           <NoteStatus />
 
-          <div className="bg-white rounded-lg shadow-sm p-3 mb-3">
+          <div className="bg-white rounded-lg shadow-sm p-2 mb-2">
             {/* Subjective */}
             <NoteSection title="Subjective" content={note.subjective} />
 
@@ -131,9 +132,9 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
             <NoteSection title="Assessment" content={note.assessment} />
 
             {/* Plan */}
-            <div className="mb-3">
-              <h3 className="text-rose-600 font-semibold mb-2 flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 bg-rose-500 rounded-full"></div>
+            <div className="mb-2">
+              <h3 className="text-rose-600 font-semibold mb-1 flex items-center gap-1 text-xs">
+                <div className="w-1.5 h-1.5 bg-rose-500 rounded-full"></div>
                 Plan
               </h3>
               
