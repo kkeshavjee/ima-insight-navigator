@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { TrendingUp, FlaskConical, FileText, Activity, Stethoscope, Sparkles, Minus } from 'lucide-react';
+import { TrendingUp, FlaskConical, FileText, Activity, Stethoscope, Sparkles, Minus, ArrowDown } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import DetailCard, { StatusBadge } from './DetailCard';
 
@@ -23,7 +23,7 @@ const IntervalHistoryCard: React.FC<IntervalHistoryCardProps> = ({ intervalHisto
       case 'stable':
         return <Minus className="w-3 h-3 text-gray-600" />;
       case 'improved':
-        return <TrendingUp className="w-3 h-3 text-green-600" />;
+        return <ArrowDown className="w-3 h-3 text-green-600" />;
       default:
         return <Sparkles className="w-3 h-3 text-blue-600" />;
     }
