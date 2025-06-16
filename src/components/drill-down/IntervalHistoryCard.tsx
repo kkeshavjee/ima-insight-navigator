@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { TrendingUp, FlaskConical, FileText, Activity, Stethoscope, Plus, Minus } from 'lucide-react';
+import { TrendingUp, FlaskConical, FileText, Activity, Stethoscope, Sparkles, Minus } from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import DetailCard, { StatusBadge } from './DetailCard';
 
 interface IntervalHistoryData {
@@ -18,13 +19,13 @@ const IntervalHistoryCard: React.FC<IntervalHistoryCardProps> = ({ intervalHisto
   const getChangeIcon = (change: string) => {
     switch (change.toLowerCase()) {
       case 'new':
-        return <Plus className="w-3 h-3 text-blue-600" />;
+        return <Sparkles className="w-3 h-3 text-blue-600" />;
       case 'stable':
         return <Minus className="w-3 h-3 text-gray-600" />;
       case 'improved':
         return <TrendingUp className="w-3 h-3 text-green-600" />;
       default:
-        return <Plus className="w-3 h-3 text-blue-600" />;
+        return <Sparkles className="w-3 h-3 text-blue-600" />;
     }
   };
 
@@ -66,11 +67,21 @@ const IntervalHistoryCard: React.FC<IntervalHistoryCardProps> = ({ intervalHisto
           title="Specialist Notes"
           items={intervalHistory.specialistNotes}
           renderItem={(note, index) => (
-            <div key={index} className="p-2 bg-purple-50 rounded border-l-4 border-purple-400">
-              <div className="text-xs font-medium text-purple-800">{note.specialist} - {note.type}</div>
-              <div className="text-xs text-purple-600">{note.date}</div>
-              <div className="text-xs text-purple-700 mt-1">{note.summary}</div>
-            </div>
+            <Popover key={index}>
+              <PopoverTrigger asChild>
+                <div className="p-2 bg-purple-50 rounded border-l-4 border-purple-400 cursor-pointer hover:bg-purple-100 transition-colors">
+                  <div className="text-xs font-medium text-purple-800">{note.specialist} - {note.type}</div>
+                  <div className="text-xs text-purple-600">{note.date}</div>
+                </div>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 z-50" side="right" align="start">
+                <div className="space-y-2">
+                  <div className="text-sm font-medium text-purple-800">{note.specialist} - {note.type}</div>
+                  <div className="text-sm text-purple-600">{note.date}</div>
+                  <div className="text-sm text-purple-700 mt-2">{note.summary}</div>
+                </div>
+              </PopoverContent>
+            </Popover>
           )}
         />
 
@@ -81,11 +92,20 @@ const IntervalHistoryCard: React.FC<IntervalHistoryCardProps> = ({ intervalHisto
           title="ER Discharge Summaries"
           items={intervalHistory.erDischargeSummaries}
           renderItem={(er, index) => (
-            <div key={index} className="p-2 bg-red-50 rounded border-l-4 border-red-400">
-              <div className="text-xs font-medium text-red-800">{er.date} - {er.chiefComplaint}</div>
-              <div className="text-xs text-red-600">Diagnosis: {er.diagnosis}</div>
-              <div className="text-xs text-red-600">Disposition: {er.disposition}</div>
-            </div>
+            <Popover key={index}>
+              <PopoverTrigger asChild>
+                <div className="p-2 bg-red-50 rounded border-l-4 border-red-400 cursor-pointer hover:bg-red-100 transition-colors">
+                  <div className="text-xs font-medium text-red-800">{er.date} - {er.chiefComplaint}</div>
+                </div>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 z-50" side="right" align="start">
+                <div className="space-y-2">
+                  <div className="text-sm font-medium text-red-800">{er.date} - {er.chiefComplaint}</div>
+                  <div className="text-sm text-red-600"><strong>Diagnosis:</strong> {er.diagnosis}</div>
+                  <div className="text-sm text-red-600"><strong>Disposition:</strong> {er.disposition}</div>
+                </div>
+              </PopoverContent>
+            </Popover>
           )}
         />
 
@@ -96,11 +116,20 @@ const IntervalHistoryCard: React.FC<IntervalHistoryCardProps> = ({ intervalHisto
           title="Radiology Reports"
           items={intervalHistory.radiologyReports}
           renderItem={(radiology, index) => (
-            <div key={index} className="p-2 bg-indigo-50 rounded border-l-4 border-indigo-400">
-              <div className="text-xs font-medium text-indigo-800">{radiology.study} ({radiology.date})</div>
-              <div className="text-xs text-indigo-600">Findings: {radiology.findings}</div>
-              <div className="text-xs text-indigo-700 font-medium">Impression: {radiology.impression}</div>
-            </div>
+            <Popover key={index}>
+              <PopoverTrigger asChild>
+                <div className="p-2 bg-indigo-50 rounded border-l-4 border-indigo-400 cursor-pointer hover:bg-indigo-100 transition-colors">
+                  <div className="text-xs font-medium text-indigo-800">{radiology.study} ({radiology.date})</div>
+                </div>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 z-50" side="right" align="start">
+                <div className="space-y-2">
+                  <div className="text-sm font-medium text-indigo-800">{radiology.study} ({radiology.date})</div>
+                  <div className="text-sm text-indigo-600"><strong>Findings:</strong> {radiology.findings}</div>
+                  <div className="text-sm text-indigo-700 font-medium"><strong>Impression:</strong> {radiology.impression}</div>
+                </div>
+              </PopoverContent>
+            </Popover>
           )}
         />
       </div>
