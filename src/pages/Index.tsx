@@ -1,4 +1,5 @@
 
+
 import React, { useState } from 'react';
 
 // Component imports
@@ -49,21 +50,21 @@ const Index = () => {
           <DaySchedulePane onSelectPatient={handlePatientSelect} selectedPatientId={selectedPatientId} />
         </div>
 
-        {/* Middle 2 panes - adjusted proportions */}
-        <div className="w-1/2 h-full flex">
+        {/* Middle 2 panes - adjusted proportions for wider History Details */}
+        <div className="w-7/12 h-full flex">
           {/* Pane 2: Patient History */}
-          <div className="w-1/2 h-full">
+          <div className="w-1/3 h-full">
             <PatientProfilePane selectedPatientId={selectedPatientId} onNodeSelect={handleNodeSelect} />
           </div>
 
-          {/* Pane 3: History Details */}
-          <div className="w-1/2 h-full">
+          {/* Pane 3: History Details - double the original size */}
+          <div className="w-2/3 h-full">
             <DrillDownPane selectedNodeData={selectedNodeData} selectedPatientId={selectedPatientId} />
           </div>
         </div>
 
-        {/* Pane 4: Final Note Display - wider */}
-        <div className="w-5/12 h-full min-h-[300px]">
+        {/* Pane 4: Final Note Display */}
+        <div className="w-1/3 h-full min-h-[300px]">
           <FinalNotePane selectedEncounterId={selectedEncounterId} selectedPatientId={selectedPatientId} />
         </div>
       </main>
@@ -77,3 +78,4 @@ const Index = () => {
 };
 
 export default Index;
+
