@@ -1,13 +1,14 @@
+
 import React, { useState } from 'react';
-import NodeDetailsView from './NodeDetailsView';
 import IntervalHistoryCard from './drill-down/IntervalHistoryCard';
 import LabTrendChart from './drill-down/LabTrendChart';
 
 interface DrillDownPaneProps {
-  selectedNode: any;
+  selectedNodeData: any;
+  selectedPatientId: string;
 }
 
-const DrillDownPane = ({ selectedNode }: DrillDownPaneProps) => {
+const DrillDownPane = ({ selectedNodeData, selectedPatientId }: DrillDownPaneProps) => {
   const [selectedLabName, setSelectedLabName] = useState<string | null>(null);
   const [isLabChartOpen, setIsLabChartOpen] = useState(false);
 
@@ -41,12 +42,7 @@ const DrillDownPane = ({ selectedNode }: DrillDownPaneProps) => {
     setIsLabChartOpen(true);
   };
 
-  const handleCloseLabChart = () => {
-    setIsLabChartOpen(false);
-    setSelectedLabName(null);
-  };
-
-  if (!selectedNode) {
+  if (!selectedNodeData) {
     return (
       <div className="p-4 text-center text-gray-500">
         Select a node to view details
@@ -56,8 +52,7 @@ const DrillDownPane = ({ selectedNode }: DrillDownPaneProps) => {
 
   return (
     <div className="h-full overflow-y-auto">
-      <NodeDetailsView 
-        node={selectedNode} 
+      <IntervalHistoryCard 
         intervalHistory={mockIntervalHistory}
         onLabClick={handleLabClick}
       />
