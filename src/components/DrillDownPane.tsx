@@ -1,4 +1,5 @@
 
+
 import React, { useState } from 'react';
 import IntervalHistoryCard from './drill-down/IntervalHistoryCard';
 import LabTrendChart from './drill-down/LabTrendChart';
@@ -47,11 +48,11 @@ const DrillDownPane = ({ selectedNodeData, selectedPatientId }: DrillDownPanePro
   if (!selectedNodeData) {
     console.log('No selectedNodeData, showing placeholder');
     return (
-      <div className="h-full overflow-y-auto bg-gray-50 p-4">
+      <div className="h-full bg-indigo-100 p-2 shadow-md overflow-y-auto">
         <div className="bg-white rounded-lg shadow-sm p-6">
           <div className="text-center">
-            <h3 className="text-lg font-semibold text-gray-700 mb-2">History Details</h3>
-            <p className="text-gray-500">
+            <h3 className="text-lg font-semibold text-indigo-700 mb-2">History Details</h3>
+            <p className="text-indigo-500">
               {selectedPatientId ? 'Click on a node in Patient History to view details' : 'Select a patient to view details'}
             </p>
           </div>
@@ -62,11 +63,11 @@ const DrillDownPane = ({ selectedNodeData, selectedPatientId }: DrillDownPanePro
 
   console.log('Rendering IntervalHistoryCard with data for node:', selectedNodeData.label);
   return (
-    <div className="h-full overflow-y-auto bg-gray-50 p-2">
+    <div className="h-full bg-indigo-100 p-2 shadow-md overflow-y-auto">
       <div className="bg-white rounded-lg shadow-sm p-3 mb-3">
-        <h3 className="text-lg font-semibold text-gray-700 mb-2">History Details</h3>
-        <p className="text-sm text-gray-600">Selected: {selectedNodeData?.label || 'Unknown'}</p>
-        <p className="text-xs text-gray-500">Type: {selectedNodeData?.type || 'Unknown'}</p>
+        <h3 className="text-lg font-semibold text-indigo-700 mb-2">History Details</h3>
+        <p className="text-sm text-indigo-600">Selected: {selectedNodeData?.label || 'Unknown'}</p>
+        <p className="text-xs text-indigo-500">Type: {selectedNodeData?.type || 'Unknown'}</p>
       </div>
       
       <IntervalHistoryCard 
@@ -87,3 +88,4 @@ const DrillDownPane = ({ selectedNodeData, selectedPatientId }: DrillDownPanePro
 };
 
 export default DrillDownPane;
+
