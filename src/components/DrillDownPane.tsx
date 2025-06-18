@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import IntervalHistoryCard from './drill-down/IntervalHistoryCard';
 import LabTrendChart from './drill-down/LabTrendChart';
@@ -11,6 +10,8 @@ interface DrillDownPaneProps {
 const DrillDownPane = ({ selectedNodeData, selectedPatientId }: DrillDownPaneProps) => {
   const [selectedLabName, setSelectedLabName] = useState<string | null>(null);
   const [isLabChartOpen, setIsLabChartOpen] = useState(false);
+
+  console.log('DrillDownPane rendered with:', { selectedNodeData, selectedPatientId });
 
   const mockLabTrendData = [
     { date: '2024-01-01', value: 75, status: 'Normal' },
@@ -43,6 +44,7 @@ const DrillDownPane = ({ selectedNodeData, selectedPatientId }: DrillDownPanePro
   };
 
   if (!selectedNodeData) {
+    console.log('No selectedNodeData, showing placeholder');
     return (
       <div className="p-4 text-center text-gray-500">
         Select a node to view details
@@ -50,8 +52,14 @@ const DrillDownPane = ({ selectedNodeData, selectedPatientId }: DrillDownPanePro
     );
   }
 
+  console.log('Rendering IntervalHistoryCard with data');
   return (
-    <div className="h-full overflow-y-auto">
+    <div className="h-full overflow-y-auto bg-gray-50 p-2">
+      <div className="bg-white rounded-lg shadow-sm p-3 mb-3">
+        <h3 className="text-sm font-semibold text-gray-700 mb-2">History Details</h3>
+        <p className="text-xs text-gray-500">Selected: {selectedNodeData?.label || 'Unknown'}</p>
+      </div>
+      
       <IntervalHistoryCard 
         intervalHistory={mockIntervalHistory}
         onLabClick={handleLabClick}
