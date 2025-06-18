@@ -5,9 +5,10 @@ import NodeDetailsView from './drill-down/NodeDetailsView';
 
 interface DrillDownPaneProps {
   selectedNodeData: any;
+  selectedPatientId?: string | null;
 }
 
-const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
+const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData, selectedPatientId }) => {
   const getMockDetails = (node: any) => {
     if (!node) return null;
     
@@ -117,10 +118,14 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
         <h2 className="text-xs font-semibold text-indigo-700">History Details</h2>
       </div>
       
-      {!selectedNodeData ? (
-        <IntervalHistoryCard intervalHistory={intervalHistory} />
-      ) : (
+      {!selectedPatientId ? (
+        <div className="flex items-center justify-center h-24">
+          <p className="text-indigo-500 text-center text-xs">Select a patient from the schedule to view interval history.</p>
+        </div>
+      ) : selectedNodeData ? (
         <NodeDetailsView selectedNodeData={selectedNodeData} details={details} />
+      ) : (
+        <IntervalHistoryCard intervalHistory={intervalHistory} />
       )}
     </div>
   );
