@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 
 // Component imports
@@ -58,7 +57,7 @@ const Index = () => {
 
           {/* Pane 3: History Details */}
           <div className="w-1/2 h-full">
-            <DrillDownPane selectedNodeData={selectedNodeData} />
+            <DrillDownPane selectedNodeData={selectedNodeData} selectedPatientId={selectedPatientId} />
           </div>
         </div>
 
