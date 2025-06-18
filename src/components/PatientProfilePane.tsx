@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Activity, Heart, Users, Scissors, User } from 'lucide-react';
 
@@ -66,6 +65,11 @@ const PatientProfilePane: React.FC<PatientProfilePaneProps> = ({ selectedPatient
     }
   };
 
+  const handleNodeClick = (node: Node) => {
+    console.log('Node clicked in PatientProfilePane:', node);
+    onNodeSelect(node);
+  };
+
   return (
     <div className="h-full bg-indigo-100 p-2 shadow-md overflow-y-auto">
       <div className="flex items-center gap-1 mb-2">
@@ -80,7 +84,7 @@ const PatientProfilePane: React.FC<PatientProfilePaneProps> = ({ selectedPatient
                 {nodesToDisplay.map(node => (
                   <div
                     key={node.id}
-                    onClick={() => onNodeSelect(node)}
+                    onClick={() => handleNodeClick(node)}
                     className={`p-1.5 rounded-lg border cursor-pointer text-xs transition-all duration-200 transform hover:scale-[1.02] ${getNodeColor(node.type)}`}
                   >
                     <div className="flex items-center gap-1">
