@@ -119,7 +119,9 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
       </div>
       
       {!selectedNodeData ? (
-        <IntervalHistoryCard intervalHistory={intervalHistory} />
+        <div className="flex items-center justify-center h-24">
+          <p className="text-indigo-500 text-center text-xs">Select a patient from the schedule to view interval history, or click on a node in the Patient History to view detailed information.</p>
+        </div>
       ) : (
         <NodeDetailsView selectedNodeData={selectedNodeData} details={details} />
       )}
