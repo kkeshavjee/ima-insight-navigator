@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { FileText } from 'lucide-react';
 import IntervalHistoryCard from './drill-down/IntervalHistoryCard';
@@ -119,9 +118,7 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
       </div>
       
       {!selectedNodeData ? (
-        <div className="flex items-center justify-center h-24">
-          <p className="text-indigo-500 text-center text-xs">Select a patient from the schedule to view interval history, or click on a node in the Patient History to view detailed information.</p>
-        </div>
+        <IntervalHistoryCard intervalHistory={intervalHistory} />
       ) : (
         <NodeDetailsView selectedNodeData={selectedNodeData} details={details} />
       )}
