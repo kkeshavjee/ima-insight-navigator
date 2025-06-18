@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FileText } from 'lucide-react';
 import IntervalHistoryCard from './drill-down/IntervalHistoryCard';
 import NodeDetailsView from './drill-down/NodeDetailsView';
+import LabTrendChart from './drill-down/LabTrendChart';
 
 interface DrillDownPaneProps {
   selectedNodeData: any;
@@ -9,6 +10,8 @@ interface DrillDownPaneProps {
 }
 
 const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData, selectedPatientId }) => {
+  const [selectedLab, setSelectedLab] = useState<string | null>(null);
+
   const getMockDetails = (node: any) => {
     if (!node) return null;
     
@@ -108,6 +111,40 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData, selecte
     };
   };
 
+  const getLabTrendData = (labName: string) => {
+    const mockData: Record<string, any[]> = {
+      'Potassium': [
+        { date: '2024-01-15', value: 3.8, status: 'Normal' },
+        { date: '2024-02-15', value: 4.0, status: 'Normal' },
+        { date: '2024-03-15', value: 3.9, status: 'Normal' },
+        { date: '2024-04-15', value: 4.2, status: 'Normal' },
+        { date: '2024-05-01', value: 4.1, status: 'Normal' }
+      ],
+      'Creatinine': [
+        { date: '2024-01-15', value: 0.9, status: 'Normal' },
+        { date: '2024-02-15', value: 1.0, status: 'Normal' },
+        { date: '2024-03-15', value: 1.1, status: 'Normal' },
+        { date: '2024-04-15', value: 1.0, status: 'Normal' },
+        { date: '2024-05-01', value: 1.0, status: 'Normal' }
+      ],
+      'HbA1c': [
+        { date: '2023-11-10', value: 8.2, status: 'Elevated' },
+        { date: '2024-02-10', value: 7.8, status: 'Elevated' },
+        { date: '2024-05-10', value: 7.0, status: 'Elevated' }
+      ]
+    };
+    
+    return mockData[labName] || [];
+  };
+
+  const handleLabClick = (labName: string) => {
+    setSelectedLab(labName);
+  };
+
+  const handleCloseChart = () => {
+    setSelectedLab(null);
+  };
+
   const details = getMockDetails(selectedNodeData);
   const intervalHistory = getIntervalHistory();
 
@@ -125,7 +162,18 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData, selecte
       ) : selectedNodeData ? (
         <NodeDetailsView selectedNodeData={selectedNodeData} details={details} />
       ) : (
-        <IntervalHistoryCard intervalHistory={intervalHistory} />
+        <IntervalHistoryCard 
+          intervalHistory={intervalHistory} 
+          onLabClick={handleLabClick}
+        />
+      )}
+      
+      {selectedLab && (
+        <LabTrendChart
+          labName={selectedLab}
+          data={getLabTrendData(selectedLab)}
+          onClose={handleCloseChart}
+        />
       )}
     </div>
   );

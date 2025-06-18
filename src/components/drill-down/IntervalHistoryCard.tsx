@@ -1,11 +1,18 @@
 
 import React from 'react';
-import { TrendingUp, FlaskConical, FileText, Activity, Stethoscope, Sparkles, Minus, ArrowDown } from 'lucide-react';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import DetailCard, { StatusBadge } from './DetailCard';
+import { Calendar, Clock, FlaskConical, Stethoscope, FileText } from 'lucide-react';
+import DetailCard from './DetailCard';
+
+interface LabTest {
+  name: string;
+  value: string;
+  date: string;
+  status: string;
+  change: string;
+}
 
 interface IntervalHistoryData {
-  labTests: Array<{ name: string; value: string; date: string; status: string; change: string }>;
+  labTests: LabTest[];
   specialistNotes: Array<{ specialist: string; date: string; summary: string; type: string }>;
   erDischargeSummaries: Array<{ date: string; chiefComplaint: string; disposition: string; diagnosis: string }>;
   radiologyReports: Array<{ study: string; date: string; findings: string; impression: string }>;
@@ -13,126 +20,114 @@ interface IntervalHistoryData {
 
 interface IntervalHistoryCardProps {
   intervalHistory: IntervalHistoryData;
+  onLabClick?: (labName: string) => void;
 }
 
-const IntervalHistoryCard: React.FC<IntervalHistoryCardProps> = ({ intervalHistory }) => {
-  const getChangeIcon = (change: string) => {
+const IntervalHistoryCard: React.FC<IntervalHistoryCardProps> = ({ 
+  intervalHistory, 
+  onLabClick 
+}) => {
+  const getStatusColor = (status: string) => {
+    switch (status.toLowerCase()) {
+      case 'normal': return 'text-green-700';
+      case 'elevated': return 'text-red-700';
+      case 'low': return 'text-orange-700';
+      default: return 'text-gray-700';
+    }
+  };
+
+  const getChangeColor = (change: string) => {
     switch (change.toLowerCase()) {
-      case 'new':
-        return <Sparkles className="w-3 h-3 text-blue-600" />;
-      case 'stable':
-        return <Minus className="w-3 h-3 text-gray-600" />;
-      case 'improved':
-        return <ArrowDown className="w-3 h-3 text-green-600" />;
-      default:
-        return <Sparkles className="w-3 h-3 text-blue-600" />;
+      case 'improved': return 'text-green-600';
+      case 'worsened': return 'text-red-600';
+      case 'stable': return 'text-blue-600';
+      case 'new': return 'text-purple-600';
+      default: return 'text-gray-600';
+    }
+  };
+
+  const handleLabClick = (labName: string) => {
+    if (onLabClick) {
+      onLabClick(labName);
     }
   };
 
   return (
-    <div>
-      {/* Header */}
-      <div className="mb-3 p-2 bg-white rounded-lg shadow-sm">
-        <div className="flex items-center gap-2 mb-2">
-          <TrendingUp className="w-3 h-3 text-blue-600" />
-          <h3 className="text-xs font-medium text-blue-600">Interval History</h3>
-          <span className="text-xs text-gray-500">(Since last visit: 2024-04-15)</span>
-        </div>
-      </div>
-      
-      <div className="space-y-3">
-        {/* Lab Tests */}
-        <DetailCard
-          icon={FlaskConical}
-          iconColor="text-green-600"
-          title="Lab Tests"
-          items={intervalHistory.labTests}
-          renderItem={(lab, index) => (
-            <div key={index} className="p-2 bg-green-50 rounded border-l-4 border-green-400">
-              <div className="flex justify-between items-center">
-                <div className="text-xs font-medium text-green-800">{lab.name}: {lab.value} ({lab.date})</div>
-                <div className="flex gap-1 items-center">
-                  <StatusBadge status={lab.status} />
-                  {getChangeIcon(lab.change)}
-                </div>
+    <div className="space-y-3">
+      {/* Lab Tests Section */}
+      <DetailCard
+        icon={FlaskConical}
+        iconColor="text-green-600"
+        title="Lab Tests"
+        items={intervalHistory.labTests}
+        renderItem={(lab, index) => (
+          <div 
+            key={index} 
+            className="p-2 bg-green-50 rounded border-l-4 border-green-400 cursor-pointer hover:bg-green-100 transition-colors"
+            onClick={() => handleLabClick(lab.name)}
+          >
+            <div className="flex justify-between items-start">
+              <div>
+                <div className="text-xs font-medium text-green-800">{lab.name}: {lab.value}</div>
+                <div className="text-xs text-green-600">{lab.date}</div>
+              </div>
+              <div className="flex flex-col items-end">
+                <span className={`text-xs font-medium ${getStatusColor(lab.status)}`}>
+                  {lab.status}
+                </span>
+                <span className={`text-xs ${getChangeColor(lab.change)}`}>
+                  {lab.change}
+                </span>
               </div>
             </div>
-          )}
-        />
+          </div>
+        )}
+      />
 
-        {/* Specialist Notes */}
-        <DetailCard
-          icon={Stethoscope}
-          iconColor="text-purple-600"
-          title="Specialist Notes"
-          items={intervalHistory.specialistNotes}
-          renderItem={(note, index) => (
-            <Popover key={index}>
-              <PopoverTrigger asChild>
-                <div className="p-2 bg-purple-50 rounded border-l-4 border-purple-400 cursor-pointer hover:bg-purple-100 transition-colors">
-                  <div className="text-xs font-medium text-purple-800">{note.specialist} - {note.type}</div>
-                  <div className="text-xs text-purple-600">{note.date}</div>
-                </div>
-              </PopoverTrigger>
-              <PopoverContent className="w-80 z-50" side="right" align="start">
-                <div className="space-y-2">
-                  <div className="text-sm font-medium text-purple-800">{note.specialist} - {note.type}</div>
-                  <div className="text-sm text-purple-600">{note.date}</div>
-                  <div className="text-sm text-purple-700 mt-2">{note.summary}</div>
-                </div>
-              </PopoverContent>
-            </Popover>
-          )}
-        />
+      {/* Specialist Notes Section */}
+      <DetailCard
+        icon={Stethoscope}
+        iconColor="text-blue-600"
+        title="Specialist Notes"
+        items={intervalHistory.specialistNotes}
+        renderItem={(note, index) => (
+          <div key={index} className="p-2 bg-blue-50 rounded border-l-4 border-blue-400">
+            <div className="text-xs font-medium text-blue-800">{note.specialist} - {note.type}</div>
+            <div className="text-xs text-blue-600">{note.date}</div>
+            <div className="text-xs text-blue-700 mt-1">{note.summary}</div>
+          </div>
+        )}
+      />
 
-        {/* ER Discharge Summaries */}
-        <DetailCard
-          icon={Activity}
-          iconColor="text-red-600"
-          title="ER Discharge Summaries"
-          items={intervalHistory.erDischargeSummaries}
-          renderItem={(er, index) => (
-            <Popover key={index}>
-              <PopoverTrigger asChild>
-                <div className="p-2 bg-red-50 rounded border-l-4 border-red-400 cursor-pointer hover:bg-red-100 transition-colors">
-                  <div className="text-xs font-medium text-red-800">{er.date} - {er.chiefComplaint}</div>
-                </div>
-              </PopoverTrigger>
-              <PopoverContent className="w-80 z-50" side="right" align="start">
-                <div className="space-y-2">
-                  <div className="text-sm font-medium text-red-800">{er.date} - {er.chiefComplaint}</div>
-                  <div className="text-sm text-red-600"><strong>Diagnosis:</strong> {er.diagnosis}</div>
-                  <div className="text-sm text-red-600"><strong>Disposition:</strong> {er.disposition}</div>
-                </div>
-              </PopoverContent>
-            </Popover>
-          )}
-        />
+      {/* ER Discharge Summaries Section */}
+      <DetailCard
+        icon={FileText}
+        iconColor="text-red-600"
+        title="ER Discharge Summaries"
+        items={intervalHistory.erDischargeSummaries}
+        renderItem={(summary, index) => (
+          <div key={index} className="p-2 bg-red-50 rounded border-l-4 border-red-400">
+            <div className="text-xs font-medium text-red-800">{summary.date} - {summary.chiefComplaint}</div>
+            <div className="text-xs text-red-600">Disposition: {summary.disposition}</div>
+            <div className="text-xs text-red-700 mt-1">{summary.diagnosis}</div>
+          </div>
+        )}
+      />
 
-        {/* Radiology Reports */}
-        <DetailCard
-          icon={FileText}
-          iconColor="text-indigo-600"
-          title="Radiology Reports"
-          items={intervalHistory.radiologyReports}
-          renderItem={(radiology, index) => (
-            <Popover key={index}>
-              <PopoverTrigger asChild>
-                <div className="p-2 bg-indigo-50 rounded border-l-4 border-indigo-400 cursor-pointer hover:bg-indigo-100 transition-colors">
-                  <div className="text-xs font-medium text-indigo-800">{radiology.study} ({radiology.date})</div>
-                </div>
-              </PopoverTrigger>
-              <PopoverContent className="w-80 z-50" side="right" align="start">
-                <div className="space-y-2">
-                  <div className="text-sm font-medium text-indigo-800">{radiology.study} ({radiology.date})</div>
-                  <div className="text-sm text-indigo-600"><strong>Findings:</strong> {radiology.findings}</div>
-                  <div className="text-sm text-indigo-700 font-medium"><strong>Impression:</strong> {radiology.impression}</div>
-                </div>
-              </PopoverContent>
-            </Popover>
-          )}
-        />
-      </div>
+      {/* Radiology Reports Section */}
+      <DetailCard
+        icon={Calendar}
+        iconColor="text-purple-600"
+        title="Radiology Reports"
+        items={intervalHistory.radiologyReports}
+        renderItem={(report, index) => (
+          <div key={index} className="p-2 bg-purple-50 rounded border-l-4 border-purple-400">
+            <div className="text-xs font-medium text-purple-800">{report.study} - {report.date}</div>
+            <div className="text-xs text-purple-600 mt-1">Findings: {report.findings}</div>
+            <div className="text-xs text-purple-700 mt-1">Impression: {report.impression}</div>
+          </div>
+        )}
+      />
     </div>
   );
 };
