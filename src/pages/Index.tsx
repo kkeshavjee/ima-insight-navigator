@@ -1,11 +1,11 @@
 
-
 import React, { useState } from 'react';
 
 // Component imports
 import DaySchedulePane from '../components/DaySchedulePane';
 import PatientProfilePane from '../components/PatientProfilePane';
 import DrillDownPane from '../components/DrillDownPane';
+import PreventionPredictionPane from '../components/PreventionPredictionPane';
 import FinalNotePane from '../components/FinalNotePane';
 import PatientBanner from '../components/PatientBanner';
 
@@ -43,27 +43,32 @@ const Index = () => {
         <PatientBanner selectedPatientId={selectedPatientId} />
       )}
 
-      {/* Main content area with 4 panes */}
+      {/* Main content area with 5 panes */}
       <main className="flex-grow p-3 flex gap-3 overflow-hidden">
         {/* Pane 1: Day Schedule - narrower */}
         <div className="w-1/12 h-full min-h-[300px]">
           <DaySchedulePane onSelectPatient={handlePatientSelect} selectedPatientId={selectedPatientId} />
         </div>
 
-        {/* Middle 2 panes - adjusted proportions for wider History Details */}
+        {/* Middle 3 panes - adjusted proportions */}
         <div className="w-7/12 h-full flex">
           {/* Pane 2: Patient History */}
           <div className="w-1/3 h-full">
             <PatientProfilePane selectedPatientId={selectedPatientId} onNodeSelect={handleNodeSelect} />
           </div>
 
-          {/* Pane 3: History Details - double the original size */}
-          <div className="w-2/3 h-full">
-            <DrillDownPane selectedNodeData={selectedNodeData} selectedPatientId={selectedPatientId} />
+          {/* Pane 3: History Details - same size as Patient History */}
+          <div className="w-1/3 h-full">
+            <DrillDownPane selectedNodeData={selectedNodeData} />
+          </div>
+
+          {/* Pane 4: AI Recommendations */}
+          <div className="w-1/3 h-full">
+            <PreventionPredictionPane selectedPatientId={selectedPatientId} />
           </div>
         </div>
 
-        {/* Pane 4: Final Note Display */}
+        {/* Pane 5: Final Note Display - wider */}
         <div className="w-1/3 h-full min-h-[300px]">
           <FinalNotePane selectedEncounterId={selectedEncounterId} selectedPatientId={selectedPatientId} />
         </div>
@@ -78,4 +83,3 @@ const Index = () => {
 };
 
 export default Index;
-

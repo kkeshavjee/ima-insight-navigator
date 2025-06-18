@@ -1,91 +1,132 @@
 
-
-import React, { useState } from 'react';
+import React from 'react';
+import { FileText } from 'lucide-react';
 import IntervalHistoryCard from './drill-down/IntervalHistoryCard';
-import LabTrendChart from './drill-down/LabTrendChart';
+import NodeDetailsView from './drill-down/NodeDetailsView';
 
 interface DrillDownPaneProps {
   selectedNodeData: any;
-  selectedPatientId: string;
 }
 
-const DrillDownPane = ({ selectedNodeData, selectedPatientId }: DrillDownPaneProps) => {
-  const [selectedLabName, setSelectedLabName] = useState<string | null>(null);
-  const [isLabChartOpen, setIsLabChartOpen] = useState(false);
-
-  console.log('DrillDownPane rendered with:', { selectedNodeData, selectedPatientId });
-
-  const mockLabTrendData = [
-    { date: '2024-01-01', value: 75, status: 'Normal' },
-    { date: '2024-01-08', value: 80, status: 'Normal' },
-    { date: '2024-01-15', value: 90, status: 'Elevated' },
-    { date: '2024-01-22', value: 85, status: 'Normal' },
-    { date: '2024-01-29', value: 95, status: 'Elevated' },
-  ];
-
-  const mockIntervalHistory = {
-    labTests: [
-      { name: 'Glucose', value: '90', date: '2024-01-29', status: 'Normal', change: 'Stable' },
-      { name: 'Sodium', value: '140', date: '2024-01-29', status: 'Normal', change: 'Stable' },
-      { name: 'Potassium', value: '4.0', date: '2024-01-29', status: 'Normal', change: 'Stable' },
-    ],
-    specialistNotes: [
-      { specialist: 'Dr. Smith', date: '2024-01-25', summary: 'Discussed medication options.', type: 'Cardiology' },
-    ],
-    erDischargeSummaries: [
-      { date: '2024-01-20', chiefComplaint: 'Chest pain', disposition: 'Discharged', diagnosis: 'Non-cardiac chest pain' },
-    ],
-    radiologyReports: [
-      { study: 'Chest X-Ray', date: '2024-01-15', findings: 'No acute findings.', impression: 'Normal chest x-ray.' },
-    ],
+const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData }) => {
+  const getMockDetails = (node: any) => {
+    if (!node) return null;
+    
+    if (node.id === 'node_htn') {
+      return {
+        medications: [
+          { name: 'Lisinopril 20mg', dosage: 'Once daily', class: 'ACE Inhibitor' },
+          { name: 'Amlodipine 10mg', dosage: 'Once daily', class: 'Calcium Channel Blocker' }
+        ],
+        labs: [
+          { name: 'Potassium', value: '4.1 mEq/L', date: '2024-05-01', status: 'Normal' },
+          { name: 'Creatinine', value: '1.0 mg/dL', date: '2024-05-01', status: 'Normal' }
+        ],
+        visits: [
+          { date: '2024-04-15', summary: 'BP check, stable at 135/85. Continue current regimen.' }
+        ],
+        recentVisits: [
+          { date: '2024-05-15', reason: 'Follow-up' },
+          { date: '2024-04-15', reason: 'Routine Check' }
+        ]
+      };
+    }
+    
+    if (node.id === 'node_dm') {
+      return {
+        medications: [
+          { name: 'Metformin 1000mg', dosage: 'Twice daily', class: 'Biguanide' }
+        ],
+        labs: [
+          { name: 'HbA1c', value: '7.2%', date: '2024-03-10', status: 'Elevated' },
+          { name: 'Glucose, Fasting', value: '130 mg/dL', date: '2024-03-10', status: 'Elevated' }
+        ],
+        visits: [
+          { date: '2024-03-15', summary: 'Diabetes management discussed. A1C trending down.' }
+        ],
+        recentVisits: [
+          { date: '2024-04-20', reason: 'Diabetes Management' },
+          { date: '2024-03-15', reason: 'Follow-up' }
+        ]
+      };
+    }
+    
+    if (node.id === 'node_social_smoking') {
+      return {
+        medications: [],
+        labs: [],
+        visits: [],
+        recentVisits: [
+          { date: '2024-05-10', reason: 'Smoking Cessation' }
+        ]
+      };
+    }
+    
+    if (node.id === 'node_surgery_appendix') {
+      return {
+        medications: [],
+        labs: [],
+        visits: [],
+        recentVisits: [
+          { date: '2024-02-10', reason: 'Annual Physical' }
+        ]
+      };
+    }
+    
+    if (node.id === 'node_family_dm') {
+      return {
+        medications: [],
+        labs: [],
+        visits: [],
+        recentVisits: [
+          { date: '2024-05-15', reason: 'Follow-up' }
+        ]
+      };
+    }
+    
+    return { medications: [], labs: [], visits: [], recentVisits: [] };
   };
 
-  const handleLabClick = (labName: string) => {
-    setSelectedLabName(labName);
-    setIsLabChartOpen(true);
+  const getIntervalHistory = () => {
+    return {
+      labTests: [
+        { name: 'Potassium', value: '4.1 mEq/L', date: '2024-05-01', status: 'Normal', change: 'New' },
+        { name: 'Creatinine', value: '1.0 mg/dL', date: '2024-05-01', status: 'Normal', change: 'Stable' },
+        { name: 'HbA1c', value: '7.0%', date: '2024-05-10', status: 'Elevated', change: 'Improved' }
+      ],
+      specialistNotes: [
+        { specialist: 'Dr. Smith', date: '2024-05-08', summary: 'Blood pressure well controlled. Continue current medications.', type: 'Cardiology' },
+        { specialist: 'Dr. Johnson', date: '2024-04-28', summary: 'Diabetic retinal screening - no changes from baseline.', type: 'Ophthalmology' }
+      ],
+      erDischargeSummaries: [
+        { date: '2024-04-25', chiefComplaint: 'Chest pain', disposition: 'Discharged home', diagnosis: 'Atypical chest pain, rule out cardiac' }
+      ],
+      radiologyReports: [
+        { study: 'Chest X-ray', date: '2024-05-05', findings: 'Clear lung fields, normal heart size', impression: 'No acute cardiopulmonary abnormalities' },
+        { study: 'Abdominal US', date: '2024-04-30', findings: 'Normal liver echogenicity, no gallstones', impression: 'Normal abdominal ultrasound' }
+      ]
+    };
   };
 
-  if (!selectedNodeData) {
-    console.log('No selectedNodeData, showing placeholder');
-    return (
-      <div className="h-full bg-indigo-100 p-2 shadow-md overflow-y-auto">
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <div className="text-center">
-            <h3 className="text-lg font-semibold text-indigo-700 mb-2">History Details</h3>
-            <p className="text-indigo-500">
-              {selectedPatientId ? 'Click on a node in Patient History to view details' : 'Select a patient to view details'}
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const details = getMockDetails(selectedNodeData);
+  const intervalHistory = getIntervalHistory();
 
-  console.log('Rendering IntervalHistoryCard with data for node:', selectedNodeData.label);
   return (
-    <div className="h-full bg-indigo-100 p-2 shadow-md overflow-y-auto">
-      <div className="bg-white rounded-lg shadow-sm p-3 mb-3">
-        <h3 className="text-lg font-semibold text-indigo-700 mb-2">History Details</h3>
-        <p className="text-sm text-indigo-600">Selected: {selectedNodeData?.label || 'Unknown'}</p>
-        <p className="text-xs text-indigo-500">Type: {selectedNodeData?.type || 'Unknown'}</p>
+    <div className="h-full bg-indigo-100 p-2 rounded-lg shadow-md overflow-y-auto">
+      <div className="flex items-center gap-1 mb-2">
+        <FileText className="w-3 h-3 text-indigo-600" />
+        <h2 className="text-xs font-semibold text-indigo-700">History Details</h2>
       </div>
       
-      <IntervalHistoryCard 
-        intervalHistory={mockIntervalHistory}
-        onLabClick={handleLabClick}
-      />
-      
-      {selectedLabName && (
-        <LabTrendChart
-          labName={selectedLabName}
-          data={mockLabTrendData}
-          open={isLabChartOpen}
-          onOpenChange={setIsLabChartOpen}
-        />
+      {!selectedNodeData ? (
+        <div className="flex items-center justify-center h-24">
+          <p className="text-indigo-500 text-center text-xs">Select a patient from the schedule to view interval history, or click on a node in the Patient History to view detailed information.</p>
+        </div>
+      ) : (
+        <NodeDetailsView selectedNodeData={selectedNodeData} details={details} />
       )}
     </div>
   );
 };
 
 export default DrillDownPane;
-
