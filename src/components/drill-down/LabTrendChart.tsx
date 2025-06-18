@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { X } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 interface LabTrendData {
   date: string;
@@ -13,10 +13,11 @@ interface LabTrendData {
 interface LabTrendChartProps {
   labName: string;
   data: LabTrendData[];
-  onClose: () => void;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
-const LabTrendChart: React.FC<LabTrendChartProps> = ({ labName, data, onClose }) => {
+const LabTrendChart: React.FC<LabTrendChartProps> = ({ labName, data, open, onOpenChange }) => {
   const chartConfig = {
     value: {
       label: labName,
@@ -25,17 +26,11 @@ const LabTrendChart: React.FC<LabTrendChartProps> = ({ labName, data, onClose })
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-4 max-w-4xl w-full mx-4 max-h-[80vh] overflow-y-auto">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold text-gray-800">{labName} Trend</h3>
-          <button 
-            onClick={onClose}
-            className="p-1 hover:bg-gray-100 rounded"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-4xl w-full max-h-[80vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>{labName} Trend</DialogTitle>
+        </DialogHeader>
         
         <div className="h-80">
           <ChartContainer config={chartConfig}>
@@ -83,8 +78,8 @@ const LabTrendChart: React.FC<LabTrendChartProps> = ({ labName, data, onClose })
             ))}
           </div>
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 
