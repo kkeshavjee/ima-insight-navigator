@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { FileText } from 'lucide-react';
 import IntervalHistoryCard from './drill-down/IntervalHistoryCard';
@@ -87,29 +88,108 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData, selecte
     return { medications: [], labs: [], visits: [], recentVisits: [] };
   };
 
-  const getIntervalHistory = () => {
-    return {
-      labTests: [
-        { name: 'Potassium', value: '4.1 mEq/L', date: '2024-05-01', status: 'Normal', change: 'New' },
-        { name: 'Creatinine', value: '1.0 mg/dL', date: '2024-05-01', status: 'Normal', change: 'Stable' },
-        { name: 'HbA1c', value: '7.0%', date: '2024-05-10', status: 'Elevated', change: 'Improved' }
-      ],
-      specialistNotes: [
-        { specialist: 'Dr. Smith', date: '2024-05-08', summary: 'Blood pressure well controlled. Continue current medications.', type: 'Cardiology' },
-        { specialist: 'Dr. Johnson', date: '2024-04-28', summary: 'Diabetic retinal screening - no changes from baseline.', type: 'Ophthalmology' }
-      ],
-      erDischargeSummaries: [
-        { date: '2024-04-25', chiefComplaint: 'Chest pain', disposition: 'Discharged home', diagnosis: 'Atypical chest pain, rule out cardiac' }
-      ],
-      radiologyReports: [
-        { study: 'Chest X-ray', date: '2024-05-05', findings: 'Clear lung fields, normal heart size', impression: 'No acute cardiopulmonary abnormalities' },
-        { study: 'Abdominal US', date: '2024-04-30', findings: 'Normal liver echogenicity, no gallstones', impression: 'Normal abdominal ultrasound' }
-      ]
-    };
+  const getIntervalHistory = (patientId: string | null) => {
+    switch (patientId) {
+      case 'p001':
+        return {
+          labTests: [
+            { name: 'Potassium', value: '4.1 mEq/L', date: '2024-05-01', status: 'Normal', change: 'New' },
+            { name: 'Creatinine', value: '1.0 mg/dL', date: '2024-05-01', status: 'Normal', change: 'Stable' },
+            { name: 'HbA1c', value: '7.0%', date: '2024-05-10', status: 'Elevated', change: 'Improved' }
+          ],
+          specialistNotes: [
+            { specialist: 'Dr. Smith', date: '2024-05-08', summary: 'Blood pressure well controlled. Continue current medications.', type: 'Cardiology' },
+            { specialist: 'Dr. Johnson', date: '2024-04-28', summary: 'Diabetic retinal screening - no changes from baseline.', type: 'Ophthalmology' }
+          ],
+          erDischargeSummaries: [
+            { date: '2024-04-25', chiefComplaint: 'Chest pain', disposition: 'Discharged home', diagnosis: 'Atypical chest pain, rule out cardiac' }
+          ],
+          radiologyReports: [
+            { study: 'Chest X-ray', date: '2024-05-05', findings: 'Clear lung fields, normal heart size', impression: 'No acute cardiopulmonary abnormalities' },
+            { study: 'Abdominal US', date: '2024-04-30', findings: 'Normal liver echogenicity, no gallstones', impression: 'Normal abdominal ultrasound' }
+          ]
+        };
+      
+      case 'p002':
+        return {
+          labTests: [
+            { name: 'CBC', value: 'WBC 8.2 K/uL', date: '2024-05-12', status: 'Normal', change: 'New' },
+            { name: 'TSH', value: '2.1 mIU/L', date: '2024-05-05', status: 'Normal', change: 'Stable' },
+            { name: 'Vitamin D', value: '18 ng/mL', date: '2024-04-20', status: 'Low', change: 'New' }
+          ],
+          specialistNotes: [
+            { specialist: 'Dr. Williams', date: '2024-05-15', summary: 'Anxiety symptoms improving with current therapy. Continue CBT sessions.', type: 'Psychiatry' },
+            { specialist: 'Dr. Brown', date: '2024-05-02', summary: 'Recommend vitamin D supplementation for deficiency.', type: 'Endocrinology' }
+          ],
+          erDischargeSummaries: [],
+          radiologyReports: [
+            { study: 'Thyroid US', date: '2024-04-28', findings: 'Normal thyroid size and echogenicity', impression: 'Normal thyroid ultrasound' }
+          ]
+        };
+      
+      case 'p003':
+        return {
+          labTests: [
+            { name: 'Lipid Panel', value: 'Total Chol 245 mg/dL', date: '2024-05-08', status: 'High', change: 'Worsened' },
+            { name: 'LDL', value: '165 mg/dL', date: '2024-05-08', status: 'High', change: 'New' },
+            { name: 'CRP', value: '3.2 mg/L', date: '2024-04-25', status: 'Elevated', change: 'New' }
+          ],
+          specialistNotes: [
+            { specialist: 'Dr. Davis', date: '2024-05-10', summary: 'Recommend statin therapy for hyperlipidemia. Lifestyle modifications discussed.', type: 'Cardiology' },
+            { specialist: 'Dr. Miller', date: '2024-04-18', summary: 'Joint pain likely osteoarthritis. Conservative management recommended.', type: 'Rheumatology' }
+          ],
+          erDischargeSummaries: [],
+          radiologyReports: [
+            { study: 'Knee X-ray', date: '2024-04-15', findings: 'Mild joint space narrowing', impression: 'Early osteoarthritic changes' }
+          ]
+        };
+      
+      case 'p004':
+        return {
+          labTests: [
+            { name: 'PSA', value: '1.8 ng/mL', date: '2024-05-03', status: 'Normal', change: 'Stable' },
+            { name: 'Testosterone', value: '285 ng/dL', date: '2024-04-28', status: 'Low-Normal', change: 'New' },
+            { name: 'Prostate Biopsy', value: 'Benign', date: '2024-04-20', status: 'Normal', change: 'New' }
+          ],
+          specialistNotes: [
+            { specialist: 'Dr. Wilson', date: '2024-05-05', summary: 'Prostate biopsy results benign. Continue annual screening.', type: 'Urology' },
+            { specialist: 'Dr. Garcia', date: '2024-04-22', summary: 'Sleep study shows mild sleep apnea. CPAP therapy recommended.', type: 'Pulmonology' }
+          ],
+          erDischargeSummaries: [],
+          radiologyReports: [
+            { study: 'Prostate MRI', date: '2024-04-10', findings: 'No suspicious lesions identified', impression: 'Benign prostatic hyperplasia' }
+          ]
+        };
+      
+      case 'p005':
+        return {
+          labTests: [
+            { name: 'Mammogram', value: 'BI-RADS 2', date: '2024-05-12', status: 'Normal', change: 'Stable' },
+            { name: 'Pap Smear', value: 'Normal', date: '2024-04-15', status: 'Normal', change: 'Stable' },
+            { name: 'Bone Density', value: 'T-score -1.8', date: '2024-03-20', status: 'Osteopenia', change: 'New' }
+          ],
+          specialistNotes: [
+            { specialist: 'Dr. Martinez', date: '2024-05-14', summary: 'Annual gynecological exam normal. Continue routine screening.', type: 'Gynecology' },
+            { specialist: 'Dr. Lee', date: '2024-03-25', summary: 'Osteopenia noted. Recommend calcium and vitamin D supplementation.', type: 'Endocrinology' }
+          ],
+          erDischargeSummaries: [],
+          radiologyReports: [
+            { study: 'DEXA Scan', date: '2024-03-20', findings: 'Decreased bone density at lumbar spine', impression: 'Osteopenia' }
+          ]
+        };
+      
+      default:
+        return {
+          labTests: [],
+          specialistNotes: [],
+          erDischargeSummaries: [],
+          radiologyReports: []
+        };
+    }
   };
 
   const details = getMockDetails(selectedNodeData);
-  const intervalHistory = getIntervalHistory();
+  const intervalHistory = getIntervalHistory(selectedPatientId);
 
   return (
     <div className="h-full bg-indigo-100 p-2 rounded-lg shadow-md overflow-y-auto">
