@@ -171,49 +171,6 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
         <div>
           <NoteStatus />
 
-          {/* AI Patient Summary Section */}
-          {selectedPatientId && (
-            <div className="bg-blue-50 rounded-lg p-3 mb-2 border border-blue-200">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <Brain className="w-4 h-4 text-blue-600" />
-                  <h3 className="text-sm font-semibold text-blue-700">AI Patient Summary</h3>
-                </div>
-                {getStatusBadge()}
-              </div>
-              
-              {summaryStatus === 'generating' ? (
-                <div className="flex items-center py-2">
-                  <RefreshCw className="w-4 h-4 animate-spin mr-2" />
-                  <span className="text-xs text-blue-600">Analyzing patient data...</span>
-                </div>
-              ) : summaryStatus === 'generated' || summaryStatus === 'ready-for-review' ? (
-                <div className="space-y-2">
-                  <p className="text-sm text-gray-700 leading-relaxed">{summary}</p>
-                  <div className="flex items-center justify-between pt-2 border-t border-blue-200">
-                    <div className="flex items-center gap-1">
-                      <Clock className="w-3 h-3 text-gray-400" />
-                      <span className="text-xs text-gray-500">
-                        Generated {new Date().toLocaleTimeString()}
-                      </span>
-                    </div>
-                    {summaryStatus === 'generated' && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={markAsReviewed}
-                        className="h-6 px-2 text-xs"
-                      >
-                        <CheckCircle className="w-3 h-3 mr-1" />
-                        Mark Reviewed
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              ) : null}
-            </div>
-          )}
-
           <div className="bg-white rounded-lg shadow-sm p-2 mb-2">
             {/* Subjective */}
             <NoteSection title="Subjective" content={note.subjective} />
