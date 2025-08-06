@@ -124,20 +124,6 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
     );
   };
 
-  const generateSummary = async () => {
-    if (!selectedPatientId) return;
-    
-    setIsGenerating(true);
-    setSummaryStatus('generating');
-    
-    // Simulate API call delay
-    setTimeout(() => {
-      const mockSummary = mockSummaries[selectedPatientId] || "No summary available for this patient.";
-      setSummary(mockSummary);
-      setSummaryStatus('generated');
-      setIsGenerating(false);
-    }, 2000);
-  };
 
   const markAsReviewed = () => {
     setSummaryStatus('ready-for-review');
@@ -145,7 +131,20 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
 
   useEffect(() => {
     if (selectedPatientId) {
-      // Reset status when patient changes
+      // Auto-generate summary when patient changes
+      setSummaryStatus('generating');
+      setSummary('');
+      setIsGenerating(true);
+      
+      // Simulate API call delay
+      setTimeout(() => {
+        const mockSummary = mockSummaries[selectedPatientId] || "No summary available for this patient.";
+        setSummary(mockSummary);
+        setSummaryStatus('generated');
+        setIsGenerating(false);
+      }, 2000);
+    } else {
+      // Reset when no patient selected
       setSummaryStatus('not-generated');
       setSummary('');
     }
@@ -183,24 +182,12 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
                 {getStatusBadge()}
               </div>
               
-              {summaryStatus === 'not-generated' ? (
-                <div className="text-center py-2">
-                  <Button
-                    onClick={generateSummary}
-                    disabled={isGenerating}
-                    size="sm"
-                    className="h-7 px-3 text-xs"
-                  >
-                    <Brain className="w-3 h-3 mr-1" />
-                    Generate AI Summary
-                  </Button>
-                </div>
-              ) : summaryStatus === 'generating' ? (
-                <div className="flex items-center justify-center py-2">
+              {summaryStatus === 'generating' ? (
+                <div className="flex items-center py-2">
                   <RefreshCw className="w-4 h-4 animate-spin mr-2" />
                   <span className="text-xs text-blue-600">Analyzing patient data...</span>
                 </div>
-              ) : (
+              ) : summaryStatus === 'generated' || summaryStatus === 'ready-for-review' ? (
                 <div className="space-y-2">
                   <p className="text-sm text-gray-700 leading-relaxed">{summary}</p>
                   <div className="flex items-center justify-between pt-2 border-t border-blue-200">
@@ -223,7 +210,7 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
                     )}
                   </div>
                 </div>
-              )}
+              ) : null}
             </div>
           )}
 
