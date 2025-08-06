@@ -57,7 +57,7 @@ const PrescriptionList: React.FC<PrescriptionListProps> = ({
               htmlFor={prescription.id} 
               className={`cursor-pointer ${prescription.active ? 'text-green-700 font-medium' : 'text-gray-500'}`}
             >
-              {prescription.name}
+              {prescription.name} [{prescription.active ? Math.floor(Math.random() * 9) + 1 : Math.floor(Math.random() * 91) + 90}]
             </label>
           </div>
         ))}
