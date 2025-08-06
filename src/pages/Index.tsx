@@ -5,7 +5,6 @@ import DaySchedulePane from '../components/DaySchedulePane';
 import PatientProfilePane from '../components/PatientProfilePane';
 import DrillDownPane from '../components/DrillDownPane';
 import FinalNotePane from '../components/FinalNotePane';
-import AIPatientSummary from '../components/AIPatientSummary';
 import PatientBanner from '../components/PatientBanner';
 
 const Index = () => {
@@ -49,20 +48,15 @@ const Index = () => {
           <DaySchedulePane onSelectPatient={handlePatientSelect} selectedPatientId={selectedPatientId} />
         </div>
 
-        {/* Middle 3 panes - adjusted proportions */}
+        {/* Middle 2 panes - adjusted proportions */}
         <div className="w-1/2 h-full flex">
           {/* Pane 2: Patient History */}
-          <div className="w-1/3 h-full">
+          <div className="w-1/2 h-full">
             <PatientProfilePane selectedPatientId={selectedPatientId} onNodeSelect={handleNodeSelect} />
           </div>
 
-          {/* Pane 2.5: AI Patient Summary */}
-          <div className="w-1/3 h-full">
-            <AIPatientSummary selectedPatientId={selectedPatientId} />
-          </div>
-
           {/* Pane 3: History Details */}
-          <div className="w-1/3 h-full">
+          <div className="w-1/2 h-full">
             <DrillDownPane selectedNodeData={selectedNodeData} selectedPatientId={selectedPatientId} />
           </div>
         </div>
