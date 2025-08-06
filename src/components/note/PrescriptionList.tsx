@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Plus } from 'lucide-react';
+import { Plus, Check } from 'lucide-react';
 
 interface Prescription {
   id: string;
@@ -53,12 +53,22 @@ const PrescriptionList: React.FC<PrescriptionListProps> = ({
               checked={isPrescriptionChecked(prescription.id)}
               onCheckedChange={(checked) => handlePrescriptionChange(prescription.id, !!checked)}
             />
-            <label 
-              htmlFor={prescription.id} 
-              className={`cursor-pointer ${prescription.active ? 'text-green-700 font-medium' : 'text-gray-500'}`}
-            >
-              {prescription.name} [{prescription.active ? Math.floor(Math.random() * 9) + 1 : Math.floor(Math.random() * 91) + 90}]
-            </label>
+            <div className="flex items-center gap-2 flex-1">
+              <label 
+                htmlFor={prescription.id} 
+                className={`cursor-pointer ${prescription.active ? 'text-green-700 font-medium' : 'text-gray-500'}`}
+              >
+                {prescription.name} [{prescription.active ? Math.floor(Math.random() * 9) + 1 : Math.floor(Math.random() * 91) + 90}]
+              </label>
+              <div className="flex items-center gap-1">
+                <span title="Pharmacy received">
+                  <Check className="w-3 h-3 text-green-500" />
+                </span>
+                <span title="Prescription dispensed">
+                  <Check className="w-3 h-3 text-blue-500" />
+                </span>
+              </div>
+            </div>
           </div>
         ))}
       </div>
