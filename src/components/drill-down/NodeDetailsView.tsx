@@ -25,8 +25,8 @@ interface NodeDetailsViewProps {
 }
 
 const NodeDetailsView: React.FC<NodeDetailsViewProps> = ({ selectedNodeData, details }) => {
-  // Check if the selected node is lab-related
-  const isLabRelatedNode = selectedNodeData.id === 'node_htn' || selectedNodeData.id === 'node_dm' || selectedNodeData.label?.toLowerCase().includes('lab');
+  // Only show charts when drilling down into actual lab nodes
+  const isLabNode = selectedNodeData.type === 'Lab';
   
   return (
     <div>
@@ -101,8 +101,8 @@ const NodeDetailsView: React.FC<NodeDetailsViewProps> = ({ selectedNodeData, det
           )}
         />
 
-        {/* Lab Charts Section - Only show for lab-related nodes */}
-        {isLabRelatedNode && details.labs && details.labs.length > 0 && (
+        {/* Lab Charts Section - Only show for actual lab nodes */}
+        {isLabNode && details.labs && details.labs.length > 0 && (
           <div className="mt-6">
             <div className="mb-4">
               <h4 className="text-sm font-medium text-indigo-600 mb-2">Lab Analysis</h4>
