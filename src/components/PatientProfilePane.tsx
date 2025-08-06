@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { Activity, Heart, Users, Scissors, User } from 'lucide-react';
+import { Activity, Heart, Users, Scissors, User, FlaskConical } from 'lucide-react';
+import { graphService } from '@/services/graph-service';
 
 interface Node {
   id: string;
@@ -14,38 +15,37 @@ interface PatientProfilePaneProps {
 }
 
 const PatientProfilePane: React.FC<PatientProfilePaneProps> = ({ selectedPatientId, onNodeSelect }) => {
-  // Mock nodes for the selected patient
-  const patientNodes: Record<string, Node[]> = {
-    p001: [
-      { id: 'node_htn', label: 'Hypertension', type: 'Condition' },
-      { id: 'node_dm', label: 'Diabetes Mellitus Type 2', type: 'Condition' },
-      { id: 'node_social_smoking', label: 'Former Smoker (20 pack-years)', type: 'Social History' },
-      { id: 'node_surgery_appendix', label: 'Appendectomy (2015)', type: 'Surgical History' },
-      { id: 'node_family_dm', label: 'Father - Diabetes', type: 'Family History' },
-    ],
-    p002: [
-      { id: 'node_asthma', label: 'Asthma', type: 'Condition' },
-      { id: 'node_social_exercise', label: 'Regular Exercise', type: 'Social History' },
-      { id: 'node_family_asthma', label: 'Mother - Asthma', type: 'Family History' },
-    ],
-    p003: [
-      { id: 'node_headache', label: 'Chronic Headaches', type: 'Condition' },
-      { id: 'node_social_alcohol', label: 'Social Drinker', type: 'Social History' },
-    ],
+  // Get nodes from the graph service for the selected patient
+  const getPatientNodes = (patientId: string): Node[] => {
+    const graph = graphService.getPatientGraph(patientId);
+    if (!graph) return [];
+    
+    // Filter out the patient node itself and return the rest
+    return graph.nodes
+      .filter(node => node.type !== 'Patient')
+      .map(node => ({
+        id: node.id,
+        label: node.label,
+        type: node.type
+      }));
   };
 
-  const nodesToDisplay = selectedPatientId ? (patientNodes[selectedPatientId] || []) : [];
+  const nodesToDisplay = selectedPatientId ? getPatientNodes(selectedPatientId) : [];
 
   const getNodeIcon = (type: string) => {
     switch (type) {
       case 'Condition':
         return <Heart className="w-3 h-3 text-red-500" />;
-      case 'Social History':
+      case 'SocialHistory':
         return <User className="w-3 h-3 text-green-500" />;
-      case 'Surgical History':
+      case 'Procedure':
         return <Scissors className="w-3 h-3 text-purple-500" />;
-      case 'Family History':
+      case 'FamilyHistory':
         return <Users className="w-3 h-3 text-orange-500" />;
+      case 'Lab':
+        return <FlaskConical className="w-3 h-3 text-blue-500" />;
+      case 'Medication':
+        return <Activity className="w-3 h-3 text-emerald-500" />;
       default:
         return <Activity className="w-3 h-3 text-gray-500" />;
     }
@@ -55,12 +55,16 @@ const PatientProfilePane: React.FC<PatientProfilePaneProps> = ({ selectedPatient
     switch (type) {
       case 'Condition':
         return 'bg-red-50 hover:bg-red-100 border-red-200';
-      case 'Social History':
+      case 'SocialHistory':
         return 'bg-green-50 hover:bg-green-100 border-green-200';
-      case 'Surgical History':
+      case 'Procedure':
         return 'bg-purple-50 hover:bg-purple-100 border-purple-200';
-      case 'Family History':
+      case 'FamilyHistory':
         return 'bg-orange-50 hover:bg-orange-100 border-orange-200';
+      case 'Lab':
+        return 'bg-blue-50 hover:bg-blue-100 border-blue-200';
+      case 'Medication':
+        return 'bg-emerald-50 hover:bg-emerald-100 border-emerald-200';
       default:
         return 'bg-gray-50 hover:bg-gray-100 border-gray-200';
     }
