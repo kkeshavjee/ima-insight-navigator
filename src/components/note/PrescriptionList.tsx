@@ -60,7 +60,7 @@ const PrescriptionList: React.FC<PrescriptionListProps> = ({
               >
                 {prescription.name} [{prescription.active ? Math.floor(Math.random() * 9) + 1 : Math.floor(Math.random() * 91) + 90}]
               </label>
-              <div className="flex items-center gap-1">
+              <div className="flex items-center">
                 <span title="Pharmacy received">
                   <Check className="w-3 h-3 text-green-500" />
                 </span>
