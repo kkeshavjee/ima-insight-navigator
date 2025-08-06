@@ -2,10 +2,19 @@
 import React from 'react';
 import { Calendar, Clock, FlaskConical, Pill } from 'lucide-react';
 import DetailCard, { StatusBadge } from './DetailCard';
+import LabResultsChart from '@/components/charts/LabResultsChart';
+import LabSummaryChart from '@/components/charts/LabSummaryChart';
 
 interface NodeDetailsData {
   medications: Array<{ name: string; dosage: string; class: string }>;
-  labs: Array<{ name: string; value: string; date: string; status?: string }>;
+  labs: Array<{ 
+    name: string; 
+    value: string; 
+    date: string; 
+    status?: string;
+    unit?: string;
+    referenceRange?: string;
+  }>;
   visits: Array<{ date: string; summary: string }>;
   recentVisits: Array<{ date: string; reason: string }>;
 }
@@ -88,6 +97,45 @@ const NodeDetailsView: React.FC<NodeDetailsViewProps> = ({ selectedNodeData, det
             </div>
           )}
         />
+
+        {/* Lab Charts Section */}
+        {details.labs && details.labs.length > 0 && (
+          <div className="mt-6">
+            <LabSummaryChart 
+              labs={details.labs.map(lab => ({
+                id: `lab_${lab.name}`,
+                type: 'Lab' as const,
+                label: lab.name,
+                properties: {
+                  testName: lab.name,
+                  value: lab.value,
+                  unit: lab.unit || '',
+                  referenceRange: lab.referenceRange || '',
+                   status: (lab.status as 'Normal' | 'Abnormal' | 'Critical' | 'Pending') || 'Normal',
+                  date: lab.date
+                }
+              }))} 
+            />
+            <div className="mt-4">
+              <LabResultsChart 
+                labs={details.labs.map(lab => ({
+                  id: `lab_${lab.name}`,
+                  type: 'Lab' as const,
+                  label: lab.name,
+                  properties: {
+                    testName: lab.name,
+                    value: lab.value,
+                    unit: lab.unit || '',
+                    referenceRange: lab.referenceRange || '',
+                    status: (lab.status as 'Normal' | 'Abnormal' | 'Critical' | 'Pending') || 'Normal',
+                    date: lab.date
+                  }
+                }))}
+                title="Lab Trends Over Time"
+              />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
