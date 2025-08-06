@@ -42,8 +42,7 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
           { id: 'p3', name: 'Atorvastatin 40mg daily', active: false },
         ],
         labs: [
-          { id: 'l1', name: 'CBC', timing: 'q3months', active: true },
-          { id: 'l2', name: 'CMP', timing: 'q3months', active: true },
+          { id: 'l1', name: 'FBS', timing: 'q3months', active: true },
           { id: 'l3', name: 'HbA1c', timing: 'q3months', active: true },
           { id: 'l4', name: 'Lipid Panel', timing: 'annual', active: false },
           { id: 'l5', name: 'TSH', timing: 'bi-annual', active: false },
