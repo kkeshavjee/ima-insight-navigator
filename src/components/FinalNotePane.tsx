@@ -1,8 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
-import { Brain, RefreshCw, CheckCircle, Clock } from 'lucide-react';
-import { Button } from './ui/button';
-import { Badge } from './ui/badge';
+import React, { useState } from 'react';
 import NoteHeader from './note/NoteHeader';
 import NoteStatus from './note/NoteStatus';
 import NoteSection from './note/NoteSection';
@@ -21,19 +18,6 @@ interface FinalNotePaneProps {
 const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, selectedPatientId }) => {
   const [selectedPrescriptions, setSelectedPrescriptions] = useState<string[]>([]);
   const [selectedLabs, setSelectedLabs] = useState<string[]>([]);
-  
-  // AI Summary state
-  type SummaryStatus = 'generated' | 'ready-for-review' | 'generating' | 'not-generated';
-  const [summaryStatus, setSummaryStatus] = useState<SummaryStatus>('not-generated');
-  const [summary, setSummary] = useState<string>('');
-  const [isGenerating, setIsGenerating] = useState(false);
-
-  // Mock patient summaries
-  const mockSummaries: Record<string, string> = {
-    p001: "67-year-old male with well-controlled hypertension and diabetes mellitus type 2. Former smoker with significant cardiovascular risk factors. Recent HbA1c indicates good glycemic control. Blood pressure trending within target range. Family history of diabetes adds to risk profile. Previous appendectomy without complications. Recommend continued current medication regimen with routine monitoring.",
-    p002: "34-year-old female with mild persistent asthma. Excellent medication adherence with good symptom control. Regular exercise routine supports overall health. Strong family history of asthma. Peak flow measurements stable. No recent exacerbations. Continue current inhaler therapy with annual reassessment.",
-    p003: "28-year-old patient with chronic tension-type headaches. Social alcohol use within recommended limits. Headache pattern suggests stress-related triggers. No concerning neurological findings. Response to preventive measures has been favorable. Consider lifestyle modifications and stress management techniques."
-  };
 
   // Mock note content with structured plan data
   const mockNotes: Record<string, any> = {
@@ -122,45 +106,6 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
         ? [...prev, labId]
         : prev.filter(id => id !== labId)
     );
-  };
-
-
-  const markAsReviewed = () => {
-    setSummaryStatus('ready-for-review');
-  };
-
-  useEffect(() => {
-    if (selectedPatientId) {
-      // Auto-generate summary when patient changes
-      setSummaryStatus('generating');
-      setSummary('');
-      setIsGenerating(true);
-      
-      // Simulate API call delay
-      setTimeout(() => {
-        const mockSummary = mockSummaries[selectedPatientId] || "No summary available for this patient.";
-        setSummary(mockSummary);
-        setSummaryStatus('generated');
-        setIsGenerating(false);
-      }, 2000);
-    } else {
-      // Reset when no patient selected
-      setSummaryStatus('not-generated');
-      setSummary('');
-    }
-  }, [selectedPatientId]);
-
-  const getStatusBadge = () => {
-    switch (summaryStatus) {
-      case 'generated':
-        return <Badge className="bg-green-100 text-green-800 border-green-300">AI Generated</Badge>;
-      case 'ready-for-review':
-        return <Badge className="bg-purple-100 text-purple-800 border-purple-300">Ready for Review</Badge>;
-      case 'generating':
-        return <Badge className="bg-blue-100 text-blue-800 border-blue-300">Generating...</Badge>;
-      default:
-        return null;
-    }
   };
 
   return (
