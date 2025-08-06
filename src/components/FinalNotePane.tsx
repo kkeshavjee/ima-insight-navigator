@@ -24,9 +24,9 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
 
   // Mock patient summaries
   const mockSummaries: Record<string, string> = {
-    p001: "67-year-old male with well-controlled hypertension and diabetes mellitus type 2. Former smoker with significant cardiovascular risk factors. Recent HbA1c indicates good glycemic control. Blood pressure trending within target range. Family history of diabetes adds to risk profile. Previous appendectomy without complications. Recommend continued current medication regimen with routine monitoring.",
-    p002: "34-year-old female with mild persistent asthma. Excellent medication adherence with good symptom control. Regular exercise routine supports overall health. Strong family history of asthma. Peak flow measurements stable. No recent exacerbations. Continue current inhaler therapy with annual reassessment.",
-    p003: "28-year-old patient with chronic tension-type headaches. Social alcohol use within recommended limits. Headache pattern suggests stress-related triggers. No concerning neurological findings. Response to preventive measures has been favorable. Consider lifestyle modifications and stress management techniques."
+    p001: "67-year-old male with well-controlled hypertension and diabetes mellitus type 2. Former smoker with significant cardiovascular risk factors. Recent HbA1c indicates good glycemic control. Blood pressure trending within target range. Family history of diabetes adds to risk profile. Previous appendectomy without complications.",
+    p002: "34-year-old female with mild persistent asthma. Excellent medication adherence with good symptom control. Regular exercise routine supports overall health. Strong family history of asthma. Peak flow measurements stable. No recent exacerbations.",
+    p003: "28-year-old patient with chronic tension-type headaches. Social alcohol use within recommended limits. Headache pattern suggests stress-related triggers. No concerning neurological findings. Response to preventive measures has been favorable."
   };
 
   // Mock note content with structured plan data
