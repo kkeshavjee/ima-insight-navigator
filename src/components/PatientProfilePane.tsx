@@ -21,12 +21,12 @@ const PatientProfilePane: React.FC<PatientProfilePaneProps> = ({ selectedPatient
       { id: 'node_dm', label: 'Diabetes Mellitus Type 2', type: 'Condition' },
       { id: 'node_social_smoking', label: 'Former Smoker (20 pack-years)', type: 'Social History' },
       { id: 'node_surgery_appendix', label: 'Appendectomy (2015)', type: 'Surgical History' },
-      { id: 'node_family_dm', label: 'Father - Diabetes', type: 'Family History' },
+      { id: 'node_family_dm', label: 'Family History', type: 'Family History' },
     ],
     p002: [
       { id: 'node_asthma', label: 'Asthma', type: 'Condition' },
       { id: 'node_social_exercise', label: 'Regular Exercise', type: 'Social History' },
-      { id: 'node_family_asthma', label: 'Mother - Asthma', type: 'Family History' },
+      { id: 'node_family_asthma', label: 'Family History', type: 'Family History' },
     ],
     p003: [
       { id: 'node_headache', label: 'Chronic Headaches', type: 'Condition' },
