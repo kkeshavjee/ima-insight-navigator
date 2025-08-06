@@ -1,5 +1,6 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Brain } from 'lucide-react';
 import NoteHeader from './note/NoteHeader';
 import NoteStatus from './note/NoteStatus';
 import NoteSection from './note/NoteSection';
@@ -18,6 +19,15 @@ interface FinalNotePaneProps {
 const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, selectedPatientId }) => {
   const [selectedPrescriptions, setSelectedPrescriptions] = useState<string[]>([]);
   const [selectedLabs, setSelectedLabs] = useState<string[]>([]);
+  const [summary, setSummary] = useState<string>('');
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  // Mock patient summaries
+  const mockSummaries: Record<string, string> = {
+    p001: "67-year-old male with well-controlled hypertension and diabetes mellitus type 2. Former smoker with significant cardiovascular risk factors. Recent HbA1c indicates good glycemic control. Blood pressure trending within target range. Family history of diabetes adds to risk profile. Previous appendectomy without complications. Recommend continued current medication regimen with routine monitoring.",
+    p002: "34-year-old female with mild persistent asthma. Excellent medication adherence with good symptom control. Regular exercise routine supports overall health. Strong family history of asthma. Peak flow measurements stable. No recent exacerbations. Continue current inhaler therapy with annual reassessment.",
+    p003: "28-year-old patient with chronic tension-type headaches. Social alcohol use within recommended limits. Headache pattern suggests stress-related triggers. No concerning neurological findings. Response to preventive measures has been favorable. Consider lifestyle modifications and stress management techniques."
+  };
 
   // Mock note content with structured plan data
   const mockNotes: Record<string, any> = {
@@ -100,6 +110,24 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
     );
   };
 
+  useEffect(() => {
+    if (selectedPatientId) {
+      // Auto-generate summary when patient changes
+      setSummary('');
+      setIsGenerating(true);
+      
+      // Simulate API call delay
+      setTimeout(() => {
+        const mockSummary = mockSummaries[selectedPatientId] || "No summary available for this patient.";
+        setSummary(mockSummary);
+        setIsGenerating(false);
+      }, 2000);
+    } else {
+      setSummary('');
+      setIsGenerating(false);
+    }
+  }, [selectedPatientId]);
+
   const handleLabChange = (labId: string, checked: boolean) => {
     setSelectedLabs(prev => 
       checked 
@@ -115,6 +143,21 @@ const FinalNotePane: React.FC<FinalNotePaneProps> = ({ selectedEncounterId, sele
       {selectedEncounterId && note ? (
         <div>
           <NoteStatus />
+
+          {/* AI Clinical Summary */}
+          {selectedPatientId && (
+            <div className="bg-blue-50 rounded-lg p-3 mb-3 border border-blue-200">
+              <div className="flex items-center gap-2 mb-2">
+                <Brain className="w-4 h-4 text-blue-600" />
+                <h3 className="text-sm font-semibold text-blue-700">AI Clinical Summary</h3>
+              </div>
+              {isGenerating ? (
+                <p className="text-sm text-blue-600 italic">Generating clinical summary...</p>
+              ) : summary ? (
+                <p className="text-sm text-gray-700 leading-relaxed">{summary}</p>
+              ) : null}
+            </div>
+          )}
 
           <div className="bg-white rounded-lg shadow-sm p-2 mb-2">
             {/* Subjective */}
