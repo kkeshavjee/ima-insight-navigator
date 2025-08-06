@@ -25,6 +25,9 @@ interface NodeDetailsViewProps {
 }
 
 const NodeDetailsView: React.FC<NodeDetailsViewProps> = ({ selectedNodeData, details }) => {
+  // Check if the selected node is lab-related
+  const isLabRelatedNode = selectedNodeData.id === 'node_htn' || selectedNodeData.id === 'node_dm' || selectedNodeData.label?.toLowerCase().includes('lab');
+  
   return (
     <div>
       <div className="mb-3 p-2 bg-white rounded-lg shadow-sm">
@@ -98,24 +101,27 @@ const NodeDetailsView: React.FC<NodeDetailsViewProps> = ({ selectedNodeData, det
           )}
         />
 
-        {/* Lab Charts Section */}
-        {details.labs && details.labs.length > 0 && (
+        {/* Lab Charts Section - Only show for lab-related nodes */}
+        {isLabRelatedNode && details.labs && details.labs.length > 0 && (
           <div className="mt-6">
-            <LabSummaryChart 
-              labs={details.labs.map(lab => ({
-                id: `lab_${lab.name}`,
-                type: 'Lab' as const,
-                label: lab.name,
-                properties: {
-                  testName: lab.name,
-                  value: lab.value,
-                  unit: lab.unit || '',
-                  referenceRange: lab.referenceRange || '',
-                   status: (lab.status as 'Normal' | 'Abnormal' | 'Critical' | 'Pending') || 'Normal',
-                  date: lab.date
-                }
-              }))} 
-            />
+            <div className="mb-4">
+              <h4 className="text-sm font-medium text-indigo-600 mb-2">Lab Analysis</h4>
+              <LabSummaryChart 
+                labs={details.labs.map(lab => ({
+                  id: `lab_${lab.name}`,
+                  type: 'Lab' as const,
+                  label: lab.name,
+                  properties: {
+                    testName: lab.name,
+                    value: lab.value,
+                    unit: lab.unit || '',
+                    referenceRange: lab.referenceRange || '',
+                    status: (lab.status as 'Normal' | 'Abnormal' | 'Critical' | 'Pending') || 'Normal',
+                    date: lab.date
+                  }
+                }))} 
+              />
+            </div>
             <div className="mt-4">
               <LabResultsChart 
                 labs={details.labs.map(lab => ({
