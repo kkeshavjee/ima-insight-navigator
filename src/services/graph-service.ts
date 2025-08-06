@@ -341,6 +341,118 @@ export class MedicalGraphService {
     };
 
     this.graphs.set('p001', patient001Graph);
+
+    // Patient p002 - Jane Smith
+    const patient002Graph: MedicalKnowledgeGraph = {
+      patientId: 'p002',
+      lastUpdated: '2024-05-15T10:30:00Z',
+      nodes: [
+        {
+          id: 'patient_p002',
+          type: 'Patient',
+          label: 'Jane Smith',
+          properties: {
+            firstName: 'Jane',
+            lastName: 'Smith',
+            dateOfBirth: '1982-07-22',
+            sex: 'Female',
+            healthCardNumber: 'HC987654321',
+            phone: '(555) 234-5678',
+            email: 'jane.smith@email.com',
+            address: '456 Oak Ave, City, State'
+          }
+        },
+        {
+          id: 'condition_anxiety',
+          type: 'Condition',
+          label: 'Generalized Anxiety Disorder',
+          properties: {
+            name: 'Generalized Anxiety Disorder',
+            icdCode: 'F41.1',
+            status: 'Active',
+            severity: 'Moderate',
+            onsetDate: '2021-09-15',
+            category: 'Mental Health'
+          }
+        },
+        {
+          id: 'med_sertraline',
+          type: 'Medication',
+          label: 'Sertraline 50mg',
+          properties: {
+            name: 'Sertraline',
+            dosage: '50mg',
+            frequency: 'Once daily',
+            route: 'Oral',
+            class: 'SSRI',
+            status: 'Active',
+            startDate: '2021-10-01'
+          }
+        },
+        {
+          id: 'lab_tsh',
+          type: 'Lab',
+          label: 'TSH 2.1 mIU/L',
+          properties: {
+            testName: 'Thyroid Stimulating Hormone',
+            value: '2.1',
+            unit: 'mIU/L',
+            referenceRange: '0.4-4.0',
+            status: 'Normal',
+            date: '2024-04-20'
+          }
+        },
+        {
+          id: 'lab_cbc',
+          type: 'Lab',
+          label: 'Hemoglobin 12.8 g/dL',
+          properties: {
+            testName: 'Hemoglobin',
+            value: '12.8',
+            unit: 'g/dL',
+            referenceRange: '12.0-15.5',
+            status: 'Normal',
+            date: '2024-05-01'
+          }
+        }
+      ],
+      edges: [
+        {
+          id: 'edge_p002_anxiety',
+          source: 'patient_p002',
+          target: 'condition_anxiety',
+          type: 'HAS_CONDITION',
+          label: 'has condition',
+          weight: 1
+        },
+        {
+          id: 'edge_anxiety_sertraline',
+          source: 'condition_anxiety',
+          target: 'med_sertraline',
+          type: 'PRESCRIBED_BY',
+          label: 'treated with',
+          weight: 0.9
+        },
+        {
+          id: 'edge_p002_tsh',
+          source: 'patient_p002',
+          target: 'lab_tsh',
+          type: 'HAS_LAB_RESULT',
+          label: 'has lab result',
+          weight: 0.8
+        },
+        {
+          id: 'edge_p002_cbc',
+          source: 'patient_p002',
+          target: 'lab_cbc',
+          type: 'HAS_LAB_RESULT',
+          label: 'has lab result',
+          weight: 0.7
+        }
+      ]
+    };
+
+    this.graphs.set('p002', patient002Graph);
   }
 }
 
