@@ -2,11 +2,22 @@
 import React from 'react';
 import { Calendar, Clock, FlaskConical, Pill } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import DetailCard, { StatusBadge } from './DetailCard';
 
 interface NodeDetailsData {
   medications: Array<{ name: string; dosage: string; class: string }>;
-  labs: Array<{ name: string; value: string; date: string; status?: string; trend?: string }>;
+  labs: Array<{ 
+    name: string; 
+    value: string; 
+    date: string; 
+    status?: string; 
+    trend?: string; 
+    numericValue?: number;
+    unit?: string;
+    history?: Array<{ date: string; value: number; formattedDate: string }>;
+    normalRange?: { min: number; max: number };
+  }>;
   visits: Array<{ date: string; summary: string }>;
   recentVisits: Array<{ date: string; reason: string; note?: string }>;
 }
@@ -109,14 +120,80 @@ const NodeDetailsView: React.FC<NodeDetailsViewProps> = ({ selectedNodeData, det
                   </div>
                 </div>
               </PopoverTrigger>
-              <PopoverContent className="w-96 z-50" side="right" align="start">
-                <div className="space-y-2">
+              <PopoverContent className="w-[500px] z-50" side="right" align="start">
+                <div className="space-y-4">
                   <div className="text-sm font-medium text-green-800">{lab.name}</div>
-                  <div className="text-sm text-green-600"><strong>Value:</strong> {lab.value}</div>
+                  <div className="text-sm text-green-600"><strong>Current Value:</strong> {lab.value}</div>
                   <div className="text-sm text-green-600"><strong>Date:</strong> {lab.date}</div>
                   {lab.status && (
                     <div className="text-sm text-green-600"><strong>Status:</strong> {lab.status}</div>
                   )}
+                  {lab.normalRange && (
+                    <div className="text-sm text-green-600">
+                      <strong>Normal Range:</strong> {lab.normalRange.min} - {lab.normalRange.max} {lab.unit}
+                    </div>
+                  )}
+                  
+                  {/* Trending Graph */}
+                  {lab.history && lab.history.length > 0 && (
+                    <div className="space-y-2">
+                      <div className="text-sm font-medium text-green-800">Trend Over Time</div>
+                      <div className="h-48 w-full">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <LineChart data={lab.history}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="#e0e7ff" />
+                            <XAxis 
+                              dataKey="formattedDate" 
+                              fontSize={12}
+                              stroke="#6b7280"
+                            />
+                            <YAxis 
+                              fontSize={12}
+                              stroke="#6b7280"
+                              domain={lab.normalRange ? [lab.normalRange.min * 0.8, lab.normalRange.max * 1.2] : ['auto', 'auto']}
+                            />
+                            <Tooltip 
+                              labelStyle={{ color: '#374151' }}
+                              contentStyle={{ 
+                                backgroundColor: '#f3f4f6', 
+                                border: '1px solid #d1d5db',
+                                borderRadius: '6px'
+                              }}
+                            />
+                            <Line 
+                              type="monotone" 
+                              dataKey="value" 
+                              stroke="#10b981" 
+                              strokeWidth={2}
+                              dot={{ fill: '#10b981', strokeWidth: 2, r: 4 }}
+                              activeDot={{ r: 6, stroke: '#10b981', strokeWidth: 2 }}
+                            />
+                            {lab.normalRange && (
+                              <>
+                                <Line 
+                                  type="monotone" 
+                                  dataKey={() => lab.normalRange.max} 
+                                  stroke="#ef4444" 
+                                  strokeWidth={1}
+                                  strokeDasharray="5 5"
+                                  dot={false}
+                                />
+                                <Line 
+                                  type="monotone" 
+                                  dataKey={() => lab.normalRange.min} 
+                                  stroke="#ef4444" 
+                                  strokeWidth={1}
+                                  strokeDasharray="5 5"
+                                  dot={false}
+                                />
+                              </>
+                            )}
+                          </LineChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </div>
+                  )}
+                  
                   {lab.trend && (
                     <div className="text-sm text-green-600">
                       <strong>Trend:</strong> 

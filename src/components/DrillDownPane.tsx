@@ -20,8 +20,38 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData, selecte
           { name: 'Amlodipine 10mg', dosage: 'Once daily', class: 'Calcium Channel Blocker' }
         ],
         labs: [
-          { name: 'Potassium', value: '4.1 mEq/L', date: '2024-05-01', status: 'Normal' },
-          { name: 'Creatinine', value: '1.0 mg/dL', date: '2024-05-01', status: 'Normal' }
+          { 
+            name: 'Potassium', 
+            value: '4.1 mEq/L', 
+            date: '2024-05-01', 
+            status: 'Normal', 
+            numericValue: 4.1,
+            unit: 'mEq/L',
+            normalRange: { min: 3.5, max: 5.0 },
+            history: [
+              { date: '2024-01-15', value: 3.8, formattedDate: 'Jan 15' },
+              { date: '2024-02-15', value: 4.0, formattedDate: 'Feb 15' },
+              { date: '2024-03-15', value: 4.2, formattedDate: 'Mar 15' },
+              { date: '2024-04-15', value: 4.0, formattedDate: 'Apr 15' },
+              { date: '2024-05-01', value: 4.1, formattedDate: 'May 01' }
+            ]
+          },
+          { 
+            name: 'Creatinine', 
+            value: '1.0 mg/dL', 
+            date: '2024-05-01', 
+            status: 'Normal', 
+            numericValue: 1.0,
+            unit: 'mg/dL',
+            normalRange: { min: 0.7, max: 1.3 },
+            history: [
+              { date: '2024-01-15', value: 0.9, formattedDate: 'Jan 15' },
+              { date: '2024-02-15', value: 0.95, formattedDate: 'Feb 15' },
+              { date: '2024-03-15', value: 1.1, formattedDate: 'Mar 15' },
+              { date: '2024-04-15', value: 1.0, formattedDate: 'Apr 15' },
+              { date: '2024-05-01', value: 1.0, formattedDate: 'May 01' }
+            ]
+          }
         ],
         visits: [
           { date: '2024-04-15', summary: 'BP check, stable at 135/85. Continue current regimen.' }
@@ -39,8 +69,40 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData, selecte
           { name: 'Metformin 1000mg', dosage: 'Twice daily', class: 'Biguanide' }
         ],
         labs: [
-          { name: 'HbA1c', value: '7.2%', date: '2024-03-10', status: 'Elevated' },
-          { name: 'Glucose, Fasting', value: '130 mg/dL', date: '2024-03-10', status: 'Elevated' }
+          { 
+            name: 'HbA1c', 
+            value: '7.2%', 
+            date: '2024-03-10', 
+            status: 'Elevated', 
+            trend: 'down',
+            numericValue: 7.2,
+            unit: '%',
+            normalRange: { min: 4.0, max: 5.7 },
+            history: [
+              { date: '2023-09-10', value: 8.1, formattedDate: 'Sep 10' },
+              { date: '2023-12-10', value: 7.8, formattedDate: 'Dec 10' },
+              { date: '2024-01-10', value: 7.5, formattedDate: 'Jan 10' },
+              { date: '2024-02-10', value: 7.3, formattedDate: 'Feb 10' },
+              { date: '2024-03-10', value: 7.2, formattedDate: 'Mar 10' }
+            ]
+          },
+          { 
+            name: 'Glucose, Fasting', 
+            value: '130 mg/dL', 
+            date: '2024-03-10', 
+            status: 'Elevated', 
+            trend: 'up',
+            numericValue: 130,
+            unit: 'mg/dL',
+            normalRange: { min: 70, max: 99 },
+            history: [
+              { date: '2023-09-10', value: 115, formattedDate: 'Sep 10' },
+              { date: '2023-12-10', value: 120, formattedDate: 'Dec 10' },
+              { date: '2024-01-10', value: 125, formattedDate: 'Jan 10' },
+              { date: '2024-02-10', value: 128, formattedDate: 'Feb 10' },
+              { date: '2024-03-10', value: 130, formattedDate: 'Mar 10' }
+            ]
+          }
         ],
         visits: [
           { date: '2024-03-15', summary: 'Diabetes management discussed. A1C trending down.' }
@@ -89,11 +151,91 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData, selecte
       return {
         medications: [],
         labs: [
-          { name: 'FBS', value: '126 mg/dL', date: '2024-05-15', status: 'Elevated', trend: 'up' },
-          { name: 'HbA1c', value: '7.2%', date: '2024-05-10', status: 'Elevated', trend: 'down' },
-          { name: 'Potassium', value: '4.1 mEq/L', date: '2024-05-01', status: 'Normal', trend: 'stable' },
-          { name: 'Creatinine', value: '1.0 mg/dL', date: '2024-05-01', status: 'Normal', trend: 'stable' },
-          { name: 'Lipid Panel', value: 'TC 195 mg/dL', date: '2024-04-20', status: 'Normal', trend: 'down' }
+          { 
+            name: 'FBS', 
+            value: '126 mg/dL', 
+            date: '2024-05-15', 
+            status: 'Elevated', 
+            trend: 'up',
+            numericValue: 126,
+            unit: 'mg/dL',
+            normalRange: { min: 70, max: 99 },
+            history: [
+              { date: '2024-01-15', value: 118, formattedDate: 'Jan 15' },
+              { date: '2024-02-15', value: 120, formattedDate: 'Feb 15' },
+              { date: '2024-03-15', value: 122, formattedDate: 'Mar 15' },
+              { date: '2024-04-15', value: 124, formattedDate: 'Apr 15' },
+              { date: '2024-05-15', value: 126, formattedDate: 'May 15' }
+            ]
+          },
+          { 
+            name: 'HbA1c', 
+            value: '7.2%', 
+            date: '2024-05-10', 
+            status: 'Elevated', 
+            trend: 'down',
+            numericValue: 7.2,
+            unit: '%',
+            normalRange: { min: 4.0, max: 5.7 },
+            history: [
+              { date: '2024-01-10', value: 7.8, formattedDate: 'Jan 10' },
+              { date: '2024-02-10', value: 7.6, formattedDate: 'Feb 10' },
+              { date: '2024-03-10', value: 7.4, formattedDate: 'Mar 10' },
+              { date: '2024-04-10', value: 7.3, formattedDate: 'Apr 10' },
+              { date: '2024-05-10', value: 7.2, formattedDate: 'May 10' }
+            ]
+          },
+          { 
+            name: 'Potassium', 
+            value: '4.1 mEq/L', 
+            date: '2024-05-01', 
+            status: 'Normal', 
+            trend: 'stable',
+            numericValue: 4.1,
+            unit: 'mEq/L',
+            normalRange: { min: 3.5, max: 5.0 },
+            history: [
+              { date: '2024-01-01', value: 4.0, formattedDate: 'Jan 01' },
+              { date: '2024-02-01', value: 4.1, formattedDate: 'Feb 01' },
+              { date: '2024-03-01', value: 4.0, formattedDate: 'Mar 01' },
+              { date: '2024-04-01', value: 4.1, formattedDate: 'Apr 01' },
+              { date: '2024-05-01', value: 4.1, formattedDate: 'May 01' }
+            ]
+          },
+          { 
+            name: 'Creatinine', 
+            value: '1.0 mg/dL', 
+            date: '2024-05-01', 
+            status: 'Normal', 
+            trend: 'stable',
+            numericValue: 1.0,
+            unit: 'mg/dL',
+            normalRange: { min: 0.7, max: 1.3 },
+            history: [
+              { date: '2024-01-01', value: 1.0, formattedDate: 'Jan 01' },
+              { date: '2024-02-01', value: 0.9, formattedDate: 'Feb 01' },
+              { date: '2024-03-01', value: 1.0, formattedDate: 'Mar 01' },
+              { date: '2024-04-01', value: 1.0, formattedDate: 'Apr 01' },
+              { date: '2024-05-01', value: 1.0, formattedDate: 'May 01' }
+            ]
+          },
+          { 
+            name: 'Lipid Panel', 
+            value: 'TC 195 mg/dL', 
+            date: '2024-04-20', 
+            status: 'Normal', 
+            trend: 'down',
+            numericValue: 195,
+            unit: 'mg/dL',
+            normalRange: { min: 0, max: 200 },
+            history: [
+              { date: '2023-12-20', value: 220, formattedDate: 'Dec 20' },
+              { date: '2024-01-20', value: 210, formattedDate: 'Jan 20' },
+              { date: '2024-02-20', value: 205, formattedDate: 'Feb 20' },
+              { date: '2024-03-20', value: 200, formattedDate: 'Mar 20' },
+              { date: '2024-04-20', value: 195, formattedDate: 'Apr 20' }
+            ]
+          }
         ],
         visits: [
           { date: '2024-05-15', summary: 'Lab review appointment. FBS trending up, will monitor closely.' }
