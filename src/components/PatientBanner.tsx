@@ -57,24 +57,45 @@ const PatientBanner: React.FC<PatientBannerProps> = ({ selectedPatientId }) => {
   };
 
   return (
-    <div className="bg-blue-600 text-white p-3 shadow-md">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2">
-            <User className="w-4 h-4" />
-            <span className="text-sm font-semibold">{patient.name}</span>
+    <div className="apollo-glass rounded-xl mx-4 apollo-animate-in">
+      <div className="flex items-center justify-between p-4">
+        <div className="flex items-center gap-8">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <User className="w-5 h-5 text-primary" />
+            </div>
+            <div>
+              <div className="font-semibold text-lg apollo-text-glow">{patient.name}</div>
+              <div className="text-xs text-muted-foreground">Patient ID: {selectedPatientId}</div>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4" />
-            <span className="text-sm">DOB: {patient.dateOfBirth} (Age: {calculateAge(patient.dateOfBirth)})</span>
+          
+          <div className="flex items-center gap-6 text-sm">
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-accent" />
+              <span className="text-muted-foreground">DOB:</span>
+              <span>{patient.dateOfBirth}</span>
+              <span className="text-accent font-medium">({calculateAge(patient.dateOfBirth)} years)</span>
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <Heart className="w-4 h-4 text-primary" />
+              <span className="text-muted-foreground">Sex:</span>
+              <span>{patient.sex}</span>
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <CreditCard className="w-4 h-4 text-primary" />
+              <span className="text-muted-foreground">Health Card:</span>
+              <span className="font-mono">{patient.healthCardNumber}</span>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Heart className="w-4 h-4" />
-            <span className="text-sm">Sex: {patient.sex}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <CreditCard className="w-4 h-4" />
-            <span className="text-sm">Health Card: {patient.healthCardNumber}</span>
+        </div>
+        
+        <div className="flex items-center gap-3">
+          <div className="px-3 py-1 bg-accent/10 rounded-full flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full apollo-status-active animate-apollo-pulse"></div>
+            <span className="text-xs text-accent font-medium">Active Session</span>
           </div>
         </div>
       </div>

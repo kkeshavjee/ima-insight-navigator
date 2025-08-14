@@ -2,91 +2,241 @@
 @tailwind components;
 @tailwind utilities;
 
+/* APOLLO DESIGN SYSTEM - Jarvis-Inspired Clinical AI */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core Apollo Colors - Sci-fi medical aesthetic */
+    --apollo-primary: 197 92% 58%;        /* Cyan blue - AI intelligence */
+    --apollo-primary-glow: 197 100% 70%;  /* Bright cyan glow */
+    --apollo-secondary: 232 92% 65%;      /* Deep blue - clinical trust */
+    --apollo-accent: 149 100% 45%;        /* Emerald - health vitality */
+    --apollo-warning: 45 100% 51%;        /* Amber - attention */
+    --apollo-critical: 0 100% 67%;        /* Red - urgent care */
+    
+    /* Neutral palette with warm undertones */
+    --apollo-surface: 220 15% 7%;         /* Deep charcoal */
+    --apollo-surface-elevated: 220 13% 11%; /* Elevated panels */
+    --apollo-surface-glass: 220 15% 7% / 0.8; /* Glass morphism */
+    --apollo-border: 220 15% 20%;         /* Subtle borders */
+    --apollo-border-glow: 197 92% 58% / 0.3; /* Glowing borders */
+    
+    /* Text hierarchy */
+    --apollo-text-primary: 220 10% 95%;   /* Main text */
+    --apollo-text-secondary: 220 10% 70%; /* Secondary text */
+    --apollo-text-muted: 220 10% 50%;     /* Muted text */
+    --apollo-text-inverse: 220 15% 7%;    /* Dark text on light */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Applied to shadcn variables */
+    --background: var(--apollo-surface);
+    --foreground: var(--apollo-text-primary);
+    
+    --card: var(--apollo-surface-elevated);
+    --card-foreground: var(--apollo-text-primary);
+    
+    --popover: var(--apollo-surface-elevated);
+    --popover-foreground: var(--apollo-text-primary);
+    
+    --primary: var(--apollo-primary);
+    --primary-foreground: var(--apollo-text-inverse);
+    
+    --secondary: var(--apollo-surface-elevated);
+    --secondary-foreground: var(--apollo-text-primary);
+    
+    --muted: var(--apollo-surface-elevated);
+    --muted-foreground: var(--apollo-text-muted);
+    
+    --accent: var(--apollo-accent);
+    --accent-foreground: var(--apollo-text-inverse);
+    
+    --destructive: var(--apollo-critical);
+    --destructive-foreground: var(--apollo-text-primary);
+    
+    --border: var(--apollo-border);
+    --input: var(--apollo-border);
+    --ring: var(--apollo-primary);
+    
+    --radius: 0.75rem;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--apollo-primary)), hsl(var(--apollo-primary-glow)));
+    --gradient-surface: linear-gradient(145deg, hsl(var(--apollo-surface)), hsl(var(--apollo-surface-elevated)));
+    --gradient-glow: radial-gradient(circle at 50% 50%, hsl(var(--apollo-primary) / 0.15) 0%, transparent 70%);
+    
+    /* Shadows */
+    --shadow-glass: 0 8px 32px 0 hsl(var(--apollo-primary) / 0.15);
+    --shadow-elevated: 0 20px 40px -12px hsl(var(--apollo-surface) / 0.8);
+    --shadow-glow: 0 0 60px hsl(var(--apollo-primary) / 0.3);
+    
+    /* Animations */
+    --transition-smooth: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    --transition-quick: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+  /* Light mode (clinical override) */
+  .light {
+    --apollo-surface: 220 15% 98%;
+    --apollo-surface-elevated: 220 10% 100%;
+    --apollo-text-primary: 220 15% 7%;
+    --apollo-text-secondary: 220 10% 30%;
+    --apollo-text-muted: 220 10% 50%;
+    --apollo-text-inverse: 220 10% 95%;
+    --apollo-border: 220 15% 90%;
+  }
+}
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+@layer base {
+  * {
+    @apply border-border;
+  }
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+  /* Custom scrollbars */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--apollo-surface));
+  }
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--apollo-border));
+    border-radius: 4px;
+  }
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--apollo-primary) / 0.6);
+  }
+}
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+/* Apollo Component Styles */
+@layer components {
+  /* Glass morphism containers */
+  .apollo-glass {
+    background: hsl(var(--apollo-surface-glass));
+    backdrop-filter: blur(20px);
+    border: 1px solid hsl(var(--apollo-border-glow));
+    box-shadow: var(--shadow-glass);
+  }
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+  /* Elevated panels */
+  .apollo-panel {
+    background: var(--gradient-surface);
+    border: 1px solid hsl(var(--apollo-border));
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-elevated);
+    transition: var(--transition-smooth);
+  }
+
+  .apollo-panel:hover {
+    border-color: hsl(var(--apollo-border-glow));
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Data visualization glow */
+  .apollo-data-glow {
+    position: relative;
+  }
+
+  .apollo-data-glow::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: var(--gradient-glow);
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0;
+    transition: var(--transition-smooth);
+  }
+
+  .apollo-data-glow:hover::before {
+    opacity: 1;
+  }
+
+  /* Pulse animation for live data */
+  .apollo-pulse {
+    animation: apolloPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Text effects */
+  .apollo-text-glow {
+    text-shadow: 0 0 20px hsl(var(--apollo-primary) / 0.5);
+  }
+
+  /* Interactive elements */
+  .apollo-interactive {
+    transition: var(--transition-quick);
+    cursor: pointer;
+  }
+
+  .apollo-interactive:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Status indicators */
+  .apollo-status-active {
+    background: hsl(var(--apollo-accent));
+    box-shadow: 0 0 20px hsl(var(--apollo-accent) / 0.4);
+  }
+
+  .apollo-status-warning {
+    background: hsl(var(--apollo-warning));
+    box-shadow: 0 0 20px hsl(var(--apollo-warning) / 0.4);
+  }
+
+  .apollo-status-critical {
+    background: hsl(var(--apollo-critical));
+    box-shadow: 0 0 20px hsl(var(--apollo-critical) / 0.4);
+  }
+}
+
+/* Apollo Animations */
+@layer utilities {
+  @keyframes apolloPulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes apolloSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes apolloFadeGlow {
+    from {
+      opacity: 0;
+      box-shadow: none;
+    }
+    to {
+      opacity: 1;
+      box-shadow: var(--shadow-glow);
+    }
+  }
+
+  .apollo-animate-in {
+    animation: apolloSlideIn 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .apollo-animate-glow {
+    animation: apolloFadeGlow 0.8s cubic-bezier(0.23, 1, 0.32, 1);
   }
 }
 
