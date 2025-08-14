@@ -5,9 +5,9 @@ import DetailCard, { StatusBadge } from './DetailCard';
 
 interface NodeDetailsData {
   medications: Array<{ name: string; dosage: string; class: string }>;
-  labs: Array<{ name: string; value: string; date: string; status?: string }>;
+  labs: Array<{ name: string; value: string; date: string; status?: string; trend?: string }>;
   visits: Array<{ date: string; summary: string }>;
-  recentVisits: Array<{ date: string; reason: string }>;
+  recentVisits: Array<{ date: string; reason: string; note?: string }>;
 }
 
 interface NodeDetailsViewProps {
@@ -52,6 +52,11 @@ const NodeDetailsView: React.FC<NodeDetailsViewProps> = ({ selectedNodeData, det
                   <div className="text-xs font-medium text-indigo-800">
                     {visit.date} - {visit.reason}
                   </div>
+                  {visit.note && (
+                    <div className="text-xs text-indigo-600 mt-1 italic">
+                      {visit.note}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -83,7 +88,18 @@ const NodeDetailsView: React.FC<NodeDetailsViewProps> = ({ selectedNodeData, det
             <div key={index} className="p-2 bg-green-50 rounded border-l-4 border-green-400">
               <div className="flex justify-between items-center">
                 <div className="text-xs font-medium text-green-800">{lab.name}: {lab.value} ({lab.date})</div>
-                {lab.status && <StatusBadge status={lab.status} />}
+                <div className="flex items-center gap-1">
+                  {lab.trend && (
+                    <span className={`text-xs px-2 py-1 rounded ${
+                      lab.trend === 'up' ? 'bg-red-100 text-red-700' :
+                      lab.trend === 'down' ? 'bg-blue-100 text-blue-700' :
+                      'bg-gray-100 text-gray-700'
+                    }`}>
+                      {lab.trend === 'up' ? '↗' : lab.trend === 'down' ? '↘' : '→'} {lab.trend}
+                    </span>
+                  )}
+                  {lab.status && <StatusBadge status={lab.status} />}
+                </div>
               </div>
             </div>
           )}

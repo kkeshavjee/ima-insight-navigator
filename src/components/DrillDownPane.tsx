@@ -27,8 +27,8 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData, selecte
           { date: '2024-04-15', summary: 'BP check, stable at 135/85. Continue current regimen.' }
         ],
         recentVisits: [
-          { date: '2024-05-15', reason: 'Follow-up' },
-          { date: '2024-04-15', reason: 'Routine Check' }
+          { date: '2024-05-15', reason: 'Follow-up', note: 'BP 132/84 mmHg. Patient reports good adherence to medications. Discussed low-sodium diet importance.' },
+          { date: '2024-04-15', reason: 'Routine Check', note: 'BP stable at 135/85. Lisinopril dose increased to 20mg. Follow-up in 6 weeks.' }
         ]
       };
     }
@@ -46,8 +46,8 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData, selecte
           { date: '2024-03-15', summary: 'Diabetes management discussed. A1C trending down.' }
         ],
         recentVisits: [
-          { date: '2024-04-20', reason: 'Diabetes Management' },
-          { date: '2024-03-15', reason: 'Follow-up' }
+          { date: '2024-04-20', reason: 'Diabetes Management', note: 'HbA1c 7.2%, down from 7.8%. Patient adherent to metformin. Reinforced carb counting and exercise plan.' },
+          { date: '2024-03-15', reason: 'Follow-up', note: 'Reviewing diabetes self-management. Added continuous glucose monitoring. Next visit in 3 months.' }
         ]
       };
     }
@@ -81,6 +81,26 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData, selecte
         visits: [],
         recentVisits: [
           { date: '2024-05-15', reason: 'Follow-up' }
+        ]
+      };
+    }
+    
+    if (node.id === 'node_labs') {
+      return {
+        medications: [],
+        labs: [
+          { name: 'FBS', value: '126 mg/dL', date: '2024-05-15', status: 'Elevated', trend: 'up' },
+          { name: 'HbA1c', value: '7.2%', date: '2024-05-10', status: 'Elevated', trend: 'down' },
+          { name: 'Potassium', value: '4.1 mEq/L', date: '2024-05-01', status: 'Normal', trend: 'stable' },
+          { name: 'Creatinine', value: '1.0 mg/dL', date: '2024-05-01', status: 'Normal', trend: 'stable' },
+          { name: 'Lipid Panel', value: 'TC 195 mg/dL', date: '2024-04-20', status: 'Normal', trend: 'down' }
+        ],
+        visits: [
+          { date: '2024-05-15', summary: 'Lab review appointment. FBS trending up, will monitor closely.' }
+        ],
+        recentVisits: [
+          { date: '2024-05-15', reason: 'Lab Review', note: 'Discussed FBS increase. Patient admits to recent dietary indiscretions. Reinforced dietary counseling.' },
+          { date: '2024-05-01', reason: 'Routine Labs', note: 'Annual lab panel drawn. Results pending review at next appointment.' }
         ]
       };
     }
