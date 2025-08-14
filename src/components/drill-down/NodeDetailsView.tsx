@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Calendar, Clock, FlaskConical, Pill } from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import DetailCard, { StatusBadge } from './DetailCard';
 
 interface NodeDetailsData {
@@ -40,30 +41,33 @@ const NodeDetailsView: React.FC<NodeDetailsViewProps> = ({ selectedNodeData, det
         )}
 
         {/* Recent Visits Section */}
-        <div className="p-3 bg-white rounded-lg shadow-sm">
-          <div className="flex items-center gap-2 mb-2">
-            <Clock className="w-3 h-3 text-indigo-600" />
-            <h3 className="text-xs font-medium text-indigo-600">Recent Visits</h3>
-          </div>
-          {details.recentVisits.length > 0 ? (
-            <div className="space-y-1">
-              {details.recentVisits.map((visit, index) => (
-                <div key={index} className="p-2 bg-indigo-50 rounded border-l-4 border-indigo-400">
+        <DetailCard
+          icon={Clock}
+          iconColor="text-indigo-600"
+          title="Recent Visits"
+          items={details.recentVisits}
+          renderItem={(visit, index) => (
+            <Popover key={index}>
+              <PopoverTrigger asChild>
+                <div className="p-2 bg-indigo-50 rounded border-l-4 border-indigo-400 cursor-pointer hover:bg-indigo-100 transition-colors">
                   <div className="text-xs font-medium text-indigo-800">
                     {visit.date} - {visit.reason}
                   </div>
+                </div>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 z-50" side="right" align="start">
+                <div className="space-y-2">
+                  <div className="text-sm font-medium text-indigo-800">{visit.date} - {visit.reason}</div>
                   {visit.note && (
-                    <div className="text-xs text-indigo-600 mt-1 italic">
-                      {visit.note}
+                    <div className="text-sm text-indigo-700 mt-2">
+                      <strong>Notes:</strong> {visit.note}
                     </div>
                   )}
                 </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-xs text-gray-500 italic">No recent visits available for this item.</p>
+              </PopoverContent>
+            </Popover>
           )}
-        </div>
+        />
 
         {/* Medications Section */}
         <DetailCard
@@ -85,23 +89,49 @@ const NodeDetailsView: React.FC<NodeDetailsViewProps> = ({ selectedNodeData, det
           title="Recent Lab Results"
           items={details.labs}
           renderItem={(lab, index) => (
-            <div key={index} className="p-2 bg-green-50 rounded border-l-4 border-green-400">
-              <div className="flex justify-between items-center">
-                <div className="text-xs font-medium text-green-800">{lab.name}: {lab.value} ({lab.date})</div>
-                <div className="flex items-center gap-1">
-                  {lab.trend && (
-                    <span className={`text-xs px-2 py-1 rounded ${
-                      lab.trend === 'up' ? 'bg-red-100 text-red-700' :
-                      lab.trend === 'down' ? 'bg-blue-100 text-blue-700' :
-                      'bg-gray-100 text-gray-700'
-                    }`}>
-                      {lab.trend === 'up' ? '↗' : lab.trend === 'down' ? '↘' : '→'} {lab.trend}
-                    </span>
-                  )}
-                  {lab.status && <StatusBadge status={lab.status} />}
+            <Popover key={index}>
+              <PopoverTrigger asChild>
+                <div className="p-2 bg-green-50 rounded border-l-4 border-green-400 cursor-pointer hover:bg-green-100 transition-colors">
+                  <div className="flex justify-between items-center">
+                    <div className="text-xs font-medium text-green-800">{lab.name}: {lab.value} ({lab.date})</div>
+                    <div className="flex items-center gap-1">
+                      {lab.trend && (
+                        <span className={`text-xs px-2 py-1 rounded ${
+                          lab.trend === 'up' ? 'bg-red-100 text-red-700' :
+                          lab.trend === 'down' ? 'bg-blue-100 text-blue-700' :
+                          'bg-gray-100 text-gray-700'
+                        }`}>
+                          {lab.trend === 'up' ? '↗' : lab.trend === 'down' ? '↘' : '→'}
+                        </span>
+                      )}
+                      {lab.status && <StatusBadge status={lab.status} />}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </PopoverTrigger>
+              <PopoverContent className="w-96 z-50" side="right" align="start">
+                <div className="space-y-2">
+                  <div className="text-sm font-medium text-green-800">{lab.name}</div>
+                  <div className="text-sm text-green-600"><strong>Value:</strong> {lab.value}</div>
+                  <div className="text-sm text-green-600"><strong>Date:</strong> {lab.date}</div>
+                  {lab.status && (
+                    <div className="text-sm text-green-600"><strong>Status:</strong> {lab.status}</div>
+                  )}
+                  {lab.trend && (
+                    <div className="text-sm text-green-600">
+                      <strong>Trend:</strong> 
+                      <span className={`ml-1 px-2 py-1 rounded text-xs ${
+                        lab.trend === 'up' ? 'bg-red-100 text-red-700' :
+                        lab.trend === 'down' ? 'bg-blue-100 text-blue-700' :
+                        'bg-gray-100 text-gray-700'
+                      }`}>
+                        {lab.trend === 'up' ? '↗ Trending Up' : lab.trend === 'down' ? '↘ Trending Down' : '→ Stable'}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </PopoverContent>
+            </Popover>
           )}
         />
       </div>
