@@ -255,9 +255,57 @@ const DrillDownPane: React.FC<DrillDownPaneProps> = ({ selectedNodeData, selecte
       case 'p001':
         return {
           labTests: [
-            { name: 'Potassium', value: '4.1 mEq/L', date: '2024-05-01', status: 'Normal', change: 'New' },
-            { name: 'Creatinine', value: '1.0 mg/dL', date: '2024-05-01', status: 'Normal', change: 'Stable' },
-            { name: 'HbA1c', value: '7.0%', date: '2024-05-10', status: 'Elevated', change: 'Improved' }
+            { 
+              name: 'Potassium', 
+              value: '4.1 mEq/L', 
+              date: '2024-05-01', 
+              status: 'Normal', 
+              change: 'Stable',
+              numericValue: 4.1,
+              unit: 'mEq/L',
+              normalRange: { min: 3.5, max: 5.0 },
+              history: [
+                { date: '2024-01-01', value: 3.8, formattedDate: 'Jan 01' },
+                { date: '2024-02-01', value: 4.0, formattedDate: 'Feb 01' },
+                { date: '2024-03-01', value: 4.2, formattedDate: 'Mar 01' },
+                { date: '2024-04-01', value: 4.0, formattedDate: 'Apr 01' },
+                { date: '2024-05-01', value: 4.1, formattedDate: 'May 01' }
+              ]
+            },
+            { 
+              name: 'Creatinine', 
+              value: '1.0 mg/dL', 
+              date: '2024-05-01', 
+              status: 'Normal', 
+              change: 'Stable',
+              numericValue: 1.0,
+              unit: 'mg/dL',
+              normalRange: { min: 0.7, max: 1.3 },
+              history: [
+                { date: '2024-01-01', value: 0.9, formattedDate: 'Jan 01' },
+                { date: '2024-02-01', value: 0.95, formattedDate: 'Feb 01' },
+                { date: '2024-03-01', value: 1.1, formattedDate: 'Mar 01' },
+                { date: '2024-04-01', value: 1.0, formattedDate: 'Apr 01' },
+                { date: '2024-05-01', value: 1.0, formattedDate: 'May 01' }
+              ]
+            },
+            { 
+              name: 'HbA1c', 
+              value: '7.0%', 
+              date: '2024-05-10', 
+              status: 'Elevated', 
+              change: 'Improved',
+              numericValue: 7.0,
+              unit: '%',
+              normalRange: { min: 4.0, max: 5.7 },
+              history: [
+                { date: '2023-11-10', value: 8.2, formattedDate: 'Nov 10' },
+                { date: '2023-12-10', value: 7.8, formattedDate: 'Dec 10' },
+                { date: '2024-02-10', value: 7.5, formattedDate: 'Feb 10' },
+                { date: '2024-04-10', value: 7.2, formattedDate: 'Apr 10' },
+                { date: '2024-05-10', value: 7.0, formattedDate: 'May 10' }
+              ]
+            }
           ],
           specialistNotes: [
             { specialist: 'Dr. Smith', date: '2024-05-08', summary: 'Blood pressure well controlled. Continue current medications.', type: 'Cardiology' },
